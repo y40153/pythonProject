@@ -1,3 +1,4 @@
+import datetime
 import json
 import os
 import random
@@ -344,13 +345,14 @@ def chaxun():
         # key = query(date, '440304', '福田区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308',
         #       '盐田区') + query(date,'440307', '龙岗区')
-        key = query(date, '440305', '南山区') + query(date, '440306',
-                                                      '宝安区') + query(date, '440304', '福田区')
+        key = query(date, '440305', '南山区') + query(date, '440307',
+                '龙岗区') + query(date, '440304', '福田区')
         # key = query(date, '440309', '龙华区')+query(date, '440305', '南山区') + query(date, '440306','宝安区') + \
         #       query(date, '440304', '福田区') + query(date, '440396', '大鹏新区') + query(date, '440308','盐田区') \
         #       + query(date, '440307', '龙岗区')+ query(date, '440303', '罗湖区')
+        sj = datetime.datetime.now()  # 当前时间
+        print(f'{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
-        print(f'第{zi}次轮询：有{key}个区有号')
 
         if key > 0:
             global name
@@ -365,8 +367,8 @@ def chaxun():
 
 def run(yyrq, shij, bianhao, diz):
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '高涛', '429004198810051917', '18672691679',
-            '傅英', '431121199704075545', '18273112556',
+            '许益铨', '44528119950101677X', '13631616689',
+            '张嘉晶', '440307199203141625', '13543276001',
             32)
     # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
     #         '潘卓钒', '441802199804110919', '15279101998',
