@@ -342,12 +342,10 @@ def chaxun():
     zi=1
     while True:
         key = query(date, '440304', '福田区')+ query(date,'440307', '龙岗区')
-        # key = query(date, '440396', '大鹏新区') + query(date, '440308',
-        #       '盐田区') + query(date,'440307', '龙岗区')
-        # key = query(date, '440305', '南山区') + query(date, '440306',
-        #                                               '宝安区') + query(date, '440303', '罗湖区')
-        # key = query(date, '440305', '南山区') + query(date, '440306',
-        #                                               '宝安区') + query(date, '440304', '福田区')+ query(date, '440303', '罗湖区')+ query(date,'440307', '龙岗区')
+        # key = query(date, '440396', '大鹏新区') + query(date, '440308', '盐田区') + query(date,'440307', '龙岗区') key =
+        # query(date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440303', '罗湖区') key = query(
+        # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',
+        # '罗湖区')+ query(date,'440307', '龙岗区')
         sj = datetime.datetime.now()  # 当前时间
         print(f'{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
