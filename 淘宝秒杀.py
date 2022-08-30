@@ -5,9 +5,6 @@ import time
 # 启动火狐浏览器的驱动器
 from selenium.webdriver.common.by import By
 
-driver = webdriver.Firefox()
-# 最大化浏览器
-driver.maximize_window()
 
 
 # 传入用户名密码，登录淘宝
@@ -67,6 +64,9 @@ if __name__ == "__main__":
     # 登录
     key=input('设置抢购时间,如08-24：\n')
 
+    driver = webdriver.Firefox()
+    # 最大化浏览器
+    driver.maximize_window()
     login()
     # 设置抢购时间
     buy(f'2022-{key} 10:00:00')
