@@ -349,7 +349,7 @@ def chaxun():
         #       query(date, '440304', '福田区') + query(date, '440396', '大鹏新区') + query(date, '440308','盐田区') \
         #       + query(date, '440307', '龙岗区')+ query(date, '440303', '罗湖区')
         zi += 1
-        print(f'第{zi}次轮询：有{key}个区有号')
+        print(f'傅英，第{zi}次轮询：有{key}个区有号')
 
         if key > 0:
             global name
