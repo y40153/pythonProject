@@ -326,9 +326,8 @@ def query(shijian, bianhao, weizhi):
                 print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
                 panduan = True
                 name = f'{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'
-                payloadq = f'ids=1ff917c905584896ab4d11a4765c49e5:1:1d20467aae354aceaeb5cc472b13605d'
-                response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
-                                            headers=headers, data=payloadq)
+                payloadq = f'ids=08714159118548cc8aa1284687176679:1:41d447b785fa4d4b9abc6f25f9b031a8'
+                response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos', headers=headers, data=payloadq)
                 print(response.text)
                 run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
             else:
@@ -344,23 +343,23 @@ def chaxun():
     dater = input("请输入预约日期如09-01:\n")
     date = f'2022-{dater}'
     print(date)
-    zi=1
+    zi = 1
     while True:
-        # key = query(date, '440304', '福田区')
+        key = query(date, '440303', '罗湖区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308',
         #       '盐田区') + query(date,'440307', '龙岗区')
-        key = query(date, '440305', '南山区')+ query(date, '440304', '福田区')
+        # key = query(date, '440305', '南山区') + query(date, '440306',
+        #                                               '宝安区') + query(date, '440304', '福田区')
         # key = query(date, '440309', '龙华区')+query(date, '440305', '南山区') + query(date, '440306','宝安区') + \
         #       query(date, '440304', '福田区') + query(date, '440396', '大鹏新区') + query(date, '440308','盐田区') \
         #       + query(date, '440307', '龙岗区')+ query(date, '440303', '罗湖区')
         sj = datetime.datetime.now()  # 当前时间
-        print(f'{sj},第{zi}次轮询：有{key}个区有号')
+        print(f'张静{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
-
         if key > 0:
             global name
             print('发邮件哦', name)
-            sendmail(name, key)
+            # sendmail(name, key)
             mins = 300
         else:
             print('没有号，发不了')
@@ -370,21 +369,10 @@ def chaxun():
 
 def run(yyrq, shij, bianhao, diz):
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '许益铨', '44528119950101677X', '13631616689',
-            '张嘉晶', '440307199203141625', '13543276001',
+            '吴晓彬', '440582199309086397', '15279101998',
+            '潘莹莹', '440981199610152846', '15279101998',
             32)
-    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-    #         '潘卓钒', '441802199804110919', '15279101998',
-    #         '黎静婷', '445381199803206021', '13168661477',
-    #         32)
-    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-    #         '黄凯', '441523199507176036', '15014049639',
-    #         '马丽纯', '440582199501135849', '13202297256',
-    #         32)
-    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-    #         '闻一龙', '330193198801260013', '18858277711',
-    #         '刘瑶玥', '360602199512130027', '15711966886',
-    #         32)
+
     return
 
 
