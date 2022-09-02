@@ -89,25 +89,20 @@ def query(shijian, bianhao, dizhi):
     }
 
     response = requests.request("POST", url, headers=headers, data=payload)
-    data = json.loads(response.text)  # 解读出接口返回的数据
-    ydata = json.loads(payload)  # 获取提交的json数据
-    shijian = ydata['bookDate']
-    if __name__ == '__main__':
-        for c, b in data.items():
-            if c == 'data':
-                data = b  # 找到数据里面想要的data
-        for d in data:
+    data = response.json()  # 解读出接口返回的数据
+    data = data['data']
+    for d in data:
 
-            print(d)  # 打印出想要的数据
+        print(d)  # 打印出想要的数据
 
-            if d['syyyl'] > 0:  # 秒杀准备，有号判断
-                print('\033''[0:35m'  f'{shijian}快看啊，{d["yysj"]}这里有 {d["syyyl"]} 个号啦'  '\033[m')
-            else:
-                print('检查一下结果出问题了')
+        if d['syyyl'] > 0:  # 秒杀准备，有号判断
+            print('\033''[0:35m'  f'{shijian}快看啊，{d["yysj"]}这里有 {d["syyyl"]} 个号啦'  '\033[m')
+        else:
+            print('检查一下结果出问题了')
 
 
 if __name__ == '__main__':
-    date = '2022-09-19'
+    date = '2022-09-09'
     query(date, '440304', "深圳市福田区民政局婚姻登记处")
     print('-' * 90)
     # query(date, '440305', "深圳市南山区民政局婚姻登记处")

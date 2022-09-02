@@ -309,14 +309,11 @@ def query(shijian, bianhao, weizhi):
 
     response = requests.request("POST", url, headers=headers, data=payload)
 
-    if re.search('会话超时，请重新申请！', response.text) is None:
+    if re.search('会话超时，请重新申请！', response.text) == None:
         print('正常跳转查询成功')
-        data = json.loads(response.text)  # 解读出接口返回的数据
+        data = response.json()  # 解读出接口返回的数据
         global panduan, name
         panduan = False
-        for c, b in enumerate(data):
-            if c == 'data':
-                data = b  # 找到数据里面想要的data
         for d in data:
 
             print(d)  # 打印出想要的数据

@@ -185,61 +185,6 @@ def login():
         denlu()
 
 
-def queryz(shijian):
-    if os.name == 'posix':
-        with open('/Users/wang/Desktop/证件信息.txt', 'r', encoding='utf‐8') as a_file:
-            cookie = a_file.readline().rstrip()
-    else:
-        with open(r"C:\Users\Administrator\Desktop\证件信息.txt", 'r', encoding='utf‐8') as a_file:
-            cookie = a_file.readline().rstrip()
-
-    url = f'https://www.gdhy.gov.cn/common.do?do=getWdrqxx&yyrq={shijian}&blcs=440300000000&ywlx=J'
-
-    payload = {}
-    headers = {
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'zh-CN,zh;q=0.9',
-        'Connection': 'keep-alive',
-        'Cookie': f'{cookie}',
-        'Host': 'www.gdhy.gov.cn',
-        'Referer': 'https://www.gdhy.gov.cn/common.do?do=getWdrqxx&yyrq=2022-08-31&blcs=440300000000&ywlx=J',
-        'Sec-Fetch-Mode': 'navigate',
-        'Sec-Fetch-Site': 'same-origin',
-        'Sec-Fetch-User': '?1',
-        'Upgrade-Insecure-Requests': '1',
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36'
-    }
-
-    response = requests.request("GET", url, headers=headers, data=payload)
-
-    print(response.text)
-
-    # if re.search('会话超时，请重新申请！', response.text) == None:
-    #     print('正常跳转查询成功')
-    #     data = json.loads(response.text)  # 解读出接口返回的数据
-    #     global panduan, name
-    #     for c, b in enumerate(data):
-    #         if c == 'data':
-    #             data = b  # 找到数据里面想要的data
-    #     for d in data:
-    #
-    #         print(d)  # 打印出想要的数据
-    #
-    #         if d['syl'] > 0:  # 秒杀准备，有号判断
-    #             print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
-    #             panduan = True
-    #             name = f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'
-    #
-    #         else:
-    #             panduan = False
-    #             print(data)
-    # else:
-    #     print('登录过期')
-    #     denlu()
-    return
-
-
 def query(shijian, bianhao, weizhi):
     url = "https://www.gdhy.gov.cn/common.do?do=getYysjxx"
 
@@ -271,11 +216,9 @@ def query(shijian, bianhao, weizhi):
 
     if re.search('会话超时，请重新申请！', response.text) == None:
         print('正常跳转查询成功')
-        data = json.loads(response.text)  # 解读出接口返回的数据
+        data = response.json() # 解读出接口返回的数据
         global panduan, name
-        for c, b in enumerate(data):
-            if c == 'data':
-                data = b  # 找到数据里面想要的data
+        panduan = False
         for d in data:
 
             print(d)  # 打印出想要的数据
@@ -375,7 +318,7 @@ def miaosha():
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         # 'Host': 'www.gdhy.gov.cn',
         # 'Origin': 'https://www.gdhy.gov.cn',
-        'Referer': 'https://www.gdhy.gov.cn/yyjh.do?do=preYyxxOper&yyrq=2022-08-30&djjg=4403040A1000&yysj=9:00-10:00&ydbllx=01',
+        'Referer': 'https://www.gdhy.gov.cn/yyjh.do?do=preYyxxOper&yyrq=2022-09-17&djjg=4403040A1000&yysj=9:00-10:00&ydbllx=01',
         # 'Sec-Fetch-Mode': 'cors',
         # 'Sec-Fetch-Site': 'same-origin',
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
@@ -403,7 +346,7 @@ def miaosha():
         # global headers
         payload = f'creator_id=%20&creator_name=%20&creator_orgid=%20&create_time=%20&slywlx=%2001&id=%20&oper=%20' \
                   f'&jszjhmnan=%20&jszjhmnv=%20&djnlnan=%20&djnlnv=%20&blzt=%20&blsj=%20&hidcitynan=%20&hidcitynv=%20' \
-                  f'&yyrq=2022-08-30&yysj=9%3A00-10%3A00&djjg=4403040A1000&sqrlbnan=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0' \
+                  f'&yyrq=2022-09-17&yysj=9%3A00-10%3A00&djjg=4403040A1000&sqrlbnan=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0' \
                   f'%91&sqrlbnv=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0%91&xmnan=%E5%90%B4%E6%99%93%E5%BD%AC&xmnv=%E6%BD%98' \
                   f'%E8%8E%B9%E8%8E%B9&sfzjlbnan=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0%91%E8%BA%AB%E4%BB%BD%E8%AF%81' \
                   f'&sfzjlbnv=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0%91%E8%BA%AB%E4%BB%BD%E8%AF%81&sfzjhmnan' \
@@ -412,6 +355,14 @@ def miaosha():
                   f'=%E5%86%9C%E3%80%81%E6%9E%97%E3%80%81%E7%89%A7%E3%80%81%E6%B8%94%E3%80%81%E6%B0%B4%E5%88%A9%E4%B8' \
                   f'%9A%E7%94%9F%E4%BA%A7%E4%BA%BA%E5%91%98&zynv=%E5%8A%9E%E4%BA%8B%E4%BA%BA%E5%91%98%E5%92%8C%E6%9C%89' \
                   f'%E5%85%B3%E4%BA%BA%E5%91%98&lxdhnan=15279101998&lxdhnv=15279101998&captcha={yzm(1)}'
+        headers = {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'Referer': 'https://www.gdhy.gov.cn/yyjh.do?do=preYyxxOper&yyrq=2022-09-17&djjg=4403040A1000&yysj=9:00-10'
+                       ':00&ydbllx=01',
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) '
+                          'Chrome/78.0.3904.108 Safari/537.36',
+            'Cookie': f'{cookie}'
+        }
         try:
             response = requests.request("POST", url3, headers=headers, data=payload)
             print(response.text, 'formValidate')
@@ -423,11 +374,11 @@ def miaosha():
         payload = 'flag=J&sfzjhmnan=440582199309086397&sfzjhmnv=440981199610152846'
         response = requests.request("POST", url6, headers=headers, data=payload)
         print(response.text, 'checkSfzjhmInYyhmd')
-        payload = 'sfzjhmnan=440582199309086397&sfzjhmnv=440981199610152846&yyrq=2022-08-30'
+        payload = 'sfzjhmnan=440582199309086397&sfzjhmnv=440981199610152846&yyrq=2022-09-17'
         response = requests.request("POST", url5, headers=headers, data=payload)
         print(response.text, 'checkSfzjh')
 
-        payload = 'rq=2022-08-30&sj=9%3A00-10%3A00'
+        payload = f'rq=2022-09-17&sj=9:00-10:00'
         response = requests.request("POST", url4, headers=headers, data=payload)
         print(response.text, 'completeOper')
         if response.text == 'captchaCodeError':
@@ -442,8 +393,5 @@ def miaosha():
 if __name__ == '__main__':
     login()
     # miaosha()
-
-    # queryz('2022-09-09')
-
-    # chaxun()
-    quxiao('44528119950101677X','440307199203141625','2022-09-09')#取消
+    chaxun()
+    # quxiao('44528119950101677X','440307199203141625','2022-09-09')#取消
