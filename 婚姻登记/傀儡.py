@@ -66,8 +66,8 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
             "areatypenv": "",
             "area_provincenan": "440000000000",
             "area_provincenv": "440000000000",
-            "area_citynan": "440300000000",
-            "area_citynv": "440300000000",
+            "area_citynan": "445100000000",
+            "area_citynv": "445100000000",
             "area_countynan": f"{bianhao}000000",
             "area_countynv": f"{bianhao}000000",
             "area_townnan": f"{bianhao}001000",
@@ -326,9 +326,9 @@ def query(shijian, bianhao, weizhi):
                 print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
                 panduan = True
                 name = f'{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'
-                payloadq = f'ids=08714159118548cc8aa1284687176679:1:41d447b785fa4d4b9abc6f25f9b031a8'
-                response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos', headers=headers, data=payloadq)
-                print(response.text)
+                # payloadq = f'ids=08714159118548cc8aa1284687176679:1:41d447b785fa4d4b9abc6f25f9b031a8'
+                # response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos', headers=headers, data=payloadq)
+                # print(response.text)
                 run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
             else:
                 print('获取值为空', data)
@@ -345,7 +345,7 @@ def chaxun():
     print(date)
     zi = 1
     while True:
-        key = query(date, '440303', '罗湖区')
+        key = query(date, '445103', '潮安区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308',
         #       '盐田区') + query(date,'440307', '龙岗区')
         # key = query(date, '440305', '南山区') + query(date, '440306',
@@ -359,7 +359,7 @@ def chaxun():
         if key > 0:
             global name
             print('发邮件哦', name)
-            # sendmail(name, key)
+            sendmail(name, key)
             mins = 300
         else:
             print('没有号，发不了')
@@ -369,8 +369,8 @@ def chaxun():
 
 def run(yyrq, shij, bianhao, diz):
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '吴晓彬', '440582199309086397', '15279101998',
-            '潘莹莹', '440981199610152846', '15279101998',
+            '蔡润桐', '44512119980101511', '15088166593',
+            '陈锦柳', '445121199801305125', '13531545156',
             32)
 
     return
