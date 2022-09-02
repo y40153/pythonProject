@@ -94,8 +94,7 @@ def yzm(cancel):
     open("./aa.gif", 'wb').write(response.content)  # 下载gif图片
     im = Image.open("./aa.gif")
     im.save(str(0) + '.png')  # 将png图片保存
-    im.seek(1)
-    im.save(str(1) + '.png')  # 将png图片保存
+
     im.seek(2)
     im.save(str(2) + '.png')  # 将png图片保存
     im.seek(3)

@@ -186,16 +186,15 @@ def yzm(cancel):
                                     data=payload)
 
     # text = response.content.decode('utf-8','ignore')#解决乱码
-    open("./aa.gif", 'wb').write(response.content)  # 下载gif图片
-    im = Image.open("./aa.gif")
-    im.save(str(0) + '.png')  # 将png图片保存
-    im.seek(1)
-    im.save(str(1) + '.png')  # 将png图片保存
+    open("./2.gif", 'wb').write(response.content)  # 下载gif图片
+    im = Image.open("./2.gif")
+    im.save(str(8) + '.png')  # 将png图片保存
+
     im.seek(2)
-    im.save(str(2) + '.png')  # 将png图片保存
+    im.save(str(9) + '.png')  # 将png图片保存
     im.seek(3)
-    im.save(str(3) + '.png')  # 将png图片保存
-    zhi = f"{recognize('3.png')[0]}{recognize('2.png')[1:2]}{recognize('3.png')[1:2]}{recognize('0.png')[-1]}"
+    im.save(str(10) + '.png')  # 将png图片保存
+    zhi = f"{recognize('10.png')[0]}{recognize('9.png')[1:2]}{recognize('10.png')[1:2]}{recognize('8.png')[-1]}"
     print(zhi)
     if cancel == None:
 
