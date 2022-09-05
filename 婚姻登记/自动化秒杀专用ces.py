@@ -120,10 +120,10 @@ def sendmail(name):
     def mail():
         ret = True
         try:
-            msg = MIMEText(f'{name[-10:]}', 'plain', 'utf-8')
+            msg = MIMEText(f'{name}', 'plain', 'utf-8')
             msg['From'] = formataddr(("秒杀监控系统", my_sender))  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
             msg['To'] = formataddr(("FK", my_user))  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
-            msg['Subject'] = f"{name}"  # 邮件的主题，也可以说是标题
+            msg['Subject'] = f"{name[-60:]}"  # 邮件的主题，也可以说是标题
 
             server = smtplib.SMTP_SSL("smtp.qq.com", 465)  # 发件人邮箱中的SMTP服务器，端口是25
             server.login(my_sender, my_pass)  # 括号中对应的是发件人邮箱账号、邮箱密码
