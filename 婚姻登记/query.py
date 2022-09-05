@@ -102,7 +102,7 @@ def query(shijian, bianhao, dizhi):
 
 
 if __name__ == '__main__':
-    date = '2022-09-16'
+    date = '2022-09-21'
     query(date, '440304', "深圳市福田区民政局婚姻登记处")
     print('-' * 90)
     # query(date, '440305', "深圳市南山区民政局婚姻登记处")
