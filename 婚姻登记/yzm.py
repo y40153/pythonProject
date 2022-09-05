@@ -13,7 +13,7 @@ from PIL import Image
 
 def sendmail(name):
     my_sender = '401534863@qq.com'  # 发件人邮箱账号
-    my_pass = 'dsjkwumnsdlybiad'  # 发件人邮箱密码
+    my_pass = 'cfzwtrerxmygbjhb'  # 发件人邮箱密码
     my_user = '15279101998@139.com'  # 收件人邮箱账号，我这边发送给自己
 
     def mail():
@@ -249,7 +249,7 @@ def chaxun():
 
         if key > 0:
             print('发邮件哦', name)
-            # sendmail(name)
+            sendmail(name)
             mins = 300
         else:
             print('没有号，发不了')
