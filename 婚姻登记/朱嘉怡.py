@@ -347,7 +347,7 @@ def chaxun():
         #       + query(date, '440307', '龙岗区')+ query(date, '440303', '罗湖区')
 
         sj = datetime.datetime.now()  # 当前时间
-        print(f'朱嘉怡，第{zi}次轮询：有{key}个区有号')
+        print(f'朱嘉怡{sj}，第{zi}次轮询：有{key}个区有号')
         zi += 1
         if key > 0:
             global name
