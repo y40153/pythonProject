@@ -48,8 +48,8 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
             "zynv": "国家机关，党群组织，企事业单位",
             "whcdnan": "博士研究生",
             "whcdnv": "硕士研究生",
-            "fjdnan": "广东省深圳市福田区福田街道办事处",
-            "fjdnv": "广东省深圳市福田区香蜜湖街道办事处",
+            "fjdnan": "隐藏显示",
+            "fjdnv": "隐藏显示",
             "lxdhnan": f"{phone}",
             "lxdhnv": f"{phone2}",
             "yyrq_id": "",
@@ -339,7 +339,7 @@ def chaxun():
     print(date)
     zi = 1
     while True:
-        key = query(date, '440303', '罗湖区')
+        key = query(date, '440303', '罗湖区')+ query(date, '440305', '南山区')+ query(date, '440304', '福田区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308',
         #       '盐田区') + query(date,'440307', '龙岗区')
         # key = query(date, '440305', '南山区') + query(date, '440306',
@@ -363,8 +363,8 @@ def chaxun():
 
 def run(yyrq, shij, bianhao, diz):
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '周文武', '441522199104160033', '13380845757',
-            '张静', '421202198907143421', '13510369193',
+            '罗华儒', '440982199306154739', '13760303107',
+            '陈诗慧', '440301199301165526', '15986658217',
             32)
     # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
     #         '潘卓钒', '441802199804110919', '15279101998',
