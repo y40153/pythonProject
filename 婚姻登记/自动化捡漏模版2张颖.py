@@ -7,7 +7,6 @@ import smtplib
 import time
 from email.mime.text import MIMEText
 from email.utils import formataddr
-
 import ddddocr
 import requests
 from PIL import Image
@@ -66,8 +65,8 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
             "areatypenv": "",
             "area_provincenan": "440000000000",
             "area_provincenv": "440000000000",
-            "area_citynan": "445100000000",
-            "area_citynv": "445100000000",
+            "area_citynan": "440300000000",
+            "area_citynv": "440300000000",
             "area_countynan": f"{bianhao}000000",
             "area_countynv": f"{bianhao}000000",
             "area_townnan": f"{bianhao}001000",
@@ -187,15 +186,14 @@ def yzm(cancel):
                                     data=payload)
 
     # text = response.content.decode('utf-8','ignore')#解决乱码
-    open("./aa.gif", 'wb').write(response.content)  # 下载gif图片
-    im = Image.open("./aa.gif")
-    im.save(str(0) + '.png')  # 将png图片保存
-
+    open("./0.gif", 'wb').write(response.content)  # 下载gif图片
+    im = Image.open("./0.gif")
+    im.save(str(4) + '.png')  # 将png图片保存
     im.seek(2)
-    im.save(str(2) + '.png')  # 将png图片保存
+    im.save(str(6) + '.png')  # 将png图片保存
     im.seek(3)
-    im.save(str(3) + '.png')  # 将png图片保存
-    zhi = f"{recognize('3.png')[0]}{recognize('2.png')[1:2]}{recognize('3.png')[1:2]}{recognize('0.png')[-1]}"
+    im.save(str(7) + '.png')  # 将png图片保存
+    zhi = f"{recognize('7.png')[0]}{recognize('6.png')[1:2]}{recognize('7.png')[1:2]}{recognize('4.png')[-1]}"
     print(zhi)
     if cancel == None:
 
@@ -322,9 +320,6 @@ def query(shijian, bianhao, weizhi):
                 print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
                 panduan = True
                 name = f'{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'
-                # payloadq = f'ids=08714159118548cc8aa1284687176679:1:41d447b785fa4d4b9abc6f25f9b031a8'
-                # response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos', headers=headers, data=payloadq)
-                # print(response.text)
                 run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
             else:
                 print('获取值为空', data)
@@ -339,18 +334,15 @@ def chaxun():
     dater = input("请输入预约日期如09-01:\n")
     date = f'2022-{dater}'
     print(date)
-    zi = 1
+    zi=1
     while True:
-        key = query(date, '445103', '潮安区')
-        # key = query(date, '440396', '大鹏新区') + query(date, '440308',
-        #       '盐田区') + query(date,'440307', '龙岗区')
-        # key = query(date, '440305', '南山区') + query(date, '440306',
-        #                                               '宝安区') + query(date, '440304', '福田区')
-        # key = query(date, '440309', '龙华区')+query(date, '440305', '南山区') + query(date, '440306','宝安区') + \
-        #       query(date, '440304', '福田区') + query(date, '440396', '大鹏新区') + query(date, '440308','盐田区') \
-        #       + query(date, '440307', '龙岗区')+ query(date, '440303', '罗湖区')
+        key = query(date, '440305', '南山区')+query(date, '440303', '罗湖区')
+        # key = query(date, '440396', '大鹏新区') + query(date, '440308', '盐田区') + query(date,'440307', '龙岗区') key =
+        # query(date, '440305', '南山区') + query(date, '440306', '宝安区') +query(date, '440303', '罗湖区')  key = query(
+        # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',
+        # '罗湖区')+ query(date,'440307', '龙岗区')
         sj = datetime.datetime.now()  # 当前时间
-        print(f'{sj},第{zi}次轮询：有{key}个区有号')
+        print(f'张颖{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
         if key > 0:
             global name
@@ -364,11 +356,11 @@ def chaxun():
 
 
 def run(yyrq, shij, bianhao, diz):
-    seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '蔡润桐', '44512119980101511', '15088166593',
-            '陈锦柳', '445121199801305125', '13531545156',
-            32)
 
+    seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
+            '郑子成', '440301199306112319', '15818507943',
+            '张颖', '440301199105291322', '15989347090',
+            32)
     return
 
 
