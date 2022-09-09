@@ -310,20 +310,25 @@ def query(shijian, bianhao, weizhi):
 
     if re.search('会话超时，请重新申请！', response.text) == None:
         print('正常跳转查询成功')
-        data = response.json()  # 解读出接口返回的数据
-        global panduan, name
-        panduan = False
-        for d in data:
+        try:
+            data = response.json()  # 解读出接口返回的数据
+            global panduan, name
+            panduan = False
+            for d in data:
 
-            print(d)  # 打印出想要的数据
+                print(d)  # 打印出想要的数据
 
-            if d['syl'] > 0:  # 秒杀准备，有号判断
-                print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
-                panduan = True
-                name = f'{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'
-                run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
-            else:
-                print('获取值为空', data)
+                if d['syl'] > 0:  # 秒杀准备，有号判断
+                    print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
+                    panduan = True
+                    name = f'{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'
+                    run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
+                else:
+                    print('获取值为空', data)
+        except:
+            sendmail(f'{response.text}', 'data出错')
+            time.sleep(60)
+            pass
     else:
         print('登录过期')
         denlu()
@@ -335,15 +340,15 @@ def chaxun():
     dater = input("请输入预约日期如09-01:\n")
     date = f'2022-{dater}'
     print(date)
-    zi = 1
+    zi=1
     while True:
-        key = query(date, '440305', '南山区') + query(date, '440304', '福田区')
+        key = query(date, '440305', '南山区')+query(date, '440304', '福田区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308', '盐田区') + query(date,'440307', '龙岗区') key =
         # query(date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440303', '罗湖区') key = query(
         # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',
         # '罗湖区')+ query(date,'440307', '龙岗区')
         sj = datetime.datetime.now()  # 当前时间
-        print(f'刘沙{sj},第{zi}次轮询：有{key}个区有号')
+        print(f'吴慧云{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
         if key > 0:
             global name
@@ -370,8 +375,8 @@ def run(yyrq, shij, bianhao, diz):
     #         '马丽纯', '440582199501135849', '13202297256',
     #         32)
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '钟文轩', '440183199702145212', '18379173146',
-            '刘沙', '360311199406011024', '13556067286',
+            '张鸣俊', '360723199308220014', '15107159257',
+            '吴慧云', '421022199302010086', '18370990802',
             32)
     return
 

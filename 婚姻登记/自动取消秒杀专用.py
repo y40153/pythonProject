@@ -311,24 +311,28 @@ def query(shijian, bianhao, weizhi):
 
     if re.search('会话超时，请重新申请！', response.text) == None:
         print('正常跳转查询成功')
-        data = response.json()  # 解读出接口返回的数据
-        global panduan, name
-        panduan = False
-        for d in data:
+        try:
+            data = response.json()  # 解读出接口返回的数据
+            global panduan, name
+            panduan = False
+            for d in data:
+                print(d)  # 打印出想要的数据
+                if d['syl'] > 0:  # 秒杀准备，有号判断
+                    print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
+                    panduan = True
+                    name = f'{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'
+                    payloadq = f'ids=76970a227543461a9a2feb06ed67099b:1:efb071b597bb4df48ea75cf51b57125b'
+                    response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
+                                                headers=headers, data=payloadq)
+                    print(response.text)
+                    run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
+                else:
+                    print('获取值为空', data)
+        except:
+            sendmail(f'{response.text}', 'data出错')
+            time.sleep(60)
+            pass
 
-            print(d)  # 打印出想要的数据
-
-            if d['syl'] > 0:  # 秒杀准备，有号判断
-                print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
-                panduan = True
-                name = f'{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'
-                payloadq = f'ids=76970a227543461a9a2feb06ed67099b:1:efb071b597bb4df48ea75cf51b57125b'
-                response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
-                                            headers=headers, data=payloadq)
-                print(response.text)
-                run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
-            else:
-                print('获取值为空', data)
     else:
         print('登录过期')
         denlu()

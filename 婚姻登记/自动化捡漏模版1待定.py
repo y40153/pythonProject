@@ -7,7 +7,6 @@ import smtplib
 import time
 from email.mime.text import MIMEText
 from email.utils import formataddr
-
 import ddddocr
 import requests
 from PIL import Image
@@ -48,8 +47,8 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
             "zynv": "国家机关，党群组织，企事业单位",
             "whcdnan": "博士研究生",
             "whcdnv": "硕士研究生",
-            "fjdnan": "隐藏显示",
-            "fjdnv": "隐藏显示",
+            "fjdnan": "广东省深圳市福田区福田街道办事处",
+            "fjdnv": "广东省深圳市福田区香蜜湖街道办事处",
             "lxdhnan": f"{phone}",
             "lxdhnv": f"{phone2}",
             "yyrq_id": "",
@@ -190,8 +189,7 @@ def yzm(cancel):
     open("./aa.gif", 'wb').write(response.content)  # 下载gif图片
     im = Image.open("./aa.gif")
     im.save(str(0) + '.png')  # 将png图片保存
-    im.seek(1)
-    im.save(str(1) + '.png')  # 将png图片保存
+
     im.seek(2)
     im.save(str(2) + '.png')  # 将png图片保存
     im.seek(3)
@@ -312,20 +310,25 @@ def query(shijian, bianhao, weizhi):
 
     if re.search('会话超时，请重新申请！', response.text) == None:
         print('正常跳转查询成功')
-        data = response.json()  # 解读出接口返回的数据
-        global panduan, name
-        panduan = False
-        for d in data:
+        try:
+            data = response.json()  # 解读出接口返回的数据
+            global panduan, name
+            panduan = False
+            for d in data:
 
-            print(d)  # 打印出想要的数据
+                print(d)  # 打印出想要的数据
 
-            if d['syl'] > 0:  # 秒杀准备，有号判断
-                print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
-                panduan = True
-                name = f'{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'
-                run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
-            else:
-                print('获取值为空', data)
+                if d['syl'] > 0:  # 秒杀准备，有号判断
+                    print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
+                    panduan = True
+                    name = f'{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'
+                    run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
+                else:
+                    print('获取值为空', data)
+        except:
+            sendmail(f'{response.text}', 'data出错')
+            time.sleep(60)
+            pass
     else:
         print('登录过期')
         denlu()
@@ -339,16 +342,13 @@ def chaxun():
     print(date)
     zi = 1
     while True:
-        key = query(date, '440303', '罗湖区')+ query(date, '440305', '南山区')+ query(date, '440304', '福田区')
-        # key = query(date, '440396', '大鹏新区') + query(date, '440308',
-        #       '盐田区') + query(date,'440307', '龙岗区')
-        # key = query(date, '440305', '南山区') + query(date, '440306',
-        #                                               '宝安区') + query(date, '440304', '福田区')
-        # key = query(date, '440309', '龙华区')+query(date, '440305', '南山区') + query(date, '440306','宝安区') + \
-        #       query(date, '440304', '福田区') + query(date, '440396', '大鹏新区') + query(date, '440308','盐田区') \
-        #       + query(date, '440307', '龙岗区')+ query(date, '440303', '罗湖区')
+        key = query(date, '440305', '南山区') + query(date, '440304', '福田区')
+        # key = query(date, '440396', '大鹏新区') + query(date, '440308', '盐田区') + query(date,'440307', '龙岗区') key =
+        # query(date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440303', '罗湖区') key = query(
+        # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',
+        # '罗湖区')+ query(date,'440307', '龙岗区')
         sj = datetime.datetime.now()  # 当前时间
-        print(f'董芝平{sj},第{zi}次轮询：有{key}个区有号')
+        print(f'刘沙{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
         if key > 0:
             global name
@@ -362,10 +362,10 @@ def chaxun():
 
 
 def run(yyrq, shij, bianhao, diz):
-    seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '殷饶斌', '360429199202260036', '18170249797',
-            '董芝平', '360421199307015247', '18824988435',
-            32)
+    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
+    #         '夏正', '421126199501101758', '13691777188',
+    #         '李琳', '532128199610130346', '15764233924',
+    #         32)
     # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
     #         '潘卓钒', '441802199804110919', '15279101998',
     #         '黎静婷', '445381199803206021', '13168661477',
@@ -374,10 +374,10 @@ def run(yyrq, shij, bianhao, diz):
     #         '黄凯', '441523199507176036', '15014049639',
     #         '马丽纯', '440582199501135849', '13202297256',
     #         32)
-    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-    #         '闻一龙', '330193198801260013', '18858277711',
-    #         '刘瑶玥', '360602199512130027', '15711966886',
-    #         32)
+    seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
+            '钟文轩', '440183199702145212', '18379173146',
+            '刘沙', '360311199406011024', '13556067286',
+            32)
     return
 
 
