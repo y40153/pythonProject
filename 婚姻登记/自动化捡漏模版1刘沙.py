@@ -335,15 +335,15 @@ def chaxun():
     dater = input("请输入预约日期如09-01:\n")
     date = f'2022-{dater}'
     print(date)
-    zi=1
+    zi = 1
     while True:
-        key = query(date, '440305', '南山区')+query(date, '440304', '福田区')
+        key = query(date, '440305', '南山区') + query(date, '440304', '福田区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308', '盐田区') + query(date,'440307', '龙岗区') key =
         # query(date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440303', '罗湖区') key = query(
         # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',
         # '罗湖区')+ query(date,'440307', '龙岗区')
         sj = datetime.datetime.now()  # 当前时间
-        print(f'吴慧云{sj},第{zi}次轮询：有{key}个区有号')
+        print(f'刘沙{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
         if key > 0:
             global name
@@ -370,8 +370,8 @@ def run(yyrq, shij, bianhao, diz):
     #         '马丽纯', '440582199501135849', '13202297256',
     #         32)
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '张鸣俊', '360723199308220014', '15107159257',
-            '吴慧云', '421022199302010086', '18370990802',
+            '钟文轩', '440183199702145212', '18379173146',
+            '刘沙', '360311199406011024', '13556067286',
             32)
     return
 
