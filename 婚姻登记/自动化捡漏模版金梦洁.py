@@ -310,6 +310,7 @@ def query(shijian, bianhao, weizhi):
 
     if re.search('会话超时，请重新申请！', response.text) == None:
         print('正常跳转查询成功')
+        time.sleep(1)
         try:
             data = response.json()  # 解读出接口返回的数据
             global panduan, name
@@ -342,7 +343,7 @@ def chaxun():
     print(date)
     zi=1
     while True:
-        key = query(date, '440305', '南山区')+query(date, '440304', '福田区')
+        key = query(date, '440305', '南山区')+query(date, '440304', '福田区')+ query(date, '440306', '宝安区')+ query(date, '440303', '罗湖区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308', '盐田区') + query(date,'440307', '龙岗区') key =
         # query(date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440303', '罗湖区') key = query(
         # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',
@@ -375,8 +376,8 @@ def run(yyrq, shij, bianhao, diz):
     #         '马丽纯', '440582199501135849', '13202297256',
     #         32)
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '张鸣俊', '360723199308220014', '15107159257',
-            '吴慧云', '421022199302010086', '18370990802',
+            '张洪诚', '413001199405131516', '15361010513',
+            '金梦洁', '420881199903142925', '13007197933',
             32)
     return
 
