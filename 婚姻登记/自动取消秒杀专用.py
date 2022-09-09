@@ -315,6 +315,7 @@ def query(shijian, bianhao, weizhi):
             data = response.json()  # 解读出接口返回的数据
             global panduan, name
             panduan = False
+            time.sleep(2)
             for d in data:
                 print(d)  # 打印出想要的数据
                 if d['syl'] > 0:  # 秒杀准备，有号判断
@@ -330,6 +331,7 @@ def query(shijian, bianhao, weizhi):
                     print('获取值为空', data)
         except:
             sendmail(f'{response.text}', 'data出错')
+            print('-'*20,'【出错了】','-'*20)
             time.sleep(60)
             pass
 
