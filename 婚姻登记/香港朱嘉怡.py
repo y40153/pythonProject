@@ -85,10 +85,10 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
         "hyzmEnty": None
     })
     headers = {
-        'x-tif-did': 'e6be642f-6d31-8aae-9871-352603d137fe',
+        'x-tif-did': '462eacb0-4062-df5d-b2a7-6603e7d9e5e8',
         'x-yss-page': 'hunyin/pages/marriage_step3_booktime/marriage_step3_booktime',
         'x-yss-city-code': '4400',
-        'x-tif-sid': 'cfd897b4a66be3b187d3b96b07b9da6984',
+        'x-tif-sid': 'dbcf3fbd78fade94bc7b732ce4adbbb9f8',
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
         'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) '
