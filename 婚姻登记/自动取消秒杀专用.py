@@ -315,7 +315,7 @@ def query(shijian, bianhao, weizhi):
         time.sleep(60)
         pass
 
-    if re.search('会话超时，请重新申请！', response.text) == None:
+    if re.search('会话超时，请重新申请！', response.text) is None:
         print('正常跳转查询成功')
         try:
             data = response.json()  # 解读出接口返回的数据
@@ -358,10 +358,7 @@ def chaxun():
         # key = query(date, '440304', '福田区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308',
         #       '盐田区') + query(date,'440307', '龙岗区')
-        key = query(date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304',
-                                                                                        '福田区') + query(date,
-                                                                                                          '440309',
-                                                                                                          '龙华区')
+        key = query(date, '440304','福田区')
         # key = query(date, '440309', '龙华区')+query(date, '440305', '南山区') + query(date, '440306','宝安区') + \
         #       query(date, '440304', '福田区') + query(date, '440396', '大鹏新区') + query(date, '440308','盐田区') \
         #       + query(date, '440307', '龙岗区')+ query(date, '440303', '罗湖区')
