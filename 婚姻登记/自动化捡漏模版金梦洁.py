@@ -7,6 +7,7 @@ import smtplib
 import time
 from email.mime.text import MIMEText
 from email.utils import formataddr
+
 import ddddocr
 import requests
 from PIL import Image
@@ -100,10 +101,11 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
         'Content-Type': 'application/json'
     }
     response = requests.request("POST", url, headers=headers, data=payload)
+    global name
     txt = response.text
-
+    name = name + x + txt
     print('\033'f'[0:{colour}m', response.text, '\033[m')  # 31-37
-    return txt
+    return
 
 
 def sendmail(name, key):
@@ -117,7 +119,7 @@ def sendmail(name, key):
             msg = MIMEText(f'{name},监控报告有{key}个区有号', 'plain', 'utf-8')
             msg['From'] = formataddr(("秒杀监控系统", my_sender))  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
             msg['To'] = formataddr(("FK", my_user))  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
-            msg['Subject'] = f"{name[-5:]}有号啦"  # 邮件的主题，也可以说是标题
+            msg['Subject'] = f"{name[:5]}有号啦"  # 邮件的主题，也可以说是标题
 
             server = smtplib.SMTP_SSL("smtp.qq.com", 465)  # 发件人邮箱中的SMTP服务器，端口是25
             server.login(my_sender, my_pass)  # 括号中对应的是发件人邮箱账号、邮箱密码
@@ -306,7 +308,13 @@ def query(shijian, bianhao, weizhi):
         'Cookie': f'{cookie}'
     }
 
-    response = requests.request("POST", url, headers=headers, data=payload)
+    try:
+        response = requests.request("POST", url, headers=headers, data=payload)
+    except:
+        sendmail('请求超时哦')
+        print('-' * 20, '【出错了】', '-' * 20)
+        time.sleep(60)
+        pass
 
     if re.search('会话超时，请重新申请！', response.text) == None:
         print('正常跳转查询成功')
@@ -322,7 +330,7 @@ def query(shijian, bianhao, weizhi):
                 if d['syl'] > 0:  # 秒杀准备，有号判断
                     print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
                     panduan = True
-                    name = f'{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'
+                    name = f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦'
                     run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
                 else:
                     print('获取值为空', data)
@@ -341,9 +349,12 @@ def chaxun():
     dater = input("请输入预约日期如09-01:\n")
     date = f'2022-{dater}'
     print(date)
-    zi=1
+    zi = 1
     while True:
-        key = query(date, '440305', '南山区')+query(date, '440304', '福田区')+ query(date, '440306', '宝安区')+ query(date, '440303', '罗湖区')
+        key = query(date, '440305', '南山区') + query(date, '440304', '福田区') + query(date, '440306',
+                                                                                        '宝安区') + query(date,
+                                                                                                          '440303',
+                                                                                                          '罗湖区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308', '盐田区') + query(date,'440307', '龙岗区') key =
         # query(date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440303', '罗湖区') key = query(
         # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',

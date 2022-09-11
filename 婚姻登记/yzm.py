@@ -1,11 +1,11 @@
-import json
 import os
+import random
 import re
 import smtplib
 import time
 from email.mime.text import MIMEText
 from email.utils import formataddr
-import random
+
 import ddddocr
 import requests
 from PIL import Image
@@ -22,7 +22,7 @@ def sendmail(name):
             msg = MIMEText(name, 'plain', 'utf-8')
             msg['From'] = formataddr(("FromRunoob", my_sender))  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
             msg['To'] = formataddr(("FK", my_user))  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
-            msg['Subject'] = f"{name[-5:]}有号啦"  # 邮件的主题，也可以说是标题
+            msg['Subject'] = f"{name[:5]}有号啦"  # 邮件的主题，也可以说是标题
 
             server = smtplib.SMTP_SSL("smtp.qq.com", 465)  # 发件人邮箱中的SMTP服务器，端口是25
             server.login(my_sender, my_pass)  # 括号中对应的是发件人邮箱账号、邮箱密码
@@ -211,11 +211,17 @@ def query(shijian, bianhao, weizhi):
         'Cookie': f'{cookie}'
     }
 
-    response = requests.request("POST", url, headers=headers, data=payload)
+    try:
+        response = requests.request("POST", url, headers=headers, data=payload)
+    except:
+        sendmail('请求超时哦')
+        print('-' * 20, '【出错了】', '-' * 20)
+        time.sleep(60)
+        pass
 
     if re.search('会话超时，请重新申请！', response.text) == None:
         print('正常跳转查询成功')
-        data = response.json() # 解读出接口返回的数据
+        data = response.json()  # 解读出接口返回的数据
         global panduan, name
         panduan = False
         for d in data:
@@ -245,7 +251,7 @@ def chaxun():
     print(date)
     dz = input('请输入预约区域如4:')
     while True:
-        key=query(date, f'44030{dz}', '福田区')
+        key = query(date, f'44030{dz}', '福田区')
 
         if key > 0:
             print('发邮件哦', name)
@@ -393,4 +399,4 @@ if __name__ == '__main__':
     login()
     # miaosha()
     # chaxun()
-    quxiao('44528119960111211X','360311199406011024','2022-09-24')#取消
+    quxiao('411324199309160017', '230206199205080941', '2022-09-17')  # 取消
