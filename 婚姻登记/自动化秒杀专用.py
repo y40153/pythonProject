@@ -9,7 +9,7 @@ from email.utils import formataddr
 import requests
 
 
-def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wumanhao, phone2, colour, date_time):
+def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wumanhao, phone2, colour):
     x = f'男名{manname}，男卡{manhao}，男号{phone}，女名{wumanname}，女卡{wumanhao}，女号{phone2}'
     url = "https://mmykm2.gdbs.gov.cn/ebus/huazi_gdhy/hunyin/api/mobile/marriage/create_reservation?"
 
@@ -107,7 +107,7 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
     #     with open(r'C:\Users\Administrator\Desktop\证件信息.txt', mode='a', encoding='utf‐8') as a_file:
     #         a_file.write(f'\n{datetime.datetime.now()}调用了秒杀{date}的号\n{x}\n{txt}\n')
     #         # 写字
-    print('\033'f'[0:{colour}m', date_time, response.text, '\033[m')  # 31-37
+    print('\033'f'[0:{colour}m', response.text, '\033[m')  # 31-37
     return txt
 
 
@@ -240,7 +240,7 @@ def run():
 
     time = datetime.datetime.now()  # 当前时间
     shijisj = str(time + datetime.timedelta(days=15))
-    yjsj = f'2022-{yyrq}' + ' 08:00:59'  # 预警时间
+    yjsj = f'2022-{yyrq}' + ' 08:00:00'  # 预警时间
     mubiaosj = f'2022-{yyrq}' + ' 08:29:59'  # 秒杀时间
     print('-' * 30)
     print('系统时间是：' + str(time))
@@ -254,16 +254,16 @@ def run():
         s = 1
         print(name)
     else:
-        print('实际尚未成熟', shijisj, s)
+        print('时机尚未成熟', shijisj, s)
     jishiqi = threading.Timer(s, run)
     jishiqi.start()
     if shijisj >= mubiaosj:
         jishiqi.cancel()
         print('时机已到')
-        data = seckill('2022-09-24', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
-                       '钟文轩', '44528119960111211X', '18379173146',
-                       '刘沙', '360311199406011024', '13556067286',
-                       32, shijisj)
+        data = seckill('2022-09-27', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
+                       '叶灿明', '441202198201154018', '15820285059',
+                       '姚凤兰', '431022199007054280', '18818560254',
+                       34)
         while True:
 
             if re.search('剩余号源不够', data) is None:
@@ -271,16 +271,20 @@ def run():
                 break
             else:
                 print('不能秒，重来')
-                data = seckill('2022-09-24', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
-                               '钟文轩', '440183199702145212', '18379173146',
-                               '刘沙', '360311199406011024', '13556067286',
-                               32, shijisj)
+                data = seckill('2022-09-27', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
+                               '叶灿明', '441202198201154018', '15820285059',
+                               '姚凤兰', '431022199007054280', '18818560254',
+                               34)
+        seckill('2022-09-27', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
+                '董贺楠', '23233019930527461X', '17620311677',
+                '严冬', '441284199410070047', '13760088888',
+                32)
 
-        # name = seckill2('2022-09-24', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
-        #                 '杨俊杰', '4403070199508170910', '13713580351',
-        #                 '朱嘉怡', 'M192882(7)', '13128863408',
-        #                 34)
-        sendmail(name)
+        name1 = seckill('2022-09-27', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
+                        '陈凌锋', '441323199402078519', '15986763618',
+                        '陈婉玲', '44522419951214522X', '18503066997',
+                        34)
+        sendmail(name1)
 
         input('输入任意字符退出程序')
 
@@ -288,6 +292,6 @@ def run():
 
 
 if __name__ == '__main__':
-    yyrq = input('请设置约号日期如09-09，小心跨年')
+    yyrq = input('请设置约号日期如09-09')  # 小心跨年
     s = 1800
     run()
