@@ -214,10 +214,10 @@ def query(shijian, bianhao, weizhi):
     try:
         response = requests.request("POST", url, headers=headers, data=payload)
     except requests.exceptions.RequestException:
-        sendmail('请求超时哦')
+        sendmail('请求超时哦', '屁')
         print('-' * 20, '【出错了】', '-' * 20)
         time.sleep(60)
-        pass
+        response = requests.request("POST", url, headers=headers, data=payload)
 
     if re.search('会话超时，请重新申请！', response.text) == None:
         print('正常跳转查询成功')
