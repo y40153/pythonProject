@@ -99,7 +99,13 @@ def yzm(cancel):
     im.save(str(2) + '.png')  # 将png图片保存
     im.seek(3)
     im.save(str(3) + '.png')  # 将png图片保存
-    zhi = f"{recognize('3.png')[0]}{recognize('2.png')[1:2]}{recognize('3.png')[1:2]}{recognize('0.png')[-1]}"
+    try:
+        zhi = f"{recognize('3.png')[0]}{recognize('2.png')[1:2]}{recognize('3.png')[1:2]}{recognize('0.png')[-1]}"
+    except Exception as e:
+        print(e)
+        sendmail(f'验证码获取错误{e}', '屁')
+        print('-' * 20, '【出错了】', '-' * 20)
+        time.sleep(60)
     print(zhi)
     if cancel == None:
 
