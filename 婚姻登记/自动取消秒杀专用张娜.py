@@ -1,3 +1,5 @@
+import datetime
+import json
 import os
 import random
 import re
@@ -11,7 +13,102 @@ import requests
 from PIL import Image
 
 
-def sendmail(name):
+def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wumanhao, phone2, colour):
+    x = f'男名{manname}，男卡{manhao}，男号{phone}，女名{wumanname}，女卡{wumanhao}，女号{phone2}'
+    url = "https://mmykm2.gdbs.gov.cn/ebus/huazi_gdhy/hunyin/api/mobile/marriage/create_reservation?"
+
+    print(x)
+    payload = json.dumps({
+        "ywlx": "J",
+        "bookDate": "",
+        "bookCity": "",
+        "sfzjhm": "",
+        "slhzbh": "",
+        "hydjEnty": {
+            "id": "",
+            "yyywlx": "",
+            "slywlx": "",
+            "sqrlbnan": "内地居民",
+            "sqrlbnv": "内地居民",
+            "sfzjlbnan": "内地居民身份证",
+            "sfzjlbnv": "内地居民身份证",
+            "sfzjhmnan": f"{manhao}",
+            "sfzjhmnv": f"{wumanhao}",
+            "jrzjlbnan": "",
+            "jrzjlbnv": "",
+            "xmnan": f"{manname}",
+            "xmnv": f"{wumanname}",
+            "csrqnan": f'{manhao[6:10]}-{manhao[10:12]}-{manhao[12:14]}',
+            "csrqnv": f'{wumanhao[6:10]}-{wumanhao[10:12]}-{wumanhao[12:14]}',
+            "gjnan": "中国",
+            "gjnv": "中国",
+            "mznan": "",
+            "mznv": "",
+            "zynan": "专业技术人员",
+            "zynv": "国家机关，党群组织，企事业单位",
+            "whcdnan": "博士研究生",
+            "whcdnv": "硕士研究生",
+            "fjdnan": "广东省深圳市福田区福田街道办事处",
+            "fjdnv": "广东省深圳市福田区香蜜湖街道办事处",
+            "lxdhnan": f"{phone}",
+            "lxdhnv": f"{phone2}",
+            "yyrq_id": "",
+            "yyh": "",
+            "yyrq": f"{date}",
+            "yysj": f"{time}",
+            "djjgbm": f"{bianhao}0A1000",
+            "djjgmc": f"{dizhi}",
+            "djjgdz": "深圳市福田区农园路30号香蜜公园西门。进入婚姻登记处需出示行程码、粤康码（绿码）、48小时内核酸检测阴性证明，行程码带星（*）的按照现行规定提供核酸检测阴性证明。",
+            "djjgdh": "0755-82928049",
+            "areacodenan": "",
+            "areacodenv": "",
+            "areatypenan": "",
+            "areatypenv": "",
+            "area_provincenan": "440000000000",
+            "area_provincenv": "440000000000",
+            "area_citynan": "440300000000",
+            "area_citynv": "440300000000",
+            "area_countynan": f"{bianhao}000000",
+            "area_countynv": f"{bianhao}000000",
+            "area_townnan": f"{bianhao}001000",
+            "area_townnv": f"{bianhao}004000",
+            "area_communitynan": "",
+            "area_communitynv": "",
+            "ydbllx": "01",
+            "jzd_provincenan": "440000000000",
+            "jzd_provincenv": "440000000000",
+            "jzd_citynan": "",
+            "jzd_citynv": "",
+            "jzd_countynan": "",
+            "jzd_countynv": ""
+        },
+        "hyzmEnty": None
+    })
+    headers = {
+        'x-tif-did': '462eacb0-4062-df5d-b2a7-6603e7d9e5e8',
+        'x-yss-page': 'hunyin/pages/marriage_step3_booktime/marriage_step3_booktime',
+        'x-yss-city-code': '4400',
+        'x-tif-sid': 'dbcf3fbd78fade94bc7b732ce4adbbb9f8',
+        'Accept-Language': 'zh-cn',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) '
+                      'Mobile/15E217 MicroMessenger/6.8.0(0x16080000) NetType/WIFI Language/en Branch/Br_trunk '
+                      'MiniProgramEnv/Mac',
+        'Referer': 'https://servicewechat.com/wx82d43fee89cdc7df/754/page-frame.html',
+        'Connection': 'keep-alive',
+        'x-ysshint': 'e6be642f-6d31-8aae-9871-352603d137fe1661747478128',
+        'dgd-pre-release': '0',
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
+    global name
+    txt = response.text
+    name = name + x + txt
+    print('\033'f'[0:{colour}m', response.text, '\033[m')  # 31-37
+    return
+
+
+def sendmail(name, key):
     my_sender = '401534863@qq.com'  # 发件人邮箱账号
     my_pass = 'cfzwtrerxmygbjhb'  # 发件人邮箱密码
     my_user = '15279101998@139.com'  # 收件人邮箱账号，我这边发送给自己
@@ -19,8 +116,8 @@ def sendmail(name):
     def mail():
         ret = True
         try:
-            msg = MIMEText(name, 'plain', 'utf-8')
-            msg['From'] = formataddr(("FromRunoob", my_sender))  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
+            msg = MIMEText(f'{name},监控报告有{key}个区有号', 'plain', 'utf-8')
+            msg['From'] = formataddr(("秒杀监控系统", my_sender))  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
             msg['To'] = formataddr(("FK", my_user))  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
             msg['Subject'] = f"{name[:5]}有号啦"  # 邮件的主题，也可以说是标题
 
@@ -192,7 +289,6 @@ def login():
 
 def query(shijian, bianhao, weizhi):
     url = "https://www.gdhy.gov.cn/common.do?do=getYysjxx"
-
     if os.name == 'posix':
         with open('/Users/wang/Desktop/证件信息.txt', 'r', encoding='utf‐8') as a_file:
             cookie = a_file.readline().rstrip()
@@ -200,6 +296,7 @@ def query(shijian, bianhao, weizhi):
         with open(r"C:\Users\Administrator\Desktop\证件信息.txt", 'r', encoding='utf‐8') as a_file:
             cookie = a_file.readline().rstrip()
     payload = f'djjgbm={bianhao}0A1000&ywlx=J&rqDate={shijian}&ydbllx=01'
+    print(f"正在查询{weizhi}的号：{payload}")
     headers = {
         'Host': 'www.gdhy.gov.cn',
         'Connection': 'keep-alive',
@@ -216,7 +313,6 @@ def query(shijian, bianhao, weizhi):
         'X-Requested-With': 'XMLHttpRequest',
         'Cookie': f'{cookie}'
     }
-
     try:
         response = requests.request("POST", url, headers=headers, data=payload)
     except requests.exceptions.RequestException:
@@ -225,23 +321,33 @@ def query(shijian, bianhao, weizhi):
         time.sleep(60)
         response = requests.request("POST", url, headers=headers, data=payload)
 
-    if re.search('会话超时，请重新申请！', response.text) == None:
+    if re.search('会话超时，请重新申请！', response.text) is None:
         print('正常跳转查询成功')
-        data = response.json()  # 解读出接口返回的数据
-        global panduan, name
-        panduan = False
-        for d in data:
+        try:
+            data = response.json()  # 解读出接口返回的数据
+            global panduan, name
+            panduan = False
+            for d in data:
+                print(d)  # 打印出想要的数据
+                if d['syl'] > 0:  # 秒杀准备，有号判断
+                    print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
+                    panduan = True
+                    name = f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦'
+                    payloadq = f'ids=c63cb2c71b0c4b7dada85c35e12cfc16:1:3eeaefb8c2874700ad93bb8953567217'
+                    response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
+                                                headers=headers, data=payloadq)
+                    print(response.text)
+                    run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
+                else:
+                    print('获取值为空', data)
+            time.sleep(2)
 
-            print(d)  # 打印出想要的数据
+        except:
+            sendmail(f'{response.text}', 'data出错')
+            print('-' * 20, '【出错了】', '-' * 20)
+            time.sleep(60)
+            pass
 
-            if d['syl'] > 0:  # 秒杀准备，有号判断
-                print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
-                panduan = True
-                name = f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'
-
-            else:
-                panduan = False
-                print(data)
     else:
         print('登录过期')
         denlu()
@@ -249,161 +355,54 @@ def query(shijian, bianhao, weizhi):
 
 
 def chaxun():
-    global panduan
-    panduan = False
     # name = ''
     dater = input("请输入预约日期如09-01:\n")
     date = f'2022-{dater}'
     print(date)
-    dz = input('请输入预约区域如4:')
+    zi = 1
     while True:
-        key = query(date, f'44030{dz}', '福田区')
+        # key = query(date, '440304', '福田区')
+        # key = query(date, '440396', '大鹏新区') + query(date, '440308',
+        #       '盐田区') + query(date,'440307', '龙岗区')
+        key = query(date, '440304','福田区')
+        # key = query(date, '440309', '龙华区')+query(date, '440305', '南山区') + query(date, '440306','宝安区') + \
+        #       query(date, '440304', '福田区') + query(date, '440396', '大鹏新区') + query(date, '440308','盐田区') \
+        #       + query(date, '440307', '龙岗区')+ query(date, '440303', '罗湖区')
+        sj = datetime.datetime.now()  # 当前时间
+        print(f'姚鑫{sj},第{zi}次轮询：有{key}个区有号')
+        zi += 1
 
         if key > 0:
+            global name
             print('发邮件哦', name)
-            sendmail(name)
+            sendmail(name, key)
             mins = 300
         else:
             print('没有号，发不了')
-            mins = 60
+            mins = 5
         time.sleep(mins)
 
 
-def quxiao(nan, nv, yyrq):
-    if os.name == 'posix':
-        with open('/Users/wang/Desktop/证件信息.txt', 'r', encoding='utf‐8') as a_file:
-            cookie = a_file.readline().rstrip()
-    else:
-        with open(r"C:\Users\Administrator\Desktop\证件信息.txt", 'r', encoding='utf‐8') as a_file:
-            cookie = a_file.readline().rstrip()
-    url = "https://www.gdhy.gov.cn/common.do?do=getYyInfos"
-
-    payload = f'sfzjhmnan={nan}&sfzjhmnv={nv}&yyh=&yyrq={yyrq}&captcha={yzm(2)}&flag=2'
-    headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Cookie': f'{cookie}'
-    }
-    try:  # 改下面切记报错会循环
-        response = requests.request("POST", url, headers=headers, data=payload)
-        # print(response.text)#出问题再打印
-        if re.search('name="id_box" value=', response.text) is not None:
-            print('没有异常，登录成功')
-            r = re.search('<input type="checkbox" name="id_box" value="(.*)"/>', response.text)
-            e = re.search('<input type="hidden" name="yyrqid" value="(.*)"/>', response.text)
-            a = r.group(1) + str(':1:') + e.group(1)
-            print(a)
-            xq = re.findall('<td align="center" class="EOS_table_oddrow" >(.*)</td>', response.text)
-            print(xq)
-            que = input("你确定要取消吗y/n")
-            if que == 'y':
-                url = 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos'
-                payload = f'ids={a}'
-                response = requests.request("POST", url, headers=headers, data=payload)
-                print(response.text)
-        elif re.search('没有符合条件的记录', response.text) is not None:
-            print('这天没有约号')
-
-        else:
-            print('验证码错了？没有数据')
-            quxiao(nan, nv, yyrq)
-    except:
-        print("程序出错！检查一下不然会循环，主要防验证码大写错误")
-        quxiao(nan, nv, yyrq)
-
-
-def miaosha():
-    url1 = "https://www.gdhy.gov.cn/yyjh.do?do=hjFormValidate&vatow=04"
-    if os.name == 'posix':
-        with open('/Users/wang/Desktop/证件信息.txt', 'r', encoding='utf‐8') as a_file:
-            cookie = a_file.readline().rstrip()
-    else:
-        with open(r"C:\Users\Administrator\Desktop\证件信息.txt", 'r', encoding='utf‐8') as a_file:
-            cookie = a_file.readline().rstrip()
-    payload = 'creator_id=%20&creator_name=%20&creator_orgid=%20&create_time=%20&slywlx=%20&id=%20&oper=%20&jszjhmnan=%20&jszjhmnv=%20&djnlnan=%20&djnlnv=%20&blzt=%20&blsj=%20&hidcitynan=%20&hidcitynv=%20&yyywlx=1&sqrlbnan=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0%91&sqrlbnv=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0%91&gjnan=%E4%B8%AD%E5%9B%BD&gjnv=%E4%B8%AD%E5%9B%BD&area_provincenan=440000000000&area_provincenv=440000000000&area_citynan=440300000000&area_citynv=440300000000&area_countynan=440304000000&area_countynv=440304000000&area_townnan=440304002000&area_townnv=440304006000&fjdnan=%E9%87%91%E9%B8%A1&fjdnv=%E6%B7%B1%E5%9C%B3%E5%B8%82&jzd_provincenan=440000000000&jzd_provincenv=440000000000&jzd_citynan=%20&jzd_citynv=%20&jzd_countynan=%20&jzd_countynv=%20&jzd_townnan=%20&jzd_townnv='
-    headers = {
-        # 'Accept': '*/*',
-        # 'Accept-Encoding': 'gzip, deflate, br',
-        # 'Accept-Language': 'zh-CN,zh;q=0.9',
-        # 'Connection': 'keep-alive',
-        # 'Content-Length': '1024',
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        # 'Host': 'www.gdhy.gov.cn',
-        # 'Origin': 'https://www.gdhy.gov.cn',
-        'Referer': 'https://www.gdhy.gov.cn/yyjh.do?do=preYyxxOper&yyrq=2022-09-17&djjg=4403040A1000&yysj=9:00-10:00&ydbllx=01',
-        # 'Sec-Fetch-Mode': 'cors',
-        # 'Sec-Fetch-Site': 'same-origin',
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
-        # 'X-Requested-With': 'XMLHttpRequest',
-        'Cookie': f'{cookie}'
-    }
-    response = requests.request("POST", url1, headers=headers, data=payload)
-    print(response.text, 'hjFormValidate')
-
-    url1 = "https://www.gdhy.gov.cn/yyjh.do?do=nextOper"
-    requests.request("POST", url1, headers=headers, data=payload)
-    url1 = 'https://www.gdhy.gov.cn/common.do?do=getYysjxx'
-    requests.request("POST", url1, headers=headers, data=payload)
-    print(response.text, 'getYysjxx')
-    url1 = 'https://www.gdhy.gov.cn/framework/jsp/tag/selectonedict/selectOneDictService.jsp'
-    requests.request("POST", url1, headers=headers, data=payload)
-    print(response.text, 'selectOneDictService')
-
-    url3 = "https://www.gdhy.gov.cn/yyjh.do?do=formValidate"
-    url6 = 'https://www.gdhy.gov.cn/common.do?do=checkSfzjhmInYyhmd'
-    url4 = 'https://www.gdhy.gov.cn/yyjh.do?do=completeOper'
-    url5 = 'https://www.gdhy.gov.cn/yyjh.do?do=checkSfzjh'
-
-    def completeOper():
-        # global headers
-        payload = f'creator_id=%20&creator_name=%20&creator_orgid=%20&create_time=%20&slywlx=%2001&id=%20&oper=%20' \
-                  f'&jszjhmnan=%20&jszjhmnv=%20&djnlnan=%20&djnlnv=%20&blzt=%20&blsj=%20&hidcitynan=%20&hidcitynv=%20' \
-                  f'&yyrq=2022-09-17&yysj=9%3A00-10%3A00&djjg=4403040A1000&sqrlbnan=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0' \
-                  f'%91&sqrlbnv=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0%91&xmnan=%E5%90%B4%E6%99%93%E5%BD%AC&xmnv=%E6%BD%98' \
-                  f'%E8%8E%B9%E8%8E%B9&sfzjlbnan=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0%91%E8%BA%AB%E4%BB%BD%E8%AF%81' \
-                  f'&sfzjlbnv=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0%91%E8%BA%AB%E4%BB%BD%E8%AF%81&sfzjhmnan' \
-                  f'=440582199309086397&sfzjhmnv=440981199610152846&csrqnan=1993-09-08&csrqnv=1996-10-15&whcdnan=%E7%A1' \
-                  f'%95%E5%A3%AB%E7%A0%94%E7%A9%B6%E7%94%9F&whcdnv=%E7%A1%95%E5%A3%AB%E7%A0%94%E7%A9%B6%E7%94%9F&zynan' \
-                  f'=%E5%86%9C%E3%80%81%E6%9E%97%E3%80%81%E7%89%A7%E3%80%81%E6%B8%94%E3%80%81%E6%B0%B4%E5%88%A9%E4%B8' \
-                  f'%9A%E7%94%9F%E4%BA%A7%E4%BA%BA%E5%91%98&zynv=%E5%8A%9E%E4%BA%8B%E4%BA%BA%E5%91%98%E5%92%8C%E6%9C%89' \
-                  f'%E5%85%B3%E4%BA%BA%E5%91%98&lxdhnan=15279101998&lxdhnv=15279101998&captcha={yzm(1)}'
-        headers = {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'Referer': 'https://www.gdhy.gov.cn/yyjh.do?do=preYyxxOper&yyrq=2022-09-17&djjg=4403040A1000&yysj=9:00-10'
-                       ':00&ydbllx=01',
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) '
-                          'Chrome/78.0.3904.108 Safari/537.36',
-            'Cookie': f'{cookie}'
-        }
-        try:
-            response = requests.request("POST", url3, headers=headers, data=payload)
-            print(response.text, 'formValidate')
-        except Exception:  # 如果 try 中的语句没有执行，则会执行下面的
-            print('天呐他出现了')
-            completeOper()
-
-        print(payload)
-        payload = 'flag=J&sfzjhmnan=440582199309086397&sfzjhmnv=440981199610152846'
-        response = requests.request("POST", url6, headers=headers, data=payload)
-        print(response.text, 'checkSfzjhmInYyhmd')
-        payload = 'sfzjhmnan=440582199309086397&sfzjhmnv=440981199610152846&yyrq=2022-09-17'
-        response = requests.request("POST", url5, headers=headers, data=payload)
-        print(response.text, 'checkSfzjh')
-
-        payload = f'rq=2022-09-17&sj=9:00-10:00'
-        response = requests.request("POST", url4, headers=headers, data=payload)
-        print(response.text, 'completeOper')
-        if response.text == 'captchaCodeError':
-            print("破解失败，重新尝试！！")
-            completeOper()
-        else:
-            print("成功破解验证码，登录成功！！")
-
-    completeOper()
+def run(yyrq, shij, bianhao, diz):
+    seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
+            '王翔宇', '520112199501230036', '18188619355',
+            '张娜', '431222199605084421', '13823281378',
+            32)
+    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
+    #         '潘卓钒', '441802199804110919', '15279101998',
+    #         '黎静婷', '445381199803206021', '13168661477',
+    #         32)
+    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
+    #         '黄凯', '441523199507176036', '15014049639',
+    #         '马丽纯', '440582199501135849', '13202297256',
+    #         32)
+    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
+    #         '闻一龙', '330193198801260013', '18858277711',
+    #         '刘瑶玥', '360602199512130027', '15711966886',
+    #         32)
+    return
 
 
 if __name__ == '__main__':
     login()
-    # miaosha()
-    # chaxun()
-
-    quxiao('520112199501230036', '431222199605084421', '2022-09-21')  # 取消
+    chaxun()
