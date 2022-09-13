@@ -333,7 +333,7 @@ def query(shijian, bianhao, weizhi):
                     print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
                     panduan = True
                     name = f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦'
-                    payloadq = f'ids=02d7f370ffd64a2ead11ddfdd41abf78:1:7c7f93a9299749519fe5962874a73173'
+                    payloadq = f'ids=29ff616b85544d7e89348788599f45e3:1:95022db54acc44d89eee8aef71b944e1'
                     response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
                                                 headers=headers, data=payloadq)
                     print(response.text)
@@ -364,7 +364,7 @@ def chaxun():
         # key = query(date, '440304', '福田区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308',
         #       '盐田区') + query(date,'440307', '龙岗区')
-        key = query(date, '440304','福田区')
+        key = query(date, '440304','福田区')+query(date, '440305', '南山区')
         # key = query(date, '440309', '龙华区')+query(date, '440305', '南山区') + query(date, '440306','宝安区') + \
         #       query(date, '440304', '福田区') + query(date, '440396', '大鹏新区') + query(date, '440308','盐田区') \
         #       + query(date, '440307', '龙岗区')+ query(date, '440303', '罗湖区')
@@ -379,7 +379,7 @@ def chaxun():
             mins = 300
         else:
             print('没有号，发不了')
-            mins = 30
+            mins = 5
         time.sleep(mins)
 
 
