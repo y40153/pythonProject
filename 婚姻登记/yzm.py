@@ -102,6 +102,7 @@ def yzm(cancel):
     try:
         zhi = f"{recognize('3.png')[0]}{recognize('2.png')[1:2]}{recognize('3.png')[1:2]}{recognize('0.png')[-1]}"
     except Exception as e:
+        zhi = 2341
         print(e)
         sendmail(f'验证码获取错误{e}', '屁')
         print('-' * 20, '【出错了】', '-' * 20)
@@ -406,4 +407,4 @@ if __name__ == '__main__':
     # miaosha()
     # chaxun()
 
-    quxiao('520112199501230036', '431222199605084421', '2022-09-21')  # 取消
+    quxiao('411324199309160017', '230206199205080941', '2022-09-17')  # 取消

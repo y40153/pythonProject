@@ -198,6 +198,7 @@ def yzm(cancel):
     try:
         zhi = f"{recognize('7.png')[0]}{recognize('6.png')[1:2]}{recognize('7.png')[1:2]}{recognize('4.png')[-1]}"
     except Exception as e:
+        zhi = 2341
         print(e)
         sendmail(f'验证码获取错误{e}', '屁')
         print('-' * 20, '【出错了】', '-' * 20)
