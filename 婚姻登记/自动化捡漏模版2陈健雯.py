@@ -355,7 +355,7 @@ def chaxun():
     print(date)
     zi = 1
     while True:
-        key = query(date, '440304', '福田区')
+        key = query(date, '440305', '南山区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308', '盐田区') + query(date,'440307', '龙岗区') key =
         # query(date, '440305', '南山区') + query(date, '440306', '宝安区') +query(date, '440303', '罗湖区')  key = query(
         # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',
@@ -376,8 +376,8 @@ def chaxun():
 
 def run(yyrq, shij, bianhao, diz):
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '王翔宇', '520112199501230036', '18188619355',
-            '张娜', '431222199605084421', '13823281378',
+            '陈华林', '440883199501163519', '18814119521',
+            '陈健雯', '445224199502023966', '13538246113',
             32)
     return
 
