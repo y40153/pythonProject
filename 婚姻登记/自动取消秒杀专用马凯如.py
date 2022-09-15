@@ -334,7 +334,7 @@ def query(shijian, bianhao, weizhi):
                     print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
                     panduan = True
                     name = f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦'
-                    payloadq = f'ids=c63cb2c71b0c4b7dada85c35e12cfc16:1:3eeaefb8c2874700ad93bb8953567217'
+                    payloadq = f'ids=4ff312b2959840429c92b76ea42ca79a:1:3eeaefb8c2874700ad93bb8953567217'
                     response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
                                                 headers=headers, data=payloadq)
                     print(response.text)
@@ -370,7 +370,7 @@ def chaxun():
         #       query(date, '440304', '福田区') + query(date, '440396', '大鹏新区') + query(date, '440308','盐田区') \
         #       + query(date, '440307', '龙岗区')+ query(date, '440303', '罗湖区')
         sj = datetime.datetime.now()  # 当前时间
-        print(f'姚鑫{sj},第{zi}次轮询：有{key}个区有号')
+        print(f'马凯如{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
 
         if key > 0:
@@ -386,8 +386,8 @@ def chaxun():
 
 def run(yyrq, shij, bianhao, diz):
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '王翔宇', '520112199501230036', '18188619355',
-            '张娜', '431222199605084421', '13823281378',
+            '王昱衡', '440301199702193472', '13066800138',
+            '马凯如', '445281199709271446', '15889391568',
             32)
     # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
     #         '潘卓钒', '441802199804110919', '15279101998',
