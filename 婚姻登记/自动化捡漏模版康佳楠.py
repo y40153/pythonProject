@@ -362,7 +362,7 @@ def chaxun():
         # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',
         # '罗湖区')+ query(date,'440307', '龙岗区')
         sj = datetime.datetime.now()  # 当前时间
-        print(f'何湾{sj},第{zi}次轮询：有{key}个区有号')
+        print(f'康佳楠{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
         if key > 0:
             global name
@@ -371,7 +371,7 @@ def chaxun():
             mins = 300
         else:
             print('没有号，发不了')
-            mins = 30
+            mins = 5
         time.sleep(mins)
 
 
@@ -389,8 +389,8 @@ def run(yyrq, shij, bianhao, diz):
     #         '马丽纯', '440582199501135849', '13202297256',
     #         32)
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '曹弘宇', '350821199306190051', '18620366160',
-            '何湾', '44162319921129002X', '13480100569',
+            '谭德辉', '441322199508154317', '15813816820',
+            '康佳楠', '441581199610066023', '13534099341',
             32)
     return
 
