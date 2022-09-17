@@ -151,12 +151,15 @@ def write(bt, zw, logo):
         print('——' * 30)
         print('——' * 30)
         print('请确认编辑的资讯：',response['data']['query']['entity']['name'])
+        print('——' * 30)
         key = pancuo('（可输入0取消编辑）请输入编辑资讯所属类别的序号:')
         if key==0:
             write(bt, zw, logo)
         else:
             url=f'https://mufans.tech/admin/article/changeStatus?id={id}&status=3'
-            response =requests.request("POST", url, headers=headers).text
+            data = json.dumps(
+                [])
+            response =requests.request("POST", url, headers=headers,data=data).text
             print('下架成功，开始编辑',response)
             url = 'https://mufans.tech/admin/article/modify'
             payload = json.dumps(
@@ -169,7 +172,7 @@ def write(bt, zw, logo):
 
     # print(payload)
 
-    print(req)
+    print('编辑完成',req)
 
 
 def pawx():
