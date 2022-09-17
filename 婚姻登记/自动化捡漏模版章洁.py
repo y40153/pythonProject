@@ -356,13 +356,13 @@ def chaxun():
     print(date)
     zi = 1
     while True:
-        key = query(date, '440304', '福田区')
+        key = query(date, '440305', '南山区')+query(date, '440309', "深圳市龙华区民政局婚姻登记处")
         # key = query(date, '440396', '大鹏新区') + query(date, '440308', '盐田区') + query(date,'440307', '龙岗区') key =
         # query(date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440303', '罗湖区') key = query(
         # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',
         # '罗湖区')+ query(date,'440307', '龙岗区')
         sj = datetime.datetime.now()  # 当前时间
-        print(f'康佳楠{sj},第{zi}次轮询：有{key}个区有号')
+        print(f'章洁{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
         if key > 0:
             global name
@@ -389,8 +389,8 @@ def run(yyrq, shij, bianhao, diz):
     #         '马丽纯', '440582199501135849', '13202297256',
     #         32)
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '谭德辉', '441322199508154317', '15813816820',
-            '康佳楠', '441581199610066023', '13534099341',
+            '魏子航', '410303199405160014', '18270834700',
+            '章洁', '362329199406105325', '15279101998',
             32)
     return
 

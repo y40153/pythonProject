@@ -1,6 +1,5 @@
 import base64
 import json
-import os
 import re
 import requests
 from lxml import etree
@@ -32,7 +31,7 @@ def login():
     print('登录mufans运营端成功获取token：' + token)
     orgs = req['data']['orgs']
     xuanzhe(orgs, 'clientTitle')
-    key = int(input('请输入您需要登录的客户序号:'))
+    key = pancuo('请输入您需要登录的客户序号:')
     url = f'https://mufans.tech/admin/home/choose?orgId={orgs[key - 1]["orgId"]}'
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55',
@@ -109,9 +108,19 @@ def query(name):
         a = 1
     return a
 
-
+def pancuo(inputs):
+    while True:
+        try:
+            a=int(input(inputs))
+            break
+        except:
+            # a=int(input('请输入正确的格式，重新输入：'))
+            print('请输入正确的格式，重新输入')
+    return a
 def write(bt, zw, logo):
-    url = 'https://mufans.tech/admin/setting/dictionary/listMine?dictType=10000'
+    print('——' * 30)
+
+    id=pancuo('资源爬取完成，请问您是要新增资讯还是要编辑，新增请输入0，编辑请输入资讯id:')
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
@@ -120,25 +129,42 @@ def write(bt, zw, logo):
         'Content-Type': 'application/json;charset=utf8',
         'Cookie': f'language=0; JSESSIONID={token}'
     }
+
+    print('——' * 30)
+
+    url = 'https://mufans.tech/admin/setting/dictionary/listMine?dictType=10000'
+
     response = requests.request("POST", url, headers=headers).json()
     typec = response['data']['list']
     xuanzhe(typec, 'name')
-    key = int(input('请输入创建资讯所属类别的序号:'))
-    url = 'https://mufans.tech/admin/article/add'
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                      'Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'zh-CN,zh;q=0.9',
-        'Content-Type': 'application/json;charset=utf8',
-        'Cookie': f'language=0; JSESSIONID={token}'
-    }
-    payload = json.dumps(
-        {"entity": {"name": f"{bt}",
-                    "logo": f"{logo}",
-                    "description": f"{zw}"}, "clientTypes": [{"id": 0, "name": "用户版H5端"}],
-         "type": {"id": typec[key - 1]['id']}, "game": {}, "league": {}})
+    if id==0:
+        key = pancuo('请输入创建资讯所属类别的序号:')
+        url = 'https://mufans.tech/admin/article/add'
+        payload = json.dumps(
+            {"entity": {"name": f"{bt}",
+                        "logo": f"{logo}",
+                        "description": f"{zw}"}, "clientTypes": [{"id": 0, "name": "用户版H5端"}],
+             "type": {"id": typec[key - 1]['id']}, "game": {}, "league": {}})
+    else:
+        url = f'https://mufans.tech/admin/article/query?id={id}'
+        response = requests.request("POST", url, headers=headers).json()
+        print('——' * 30)
+        print('——' * 30)
+        print('请确认编辑的资讯：',response['data']['query']['entity']['name'])
+        key = pancuo('（可输入0取消编辑）请输入编辑资讯所属类别的序号:')
+        if key==0:
+            write(bt, zw, logo)
+        else:
+            url=f'https://mufans.tech/admin/article/changeStatus?id={id}&status=3'
+            response =requests.request("POST", url, headers=headers).text
+            print('下架成功，开始编辑',response)
+            url = 'https://mufans.tech/admin/article/modify'
+            payload = json.dumps(
+                {"entity": {"id":f"{id}","name": f"{bt}",
+                            "logo": f"{logo}",
+                            "description": f"{zw}"}, "clientTypes": [{"id": 0, "name": "用户版H5端"}],
+                 "type": {"id": typec[key - 1]['id']}, "game": {}, "league": {}})
+
     req = requests.request("POST", url, headers=headers, data=payload).text
 
     # print(payload)
@@ -181,12 +207,16 @@ def pawx():
     # 替换关键词适应mufans
     ts = ts.replace('data-src', 'img src')
     # 关键点查找富文本图片进行替换
-    # ls = re.findall('img src="(.*?)" data-type', ts)
     ls = re.findall('img src="(.*?)"', ts)
 
     for base in ls:
+        # 删除样式控制
+        qie=base.split('?')
+        r = re.search(f'{qie[0]}(.*?)>', ts)
+        print('自动适应mufans富文本，删除微信样式\n'+r.group(1))
+        ts = ts.replace(f'{r.group(1)}', f'?{qie[1]}"')
+        # 图片处理
         r = requests.get(base).content
-
         ls_f = base64.b64encode(BytesIO(r).read())  # 读取文件内容到内存，转换为base64编码
         name = str(ls_f).split('/')[-5][-13:].replace('+', '')
         img = base.split('=')[1].split('&')[0]
