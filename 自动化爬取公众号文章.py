@@ -1,6 +1,8 @@
 import base64
 import json
 import re
+import time
+
 import requests
 from lxml import etree
 from io import BytesIO
@@ -11,7 +13,7 @@ def xuanzhe(list, names):
     for org in list:
         name = org[names]
         key += 1
-        print('——'*30)
+        print('——' * 30)
         print(f'序号【{key}】:{name}')
     return
 
@@ -83,7 +85,6 @@ def updata(path):
 
 
 def query(name):
-
     url = f'https://mufans.tech/admin/media/list?pageNum=1&pageSize=50&name={name}'
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55',
@@ -108,19 +109,22 @@ def query(name):
         a = 1
     return a
 
+
 def pancuo(inputs):
     while True:
         try:
-            a=int(input(inputs))
+            a = int(input(inputs))
             break
         except:
             # a=int(input('请输入正确的格式，重新输入：'))
             print('请输入正确的格式，重新输入')
     return a
-def write(bt, zw, logo):
+
+
+def write(bt, zw, logo,date):
     print('——' * 30)
 
-    id=pancuo('资源爬取完成，请问您是要新增资讯还是要编辑，新增请输入0，编辑请输入资讯id:')
+    id = pancuo('资源爬取完成，请问您是要新增资讯还是要编辑，新增请输入0，编辑请输入资讯id:')
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36 Edg/97.0.1072.55',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
@@ -137,49 +141,46 @@ def write(bt, zw, logo):
     response = requests.request("POST", url, headers=headers).json()
     typec = response['data']['list']
     xuanzhe(typec, 'name')
-    if id==0:
+    if id == 0:
         key = pancuo('请输入创建资讯所属类别的序号:')
         url = 'https://mufans.tech/admin/article/add'
         payload = json.dumps(
             {"entity": {"name": f"{bt}",
                         "logo": f"{logo}",
-                        "description": f"{zw}"}, "clientTypes": [{"id": 0, "name": "用户版H5端"}],
+                        "description": f"{zw}","showTime":f"{date}"}, "clientTypes": [{"id": 0, "name": "用户版H5端"}],
              "type": {"id": typec[key - 1]['id']}, "game": {}, "league": {}})
     else:
         url = f'https://mufans.tech/admin/article/query?id={id}'
         response = requests.request("POST", url, headers=headers).json()
         print('——' * 30)
         print('——' * 30)
-        print('请确认编辑的资讯：',response['data']['query']['entity']['name'])
+        print('请确认编辑的资讯：', response['data']['query']['entity']['name'])
         print('——' * 30)
         key = pancuo('（可输入0取消编辑）请输入编辑资讯所属类别的序号:')
-        if key==0:
+        if key == 0:
             write(bt, zw, logo)
         else:
-            url=f'https://mufans.tech/admin/article/changeStatus?id={id}&status=3'
+            url = f'https://mufans.tech/admin/article/changeStatus?id={id}&status=3'
             data = json.dumps(
                 [])
-            response =requests.request("POST", url, headers=headers,data=data).text
-            print('下架成功，开始编辑',response)
+            response = requests.request("POST", url, headers=headers, data=data).text
+            print('下架成功，开始编辑', response)
             url = 'https://mufans.tech/admin/article/modify'
             payload = json.dumps(
-                {"entity": {"id":f"{id}","name": f"{bt}",
+                {"entity": {"id": f"{id}", "name": f"{bt}",
                             "logo": f"{logo}",
-                            "description": f"{zw}"}, "clientTypes": [{"id": 0, "name": "用户版H5端"}],
+                            "description": f"{zw}","showTime":f"{date}"}, "clientTypes": [{"id": 0, "name": "用户版H5端"}],
                  "type": {"id": typec[key - 1]['id']}, "game": {}, "league": {}})
 
     req = requests.request("POST", url, headers=headers, data=payload).text
 
     # print(payload)
 
-    print('编辑完成',req)
+    print('编辑完成', req)
 
 
 def pawx():
-    # url = ('https://mp.weixin.qq.com/s/4tvsaD25I72kgpP4-ucIjQ')
-    # url = ('https://mp.weixin.qq.com/s/SIpP_3GBjP8G7SOJrZmSHQ')
-    # url = ('https://mp.weixin.qq.com/s/WmmCCnVx_K3xQ-RK8kl7dg')
-    # url = ('https://mp.weixin.qq.com/s/M300ML2nwwnfpOiKZphyZQ')
+
     url = input('请输入您要爬取的公众号文章网页地址：\n')
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
@@ -195,6 +196,11 @@ def pawx():
 
     get = etree.HTML(content)
     text = get.xpath('//*[@id="activity-name"]/text()')[0].strip()
+    # 找时间
+    r = re.search('\{e\(0,"(.*)\("publish_time"\)', content)
+    date = r.group(1).split('\"')[0]
+    date = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(date)))
+    print('抓到显示时间',date)
     print('——' * 30)
     print('标题是：', text)
     # 爬取微信原装富文本样式
@@ -213,16 +219,20 @@ def pawx():
     ls = re.findall('img src="(.*?)"', ts)
 
     for base in ls:
+        # 获取链接后缀名,判断异常格式不进行处理
+        img = base.split('=')[1].split('&')[0]
+        if len(img) > 5:
+            print('【检测到有异常格式，如视频格式，需要运营自行解决，目前版本暂时跳过处理】：',img)
+            continue
         # 删除样式控制
-        qie=base.split('?')
+        qie = base.split('?')
         r = re.search(f'{qie[0]}(.*?)>', ts)
-        print('自动适应mufans富文本，删除微信样式\n'+r.group(1))
+        print('自动适应mufans富文本，删除微信样式\n' + r.group(1))
         ts = ts.replace(f'{r.group(1)}', f'?{qie[1]}"')
         # 图片处理
         r = requests.get(base).content
         ls_f = base64.b64encode(BytesIO(r).read())  # 读取文件内容到内存，转换为base64编码
         name = str(ls_f).split('/')[-5][-13:].replace('+', '')
-        img = base.split('=')[1].split('&')[0]
         img = name + '.' + img
         print('——' * 30)
         print(img)
@@ -231,7 +241,11 @@ def pawx():
         if url == 1:
             print('全新图片爬取上传至素材库中。。。')
             # 下载新图片
-            aixx(r, f'./{img}', 'wb')
+            try:
+                aixx(r, f'./{img}', 'wb')
+            except:
+                print('【检测到有异常格式，如视频格式，需要运营自行解决，目前版本暂时跳过处理】')
+                continue
             # 上传新图片
             url = updata(img)
             print('上传成功，获得url=', url)
@@ -246,7 +260,7 @@ def pawx():
     r = requests.get(logo)
     ls_f = base64.b64encode(BytesIO(r.content).read())  # 读取文件内容到内存，转换为base64编码
     base = 'data:image/png;base64,' + str(ls_f).split('\'')[1]
-    write(text, ts, base)
+    write(text, ts, base,date)
     print('爬取资讯已经结束，可以关闭程序，或者继续爬取')
     print('——' * 30)
     pawx()
