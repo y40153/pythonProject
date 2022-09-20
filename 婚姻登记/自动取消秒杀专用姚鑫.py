@@ -335,7 +335,7 @@ def query(shijian, bianhao, weizhi):
                     print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
                     panduan = True
                     name = f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦'
-                    payloadq = f'ids=29ff616b85544d7e89348788599f45e3:1:95022db54acc44d89eee8aef71b944e1'
+                    payloadq = f'ids=c0b4c01dcf0d47e39d57a06f8e1b01dd:1:3ea171bf8dff4679bc4389b17982b635'
                     response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
                                                 headers=headers, data=payloadq)
                     print(response.text)
