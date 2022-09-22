@@ -110,7 +110,7 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
 
 def sendmail(name, key):
     my_sender = '401534863@qq.com'  # 发件人邮箱账号
-    my_pass = 'cfzwtrerxmygbjhb'  # 发件人邮箱密码
+    my_pass = 'ezgzdnxnrpyubjii'  # 发件人邮箱密码
     my_user = '15279101998@139.com'  # 收件人邮箱账号，我这边发送给自己
 
     def mail():

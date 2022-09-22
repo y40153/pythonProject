@@ -116,13 +116,13 @@ def run():
     jishiqi.start()
     time = datetime.datetime.now()  # 当前时间
     shijisj = str(time + datetime.timedelta(days=15))
-    mubiaosj = shijisj.split(' ')[0] + ' 08:29:59'
+    mubiaosj = shijisj.split(' ')[0] + ' 18:29:59'
     print('系统时间是：' + str(time))
     print('约号时间是：' + str(mubiaosj))
     if shijisj >= mubiaosj:
         jishiqi.cancel()
         print('时机已到')
-        data = seckill('2022-09-27', '14:00-14:30', '440304', '深圳市福田区民政局婚姻登记处',
+        data = seckill('2022-09-17', '14:00-14:30', '440304', '深圳市福田区民政局婚姻登记处',
                        '吴晓彬', '440582199309086397', '15279101998',
                        '潘莹莹', '440981199610152846', '15279101998',
                        34)

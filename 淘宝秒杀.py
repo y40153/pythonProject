@@ -18,7 +18,7 @@ def login():
     #     driver.find_element_by_link_text("登录").click()
 
     print("请在30秒内完成扫码")
-    time.sleep(15)
+    time.sleep(20)
 
     driver.get("https://cart.taobao.com/cart.htm")
     time.sleep(3)

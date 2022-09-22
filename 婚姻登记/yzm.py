@@ -13,7 +13,7 @@ from PIL import Image
 
 def sendmail(name):
     my_sender = '401534863@qq.com'  # 发件人邮箱账号
-    my_pass = 'cfzwtrerxmygbjhb'  # 发件人邮箱密码
+    my_pass = 'ezgzdnxnrpyubjii'  # 发件人邮箱密码
     my_user = '15279101998@139.com'  # 收件人邮箱账号，我这边发送给自己
 
     def mail():
@@ -407,4 +407,4 @@ if __name__ == '__main__':
     # miaosha()
     # chaxun()
 
-    quxiao('411324199309160017', '230206199205080941', '2022-09-17')  # 取消
+    quxiao('441424199806173514', '441424199801013343', '2022-09-30')  # 取消

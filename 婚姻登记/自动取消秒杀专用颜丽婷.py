@@ -110,7 +110,7 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
 
 def sendmail(name, key):
     my_sender = '401534863@qq.com'  # 发件人邮箱账号
-    my_pass = 'cfzwtrerxmygbjhb'  # 发件人邮箱密码
+    my_pass = 'ezgzdnxnrpyubjii'  # 发件人邮箱密码
     my_user = '15279101998@139.com'  # 收件人邮箱账号，我这边发送给自己
 
     def mail():
@@ -118,7 +118,7 @@ def sendmail(name, key):
         try:
             msg = MIMEText(f'{name},监控报告有{key}个区有号', 'plain', 'utf-8')
             msg['From'] = formataddr(("秒杀监控系统", my_sender))  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
-            msg['To'] = formataddr(("FK", my_user))  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
+            msg['To'] = formataddr(("杨晨武", my_user))  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
             msg['Subject'] = f"{name[:5]}有号啦"  # 邮件的主题，也可以说是标题
 
             server = smtplib.SMTP_SSL("smtp.qq.com", 465)  # 发件人邮箱中的SMTP服务器，端口是25
@@ -335,7 +335,7 @@ def query(shijian, bianhao, weizhi):
                     print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
                     panduan = True
                     name = f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦'
-                    payloadq = f'ids=43fa9efaf7c8419c9f006eedfbb17c37:1:4718e4d8e9724541b19b6ee55ed81a57'
+                    payloadq = f'ids=54452c3b68ac4149a7ff20effe942d79:1:9c2bd015789a4c498aed54ef199780d3'
                     response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
                                                 headers=headers, data=payloadq)
                     print(response.text)
@@ -366,7 +366,7 @@ def chaxun():
         # key = query(date, '440304', '福田区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308',
         #       '盐田区') + query(date,'440307', '龙岗区')
-        key = query(date, '440309', '龙华区')+query(date, '440305', '南山区')
+        key =  query(date, '440308','盐田区')+query(date, '440305', '南山区')
         # key = query(date, '440309', '龙华区')+query(date, '440305', '南山区') + query(date, '440306','宝安区') + \
         #       query(date, '440304', '福田区') + query(date, '440396', '大鹏新区') + query(date, '440308','盐田区') \
         #       + query(date, '440307', '龙岗区')+ query(date, '440303', '罗湖区')
@@ -387,8 +387,8 @@ def chaxun():
 
 def run(yyrq, shij, bianhao, diz):
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '刘润豪', '441523199301067571', '13316534333',
-            '梁玉婷', '441882199309114527', '15626428517',
+            '陈嘉鹏', '441424199806173514', '15119364710',
+            '颜丽婷', '441424199801013343', '15119364710',
             32)
     # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
     #         '潘卓钒', '441802199804110919', '15279101998',
