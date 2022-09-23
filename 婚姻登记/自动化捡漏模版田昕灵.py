@@ -359,7 +359,7 @@ def chaxun():
     print(date)
     zi = 1
     while True:
-        key = query(date, '440305', '南山区') + query(date, '440304', '福田区')
+        key = query(date, '440305', '南山区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308', '盐田区') + query(date,'440307', '龙岗区') key =
         # query(date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440303', '罗湖区') key = query(
         # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',
@@ -370,7 +370,7 @@ def chaxun():
         if key > 0:
             global name
             print('发邮件哦', name)
-            sendmail(name, key)
+            sendmail(name)
             mins = 300
         else:
             print('没有号，发不了')

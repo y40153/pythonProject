@@ -379,7 +379,7 @@ def chaxun():
         if key > 0:
             global name
             print('发邮件哦', name)
-            sendmail(name, key)
+            sendmail(name)
             mins = 300
         else:
             print('没有号，发不了')
