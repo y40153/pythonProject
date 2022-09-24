@@ -359,13 +359,13 @@ def chaxun():
     print(date)
     zi = 1
     while True:
-        key = query(date, '440304', '福田区')
+        key = query(date, '440304', '福田区')+ query(date,'440311', '光明区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308', '盐田区') + query(date,'440307', '龙岗区') key =
         # query(date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440303', '罗湖区') key = query(
         # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',
-        # '罗湖区')+ query(date,'440307', '龙岗区')
+        # '罗湖区')+ query(date,'440307', '龙岗区')+ query(date,'440311', '光明区')
         sj = datetime.datetime.now()  # 当前时间
-        print(f'段彦昭{sj},第{zi}次轮询：有{key}个区有号')
+        print(f'张静文{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
         if key > 0:
             global name
@@ -392,8 +392,8 @@ def run(yyrq, shij, bianhao, diz):
     #         '马丽纯', '440582199501135849', '13202297256',
     #         32)
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '朱田丰', '342530199511224513', '17614130353',
-            '段彦昭', '431121199309167327', '18938690891',
+            '刘佳月', '232301199501234138', '18814148075',
+            '张静文', '440306199512063927', '18826242694',
             32)
     return
 
