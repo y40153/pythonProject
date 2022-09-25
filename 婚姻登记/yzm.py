@@ -13,12 +13,14 @@ from PIL import Image
 
 def sendmail(name):
     my_sender = '401534863@qq.com'  # 发件人邮箱账号
-    my_pass = 'dvymozvmmvbmcaff'  # 发件人邮箱密码
-    def mail(my_user = '15279101998@139.com'):
+    my_pass = 'cfzwtrerxmygbjhb'  # 发件人邮箱密码
+    my_user = '15279101998@139.com'  # 收件人邮箱账号，我这边发送给自己
+
+    def mail():
         ret = True
         try:
-            msg = MIMEText(f'{name}', 'plain', 'utf-8')
-            msg['From'] = formataddr(("秒杀监控系统", my_sender))  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
+            msg = MIMEText(name, 'plain', 'utf-8')
+            msg['From'] = formataddr(("FromRunoob", my_sender))  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
             msg['To'] = formataddr(("FK", my_user))  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
             msg['Subject'] = f"{name[:5]}有号啦"  # 邮件的主题，也可以说是标题
 
@@ -26,12 +28,7 @@ def sendmail(name):
             server.login(my_sender, my_pass)  # 括号中对应的是发件人邮箱账号、邮箱密码
             server.sendmail(my_sender, [my_user, ], msg.as_string())  # 括号中对应的是发件人邮箱账号、收件人邮箱账号、发送邮件
             server.quit()  # 关闭连接
-        except Exception as e:  # 如果 try 中的语句没有执行，则会执行下面的 ret=False
-            print(e)
-            r = re.search('550', e)
-            if r is not None:
-                my_user = '401534863@qq.com'  # 收件人邮箱账号，我这边发送给自己
-                mail(my_user)
+        except Exception:  # 如果 try 中的语句没有执行，则会执行下面的 ret=False
             ret = False
         return ret
 
@@ -107,7 +104,7 @@ def yzm(cancel):
     except Exception as e:
         zhi = 2341
         print(e)
-        sendmail(f'验证码获取错误{e}', '屁')
+        sendmail(f'验证码获取错误{e}')
         print('-' * 20, '【出错了】', '-' * 20)
         time.sleep(60)
     print(zhi)
@@ -224,7 +221,7 @@ def query(shijian, bianhao, weizhi):
     try:
         response = requests.request("POST", url, headers=headers, data=payload)
     except requests.exceptions.RequestException:
-        sendmail('请求超时哦', '屁')
+        sendmail('请求超时哦')
         print('-' * 20, '【出错了】', '-' * 20)
         time.sleep(60)
         response = requests.request("POST", url, headers=headers, data=payload)
@@ -410,4 +407,4 @@ if __name__ == '__main__':
     # miaosha()
     # chaxun()
 
-    quxiao('441424199806173514', '441424199801013343', '2022-09-30')  # 取消
+    quxiao('440307199501020039', '440301199301152725', '2022-10-09')  # 取消

@@ -204,7 +204,7 @@ def yzm(cancel):
     except Exception as e:
         zhi = 2341
         print(e)
-        sendmail(f'验证码获取错误{e}', '屁')
+        sendmail(f'验证码获取错误{e}')
         print('-' * 20, '【出错了】', '-' * 20)
         time.sleep(60)
     print(zhi)
@@ -321,7 +321,7 @@ def query(shijian, bianhao, weizhi):
     try:
         response = requests.request("POST", url, headers=headers, data=payload)
     except requests.exceptions.RequestException:
-        sendmail('请求超时哦', '屁')
+        sendmail('请求超时哦')
         print('-' * 20, '【出错了】', '-' * 20)
         time.sleep(60)
         response = requests.request("POST", url, headers=headers, data=payload)
@@ -344,7 +344,7 @@ def query(shijian, bianhao, weizhi):
                 else:
                     print('获取值为空', data)
         except:
-            sendmail(f'{response.text}', 'data出错')
+            sendmail(f'{response.text}')
             time.sleep(60)
             pass
     else:
