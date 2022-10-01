@@ -15,10 +15,11 @@ from email.utils import formataddr
 import ddddocr
 import requests
 from PIL import Image
+from PyQt5.QtCore import QThread, pyqtSignal
 
 
 def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wumanhao, phone2):
-    x = f'男名{manname}，男卡{manhao}，男号{phone}，女名{wumanname}，女卡{wumanhao}，女号{phone2}'
+    x = f'男名{manname}，男卡{manhao}，男号{phone}，女名{wumanname}，女卡{wumanhao}，女号{phone2}\n'
     url = "https://mmykm2.gdbs.gov.cn/ebus/huazi_gdhy/hunyin/api/mobile/marriage/create_reservation?"
 
     GUI.printf(x)
@@ -106,8 +107,8 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
     }
     response = requests.request("POST", url, headers=headers, data=payload)
     global name
-    txt = response.text
-    name = name + x + txt
+    txt = response.text+'\n'
+    name = str(name)+ x + txt
     GUI.printf(response.text)  # 31-37
     return
 
@@ -119,7 +120,7 @@ def sendmail(name):
     def mail(my_user='15279101998@139.com'):
         ret = True
         try:
-            msg = MIMEText(f'{name[7:]}', 'plain', 'utf-8')
+            msg = MIMEText(f'{name[10:]}', 'plain', 'utf-8')
             msg['From'] = formataddr(("秒杀监控系统", my_sender))  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
             msg['To'] = formataddr(("FK", my_user))  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
             msg['Subject'] = f"{name[:5]}有号啦"  # 邮件的主题，也可以说是标题
@@ -337,13 +338,14 @@ def query(shijian, bianhao, weizhi):
             data = response.json()  # 解读出接口返回的数据
             global panduan, name
             panduan = False
+            name=''
             # GUI.printf('[data]'+str(data))
             for d in data:
                 GUI.printf(d)  # 打印出想要的数据
                 if d['syl'] > 0:  # 秒杀准备，有号判断
                     GUI.printf(f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]')
                     panduan = True
-                    name = f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦'
+                    name =str(name)+ f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦\n'
                     payloadq = f'ids='
                     if len(payloadq) > 10:
                         response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
@@ -414,6 +416,35 @@ def run(yyrq, shij, bianhao, diz):
     #         '刘瑶玥', '360602199512130027', '15711966886',
     #         32)
     return
+class UpdateThread(QThread):
+    # 创建一个信号，触发时传递给text槽函数显示
+    update_data = pyqtSignal(str)
+
+    def run(self):
+        # 无限循环，调用一次传递一次给UI
+        zi = 1
+        global tup
+        while True:
+            if not tup:
+                break
+            # 查找所有勾选框，已经勾选的就进行提交查询
+            for a in tup:
+                key =+ query(a[0],a[1], a[2])
+
+            sj = datetime.datetime.now()  # 当前时间
+            GUI.printf(f'庄小眉{sj},第{zi}次轮询：有{key}个区有号')
+            zi += 1
+            # self.update_data.emit(f'庄小眉{sj},第{zi}次轮询：有{key}个区有号')
+            if key > 0:
+                global name
+                GUI.printf('发邮件哦', name)
+                sendmail(name)
+                mins = 300
+            else:
+                GUI.printf('没有号，发不了')
+                mins = 5
+            time.sleep(mins)
+
 
 
 class GUI(QtWidgets.QWidget):
@@ -455,10 +486,10 @@ class GUI(QtWidgets.QWidget):
                 # 设置输入框提示
                 self.textbox.setPlaceholderText(f'{zl[a]}')
         self.check1 = QtWidgets.QCheckBox(self)
-        self.check1.setGeometry(QtCore.QRect(150, 15, 87, 30))
+        self.check1.setGeometry(QtCore.QRect(140, 15, 100, 30))
         self.check1.setObjectName("是否")
         self.check1.setText('是否已有预约号')
-        self.check1.toggled.connect(lambda: GUI.checks())
+        self.check1.toggled.connect(self.checks)
         # 设置退号框
         self.textbox2 = Qt.QLineEdit(self)
         self.textbox2.resize(200, 20)
@@ -466,10 +497,13 @@ class GUI(QtWidgets.QWidget):
         # 设置输入框提示
         self.textbox2.setPlaceholderText('ids')
         self.textbox2.setHidden(True)
-        # # 设置核心按钮
-        # self.btn =QtWidgets.QPushButton('开始刷号',self)
-        # self.btn.resize(100,80)
-        # self.btn.move(640,15)
+        # 设置核心按钮
+        self.btn =QtWidgets.QPushButton('暂停刷号',self)
+        self.btn.resize(100,80)
+        self.btn.move(640,15)
+        self.btn.setObjectName('zt')
+        # 点击鼠标触发事件
+        self.btn.clicked.connect(lambda :self.checks('zt'))
         # 设置label信息
         self.label1 = QtWidgets.QLabel(self)
         self.label1.setGeometry(QtCore.QRect(20, 110, 150, 60))
@@ -481,10 +515,10 @@ class GUI(QtWidgets.QWidget):
         # self.label.setToolTip('只显示可预约的15天')
 
         # 设置选择框
-        ls = ['福田', '南山', '罗湖', '宝安', '龙华', '龙岗', '光明', '盐田', '大棚', '坪山']
+        ls = ['福田区', '南山区', '罗湖区', '宝安区', '龙华区', '龙岗区', '光明区', '盐田区', '大棚区', '坪山区']
         self.check = []
-        dic = {'福田': '440304', '南山': '440305', '罗湖': '440303', '宝安': '440306', '龙华': '440309',
-               '龙岗': '440307', '光明': '440311', '盐田': '440308', '大棚': '440396', '坪山': '440310'}
+        dic = {'福田区': '440304', '南山区': '440305', '罗湖区': '440303', '宝安区': '440306', '龙华区': '440309',
+               '龙岗区': '440307', '光明区': '440311', '盐田区': '440308', '大棚区': '440396', '坪山区': '440310'}
         for x in range(10):
             self.check.append(x)
             self.check[x] = QtWidgets.QCheckBox(self)
@@ -519,9 +553,6 @@ class GUI(QtWidgets.QWidget):
         #                       "font: 75 12pt \"Arial Narrow\";"
         #                       "color: rgb(246, 255, 46);")
 
-        # 点击鼠标触发事件
-        # self.i.clicked.connect(self.clickbtn)
-
         # 设置txtbox
         self.textBrowser = QtWidgets.QTextBrowser(self)
         self.textBrowser.setGeometry(QtCore.QRect(20, 300, 700, 510))
@@ -530,13 +561,20 @@ class GUI(QtWidgets.QWidget):
         self.show();
 
     # 点击勾选触发函数
-    def checks(self):
-        if self.check1.isChecked():
+    def checks(self,key):
+        #取消按钮也是用的这个函数
+        if key=='zt':
+            global tup
+            tup=[]
+            GUI.printf('程序暂停，要继续请重新选择日期')
+        elif self.check1.isChecked():
             GUI.printf('请输入取消的ids')
             self.textbox2.setHidden(False)
+            UpdateThread().quit()
         else:
             GUI.printf('不取消直接抢')
             self.textbox2.setHidden(True)
+            UpdateThread().quit()
 
     # 点击鼠标触发函数
     def clickbtn(self, trp):
@@ -547,25 +585,25 @@ class GUI(QtWidgets.QWidget):
         textboxValue = self.sender()
         GUI.printf(textboxValue.objectName())
         GUI.printf('————' * 10)
-        zi = 1
-        while True:
-            # 查找所有勾选框，已经勾选的就进行提交查询
-            for x in range(10):
-                if self.check[x].isChecked():
-                    key = query(textboxValue.objectName(), self.check[x].objectName(), self.check[x].text())
-            sj = datetime.datetime.now()  # 当前时间
-            print(f'庄小眉{sj},第{zi}次轮询：有{key}个区有号')
-            zi += 1
+        # 创建子线程
+        self.subThread = UpdateThread()
+        # 将子线程中的信号与printf槽函数绑定
+        self.subThread.update_data.connect(self.printf)
+        # 启动子线程（开始更新时间）
+        self.subThread.start()
+        global tup
+        tup=[]
+        # 查找所有勾选框，已经勾选的就进行提交查询
+        for x in range(10):
+            if self.check[x].isChecked():
 
-            if key > 0:
-                global name
-                GUI.printf('发邮件哦', name)
-                sendmail(name)
-                mins = 300
-            else:
-                GUI.printf('没有号，发不了')
-                mins = 50
-            time.sleep(mins)
+                shijian=textboxValue.objectName()
+                bianhao=self.check[x].objectName()
+                weizhi=self.check[x].text()
+                ls = [shijian, bianhao, weizhi]
+                tup.append(ls)
+                # key = query(textboxValue.objectName(), self.check[x].objectName(), self.check[x].text())
+
         # QtWidgets.QMessageBox.question(self, "信息", '你输入的输入框内容为:' + textboxValue,QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
         GUI.printf('————' * 10)
 
