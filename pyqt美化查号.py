@@ -156,19 +156,19 @@ class GUI(QtWidgets.QWidget):
         # self.btn.move(250,70)
 
         time = datetime.datetime.now()  # 当前时间
-        for i in range(15):
+        for i in range(16):
             shijisj = str(time + datetime.timedelta(days=i + 1))
             date = shijisj.split(' ')[0]
             # 设置按钮
             self.i = QtWidgets.QPushButton(f'{date}', self)
-            self.i.resize(80, 30)
+            self.i.resize(85, 30)
             if i <8:
-                self.i.move(20 + i * 80, 120)
+                self.i.move(20 + i * 90, 120)
             else:
-                self.i.move(-580 + i * 80, 150)
+                self.i.move(-700 + i * 90, 150)
             # 设置按钮样式
             self.i.setStyleSheet(
-                                   "font: 75 12pt \"Arial Narrow\";"
+                                   "font: 75 10pt \"Arial Narrow\";"
                                    )
             # 点击鼠标触发事件
             self.i.clicked.connect(lambda: self.clickbtn(self.sender()))
