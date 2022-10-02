@@ -107,8 +107,8 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
     }
     response = requests.request("POST", url, headers=headers, data=payload)
     global name
-    txt = response.text+'\n'
-    name = str(name)+ x + txt
+    txt = response.text + '\n'
+    name = str(name) + x + txt
     GUI.printf(response.text)  # 31-37
     return
 
@@ -336,21 +336,23 @@ def query(shijian, bianhao, weizhi):
         GUI.printf('正常跳转查询成功')
         try:
             data = response.json()  # 解读出接口返回的数据
-            global panduan, name
+            global panduan, name, xinxi
             panduan = False
-            name=''
+            name = ''
+            ls = list(xinxi)
             # GUI.printf('[data]'+str(data))
             for d in data:
                 GUI.printf(d)  # 打印出想要的数据
                 if d['syl'] > 0:  # 秒杀准备，有号判断
                     GUI.printf(f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]')
                     panduan = True
-                    name =str(name)+ f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦\n'
-                    payloadq = f'ids='
+                    name = str(name) + f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦\n'
+
+                    payloadq = f'ids=' + str(ls[0])
                     if len(payloadq) > 10:
                         response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
                                                     headers=headers, data=payloadq)
-                        GUI.printf(response.text)
+                        GUI.printf(response.text + payloadq)
                     run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
                 else:
                     GUI.printf('获取值为空')
@@ -369,53 +371,16 @@ def query(shijian, bianhao, weizhi):
     return panduan
 
 
-def chaxun():
-    # name = ''
-    dater = input("请输入预约日期如09-01:\n")
-    date = f'2022-{dater}'
-    GUI.printf(date)
-    zi = 1
-    while True:
-        # key = query(date, '440304', '福田区')
-        # key = query(date, '440396', '大鹏新区') + query(date, '440308',
-        #       '盐田区') + query(date,'440307', '龙岗区')
-        key = query(date, '440305', '南山区')
-        # key = query(date, '440309', '龙华区')+query(date, '440305', '南山区') + query(date, '440306','宝安区') + \
-        #       query(date, '440304', '福田区') + query(date, '440396', '大鹏新区') + query(date, '440308','盐田区') \
-        #       + query(date, '440307', '龙岗区')+ query(date, '440303', '罗湖区')
-        sj = datetime.datetime.now()  # 当前时间
-        GUI.printf(f'庄小眉{sj},第{zi}次轮询：有{key}个区有号')
-        zi += 1
-
-        if key > 0:
-            global name
-            GUI.printf('发邮件哦', name)
-            sendmail(name)
-            mins = 300
-        else:
-            GUI.printf('没有号，发不了')
-            mins = 5
-        time.sleep(mins)
-
-
 def run(yyrq, shij, bianhao, diz):
+    global xinxi
+    ls = list(xinxi)
+    GUI.printf(f'{ls[1]}' + f'{ls[2]}' + f'{ls[3]}' + f'{ls[4]}' + f'{ls[5]}' + f'{ls[6]}')
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '叶瑞恩', '441422199305150039', '15019466508',
-            '庄小眉', '445222199506260640', '13202825240'
-            )
-    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-    #         '潘卓钒', '441802199804110919', '15279101998',
-    #         '黎静婷', '445381199803206021', '13168661477',
-    #         32)
-    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-    #         '黄凯', '441523199507176036', '15014049639',
-    #         '马丽纯', '440582199501135849', '13202297256',
-    #         32)
-    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-    #         '闻一龙', '330193198801260013', '18858277711',
-    #         '刘瑶玥', '360602199512130027', '15711966886',
-    #         32)
+            f'{ls[1]}', f'{ls[2]}', f'{ls[3]}', f'{ls[4]}', f'{ls[5]}', f'{ls[6]}')
+
     return
+
+
 class UpdateThread(QThread):
     # 创建一个信号，触发时传递给text槽函数显示
     update_data = pyqtSignal(str)
@@ -423,28 +388,31 @@ class UpdateThread(QThread):
     def run(self):
         # 无限循环，调用一次传递一次给UI
         zi = 1
-        global tup
+        global tup, xinxi
+        tup = list(tup)
+        ls=xinxi
         while True:
             if not tup:
                 break
+            elif type(tup[0]) is str:
+                GUI.printf(quxiao(ls[2], ls[5], tup[0]))
+                break
             # 查找所有勾选框，已经勾选的就进行提交查询
             for a in tup:
-                key =+ query(a[0],a[1], a[2])
+                key = + query(a[0], a[1], a[2])
 
             sj = datetime.datetime.now()  # 当前时间
-            GUI.printf(f'庄小眉{sj},第{zi}次轮询：有{key}个区有号')
+            GUI.printf(f'{xinxi[4]}{sj},第{zi}次轮询：有{key}个区有号')
             zi += 1
-            # self.update_data.emit(f'庄小眉{sj},第{zi}次轮询：有{key}个区有号')
             if key > 0:
                 global name
-                GUI.printf('发邮件哦', name)
+                GUI.printf('发邮件哦' + name)
                 sendmail(name)
                 mins = 300
             else:
                 GUI.printf('没有号，发不了')
                 mins = 5
             time.sleep(mins)
-
 
 
 class GUI(QtWidgets.QWidget):
@@ -471,22 +439,24 @@ class GUI(QtWidgets.QWidget):
         self.label1.setGeometry(QtCore.QRect(20, 0, 150, 60))
         self.label1.setText('请输入预约信息')
         # #设置输入框
-        zl = ['男姓名', '男证件号', '男手机', '女姓名', '女证件号', '女手机']
+        self.zl = []
+        zi = ['男姓名', '男证件号', '男手机', '女姓名', '女证件号', '女手机']
         for a in range(6):
+            self.zl.append(a)
             if a < 3:
-                self.textbox = Qt.QLineEdit(self)
-                self.textbox.resize(160, 20)
-                self.textbox.move(20 * (a * 10 + 1), 50)
+                self.zl[a] = Qt.QLineEdit(self)
+                self.zl[a].resize(160, 20)
+                self.zl[a].move(20 * (a * 10 + 1), 50)
                 # 设置输入框提示
-                self.textbox.setPlaceholderText(f'{zl[a]}')
+                self.zl[a].setPlaceholderText(f'{zi[a]}')
             else:
-                self.textbox = Qt.QLineEdit(self)
-                self.textbox.resize(160, 20)
-                self.textbox.move(-600 + 20 * (a * 10 + 1), 90)
+                self.zl[a] = Qt.QLineEdit(self)
+                self.zl[a].resize(160, 20)
+                self.zl[a].move(-600 + 20 * (a * 10 + 1), 90)
                 # 设置输入框提示
-                self.textbox.setPlaceholderText(f'{zl[a]}')
+                self.zl[a].setPlaceholderText(f'{zi[a]}')
         self.check1 = QtWidgets.QCheckBox(self)
-        self.check1.setGeometry(QtCore.QRect(140, 15, 100, 30))
+        self.check1.setGeometry(QtCore.QRect(135, 15, 110, 30))
         self.check1.setObjectName("是否")
         self.check1.setText('是否已有预约号')
         self.check1.toggled.connect(self.checks)
@@ -498,12 +468,12 @@ class GUI(QtWidgets.QWidget):
         self.textbox2.setPlaceholderText('ids')
         self.textbox2.setHidden(True)
         # 设置核心按钮
-        self.btn =QtWidgets.QPushButton('暂停刷号',self)
-        self.btn.resize(100,80)
-        self.btn.move(640,15)
+        self.btn = QtWidgets.QPushButton('暂停刷号', self)
+        self.btn.resize(100, 80)
+        self.btn.move(640, 15)
         self.btn.setObjectName('zt')
         # 点击鼠标触发事件
-        self.btn.clicked.connect(lambda :self.checks('zt'))
+        self.btn.clicked.connect(lambda: self.checks('zt'))
         # 设置label信息
         self.label1 = QtWidgets.QLabel(self)
         self.label1.setGeometry(QtCore.QRect(20, 110, 150, 60))
@@ -525,7 +495,6 @@ class GUI(QtWidgets.QWidget):
             self.check[x].setGeometry(QtCore.QRect(20 * (3 * x + 1), 160, 87, 20))
             self.check[x].setObjectName(f"{dic[ls[x]]}")
             self.check[x].setText(f'{ls[x]}')
-            # self.check[x].setToolTip(f'{self.check[x].text()}')
 
         time = datetime.datetime.now()  # 当前时间
         for i in range(15):
@@ -561,11 +530,11 @@ class GUI(QtWidgets.QWidget):
         self.show();
 
     # 点击勾选触发函数
-    def checks(self,key):
-        #取消按钮也是用的这个函数
-        if key=='zt':
+    def checks(self, key):
+        # 取消按钮也是用的这个函数
+        if key == 'zt':
             global tup
-            tup=[]
+            tup = []
             GUI.printf('程序暂停，要继续请重新选择日期')
         elif self.check1.isChecked():
             GUI.printf('请输入取消的ids')
@@ -578,32 +547,41 @@ class GUI(QtWidgets.QWidget):
 
     # 点击鼠标触发函数
     def clickbtn(self, trp):
-        # 清空输入框信息
-        self.textBrowser.setText('')
-        # 打印出输入框的信息
-        # textboxValue = self.textbox.text()
         textboxValue = self.sender()
-        GUI.printf(textboxValue.objectName())
-        GUI.printf('————' * 10)
+        global tup, xinxi
+        tup = []
+        ls = xinxi
+        for b in range(6):
+            ls.append(self.zl[b].text().strip())
+        GUI.printf(str(ls))
         # 创建子线程
         self.subThread = UpdateThread()
-        # 将子线程中的信号与printf槽函数绑定
-        self.subThread.update_data.connect(self.printf)
-        # 启动子线程（开始更新时间）
-        self.subThread.start()
-        global tup
-        tup=[]
-        # 查找所有勾选框，已经勾选的就进行提交查询
-        for x in range(10):
-            if self.check[x].isChecked():
+        if self.check1.isChecked():
+            tup.append(textboxValue.objectName())
+            # 启动子线程（开始更新时间）
+            self.subThread.start()
+            self.textbox2.setText('')
+        else:
+            # 清空输入框信息
+            self.textBrowser.setText('')
+            # 打印出输入框的信息
+            # textboxValue = self.textbox.text()
+            GUI.printf(textboxValue.objectName())
+            GUI.printf('————' * 10)
 
-                shijian=textboxValue.objectName()
-                bianhao=self.check[x].objectName()
-                weizhi=self.check[x].text()
-                ls = [shijian, bianhao, weizhi]
-                tup.append(ls)
-                # key = query(textboxValue.objectName(), self.check[x].objectName(), self.check[x].text())
+            # 将子线程中的信号与printf槽函数绑定
+            # self.subThread.update_data.connect(self.printf)
+            # 启动子线程（开始更新时间）
+            self.subThread.start()
 
+            # 查找所有勾选框，已经勾选的就进行提交查询
+            for x in range(10):
+                if self.check[x].isChecked():
+                    shijian = textboxValue.objectName()
+                    bianhao = self.check[x].objectName()
+                    weizhi = self.check[x].text()
+                    ls = [shijian, bianhao, weizhi]
+                    tup.append(ls)
         # QtWidgets.QMessageBox.question(self, "信息", '你输入的输入框内容为:' + textboxValue,QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
         GUI.printf('————' * 10)
 
@@ -622,6 +600,44 @@ class GUI(QtWidgets.QWidget):
         self.textBrowser.append(str(mes) + name)  # 在指定的区域显示提示信息
         self.cursot = self.textBrowser.textCursor()
         self.textBrowser.moveCursor(self.cursot.End)
+
+
+def quxiao(nan, nv, yyrq):
+    if os.name == 'posix':
+        with open('/Users/wang/Desktop/证件信息.txt', 'r', encoding='utf‐8') as a_file:
+            cookie = a_file.readline().rstrip()
+    else:
+        with open(r"C:\Users\Administrator\Desktop\证件信息.txt", 'r', encoding='utf‐8') as a_file:
+            cookie = a_file.readline().rstrip()
+    url = "https://www.gdhy.gov.cn/common.do?do=getYyInfos"
+
+    payload = f'sfzjhmnan={nan}&sfzjhmnv={nv}&yyh=&yyrq={yyrq}&captcha={yzm(2)}&flag=2'
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Cookie': f'{cookie}'
+    }
+    try:  # 改下面切记报错会循环
+        response = requests.request("POST", url, headers=headers, data=payload)
+        # print(response.text)#出问题再打印
+        if re.search('name="id_box" value=', response.text) is not None:
+            print('没有异常，登录成功')
+            r = re.search('<input type="checkbox" name="id_box" value="(.*)"/>', response.text)
+            e = re.search('<input type="hidden" name="yyrqid" value="(.*)"/>', response.text)
+            a = r.group(1) + str(':1:') + e.group(1)
+            print(a)
+            xq = re.findall('<td align="center" class="EOS_table_oddrow" >(.*)</td>', response.text)
+            GUI.printf(xq)
+
+        elif re.search('没有符合条件的记录', response.text) is not None:
+            print('这天没有约号')
+
+        else:
+            print('验证码错了？没有数据')
+            quxiao(nan, nv, yyrq)
+    except:
+        print("程序出错！检查一下不然会循环，主要防验证码大写错误")
+        quxiao(nan, nv, yyrq)
+    return a
 
 
 if __name__ == '__main__':
