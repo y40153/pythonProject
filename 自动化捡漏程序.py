@@ -336,10 +336,9 @@ def query(shijian, bianhao, weizhi):
         GUI.printf('正常跳转查询成功')
         try:
             data = response.json()  # 解读出接口返回的数据
-            global panduan, name, xinxi
+            global panduan, name
             panduan = False
             name = ''
-            ls = list(xinxi)
             # GUI.printf('[data]'+str(data))
             for d in data:
                 GUI.printf(d)  # 打印出想要的数据
@@ -348,7 +347,7 @@ def query(shijian, bianhao, weizhi):
                     panduan = True
                     name = str(name) + f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦\n'
 
-                    payloadq = f'ids=' + str(ls[0])
+                    payloadq = f'ids=' + GUI.textbox2.text()
                     if len(payloadq) > 10:
                         response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
                                                     headers=headers, data=payloadq)
@@ -372,11 +371,10 @@ def query(shijian, bianhao, weizhi):
 
 
 def run(yyrq, shij, bianhao, diz):
-    global xinxi
     ls = list(xinxi)
-    GUI.printf(f'{ls[1]}' + f'{ls[2]}' + f'{ls[3]}' + f'{ls[4]}' + f'{ls[5]}' + f'{ls[6]}')
+    GUI.printf(f'{ls[0]}' + f'{ls[1]}' + f'{ls[2]}' + f'{ls[3]}' + f'{ls[4]}' + f'{ls[5]}')
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            f'{ls[1]}', f'{ls[2]}', f'{ls[3]}', f'{ls[4]}', f'{ls[5]}', f'{ls[6]}')
+            f'{ls[0]}', f'{ls[1]}', f'{ls[2]}', f'{ls[3]}', f'{ls[4]}', f'{ls[5]}')
 
     return
 
@@ -388,14 +386,14 @@ class UpdateThread(QThread):
     def run(self):
         # 无限循环，调用一次传递一次给UI
         zi = 1
-        global tup, xinxi
+        global tup
         tup = list(tup)
-        ls=xinxi
+        ls = xinxi
         while True:
             if not tup:
                 break
             elif type(tup[0]) is str:
-                GUI.printf(quxiao(ls[2], ls[5], tup[0]))
+                GUI.printf(quxiao(ls[1], ls[4], tup[0]))
                 break
             # 查找所有勾选框，已经勾选的就进行提交查询
             for a in tup:
@@ -462,7 +460,7 @@ class GUI(QtWidgets.QWidget):
         self.check1.toggled.connect(self.checks)
         # 设置退号框
         self.textbox2 = Qt.QLineEdit(self)
-        self.textbox2.resize(200, 20)
+        self.textbox2.resize(320, 20)
         self.textbox2.move(250, 20)
         # 设置输入框提示
         self.textbox2.setPlaceholderText('ids')
@@ -549,18 +547,18 @@ class GUI(QtWidgets.QWidget):
     def clickbtn(self, trp):
         textboxValue = self.sender()
         global tup, xinxi
+        xinxi=[]
         tup = []
-        ls = xinxi
         for b in range(6):
-            ls.append(self.zl[b].text().strip())
-        GUI.printf(str(ls))
+            xinxi.append(self.zl[b].text().strip())
+        GUI.printf(str(xinxi))
         # 创建子线程
         self.subThread = UpdateThread()
-        if self.check1.isChecked():
+        if self.check1.isChecked() and self.textbox2.text()=='':
             tup.append(textboxValue.objectName())
             # 启动子线程（开始更新时间）
             self.subThread.start()
-            self.textbox2.setText('')
+
         else:
             # 清空输入框信息
             self.textBrowser.setText('')
@@ -625,6 +623,7 @@ def quxiao(nan, nv, yyrq):
             e = re.search('<input type="hidden" name="yyrqid" value="(.*)"/>', response.text)
             a = r.group(1) + str(':1:') + e.group(1)
             print(a)
+            GUI.textbox2.setText(a)
             xq = re.findall('<td align="center" class="EOS_table_oddrow" >(.*)</td>', response.text)
             GUI.printf(xq)
 
@@ -637,8 +636,7 @@ def quxiao(nan, nv, yyrq):
     except:
         print("程序出错！检查一下不然会循环，主要防验证码大写错误")
         quxiao(nan, nv, yyrq)
-    return a
-
+    return
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
