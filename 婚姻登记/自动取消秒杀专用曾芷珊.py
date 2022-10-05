@@ -338,10 +338,10 @@ def query(shijian, bianhao, weizhi):
                     print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
                     panduan = True
                     name = f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦'
-                    payloadq = f'ids=b903cdb69e2b48968a4d03c2685598fd:1:f82a8d5419df436a90849ef0402dfdf9'
-                    response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
-                                                headers=headers, data=payloadq)
-                    print(response.text)
+                    # payloadq = f'ids=e0c16e9c022241abb5bfa3bbb277f363:1:83986416984c4226a2c4e684185b129d'
+                    # response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
+                    #                             headers=headers, data=payloadq)
+                    # print(response.text)
                     run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
                 else:
                     print('获取值为空', data)
@@ -369,12 +369,12 @@ def chaxun():
         # key = query(date, '440304', '福田区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308',
         #       '盐田区') + query(date,'440307', '龙岗区')
-        key = query(date, '440305', '南山区')
+        key = query(date, '440304', '福田区')
         # key = query(date, '440309', '龙华区')+query(date, '440305', '南山区') + query(date, '440306','宝安区') + \
         #       query(date, '440304', '福田区') + query(date, '440396', '大鹏新区') + query(date, '440308','盐田区') \
         #       + query(date, '440307', '龙岗区')+ query(date, '440303', '罗湖区')
         sj = datetime.datetime.now()  # 当前时间
-        print(f'庄小眉{sj},第{zi}次轮询：有{key}个区有号')
+        print(f'曾芷珊{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
 
         if key > 0:
@@ -390,8 +390,8 @@ def chaxun():
 
 def run(yyrq, shij, bianhao, diz):
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '叶瑞恩', '441422199305150039', '15019466508',
-            '庄小眉', '445222199506260640', '13202825240',
+            '李嘉裕', '441424199512180532', '18320898499',
+            '曾芷珊', '440303199410230625', '13691622379',
             32)
     # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
     #         '潘卓钒', '441802199804110919', '15279101998',
