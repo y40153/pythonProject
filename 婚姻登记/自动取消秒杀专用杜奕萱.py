@@ -111,7 +111,8 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
 def sendmail(name):
     my_sender = '401534863@qq.com'  # 发件人邮箱账号
     my_pass = 'dvymozvmmvbmcaff'  # 发件人邮箱密码
-    def mail(my_user = '15279101998@139.com'):
+
+    def mail(my_user='15279101998@139.com'):
         ret = True
         try:
             msg = MIMEText(f'{name[7:]}', 'plain', 'utf-8')
@@ -207,7 +208,7 @@ def yzm(cancel):
         sendmail(f'验证码获取错误{e}')
         print('-' * 20, '【出错了】', '-' * 20)
         time.sleep(60)
-        
+
     print(zhi)
     if cancel == None:
 
@@ -338,10 +339,10 @@ def query(shijian, bianhao, weizhi):
                     print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
                     panduan = True
                     name = f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦'
-                    # payloadq = f'ids=e0c16e9c022241abb5bfa3bbb277f363:1:83986416984c4226a2c4e684185b129d'
-                    # response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
-                    #                             headers=headers, data=payloadq)
-                    # print(response.text)
+                    payloadq = f'ids=c17476aeb5f648d1bd58bd200e459a32:1:6c0021f935824c05864c7ac3bf35f67f'
+                    response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
+                                                headers=headers, data=payloadq)
+                    print(response.text)
                     run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
                 else:
                     print('获取值为空', data)
@@ -374,7 +375,7 @@ def chaxun():
         #       query(date, '440304', '福田区') + query(date, '440396', '大鹏新区') + query(date, '440308','盐田区') \
         #       + query(date, '440307', '龙岗区')+ query(date, '440303', '罗湖区')
         sj = datetime.datetime.now()  # 当前时间
-        print(f'曾芷珊{sj},第{zi}次轮询：有{key}个区有号')
+        print(f'杜奕萱{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
 
         if key > 0:
@@ -384,14 +385,14 @@ def chaxun():
             mins = 300
         else:
             print('没有号，发不了')
-            mins = 5
+            mins = 25
         time.sleep(mins)
 
 
 def run(yyrq, shij, bianhao, diz):
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '李嘉裕', '441424199512180532', '18320898499',
-            '曾芷珊', '440303199410230625', '13691622379',
+            '黄焕彬', '440507199512230657', '15814034970',
+            '杜奕萱', '130826200002038620', '13612868620',
             32)
     # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
     #         '潘卓钒', '441802199804110919', '15279101998',
