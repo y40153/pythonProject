@@ -1,6 +1,7 @@
 import sys
 import time
 
+from PyQt5 import QtWidgets, QtCore
 # 导入QT,其中包含一些常量，例如颜色等
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QDateTime
 # 导入常用组件
@@ -16,11 +17,9 @@ class UpdateThread(QThread):
     update_data = pyqtSignal(str)
 
     def run(self):
-        # 无限循环，每秒钟传递一次时间给UI
-        while True:
-            data = QDateTime.currentDateTime()
-            currentTime = data.toString("yyyy-MM-dd hh:mm:ss")
-            self.update_data.emit(str(currentTime))
+        # 无限循环，调用一次传递一次给UI
+
+            self.update_data.emit(str('这里放你要的动态参数'))
             time.sleep(1)
 
 
@@ -30,24 +29,28 @@ class DemoWin(QMainWindow):
         self.initUI()
 
     def initUI(self):
-        self.resize(400, 100)
+        self.resize(400, 800)
         self.lineEdit = QLineEdit(self)
         self.lineEdit.resize(400, 100)
 
         # 创建子线程
         self.subThread = UpdateThread()
-        # 将子线程中的信号与timeUpdate槽函数绑定
-        self.subThread.update_data.connect(self.timeUpdate)
+        # 将子线程中的信号与printf槽函数绑定
+        self.subThread.update_data.connect(self.printf)
         # 启动子线程（开始更新时间）
         self.subThread.start()
 
         # 添加窗口标题
         self.setWindowTitle("SubThreadDemo")
+        self.textBrowser = QtWidgets.QTextBrowser(self)
+        self.textBrowser.setGeometry(QtCore.QRect(20, 300, 400, 510))
+        self.textBrowser.setObjectName("textBrowser")
 
     # 被子线程的信号触发，更新一次时间
-    def timeUpdate(self, data):
-        self.lineEdit.setText(data)
-
+    def printf(self,mes, name=''):
+        self.textBrowser.append(str(mes) + name)  # 在指定的区域显示提示信息
+        self.cursot = self.textBrowser.textCursor()
+        self.textBrowser.moveCursor(self.cursot.End)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

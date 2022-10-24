@@ -225,10 +225,10 @@ def sendmail(name):
             server.quit()  # 关闭连接
         except Exception as e:  # 如果 try 中的语句没有执行，则会执行下面的 ret=False
             print(e)
-            r = re.search('550', e)
-            if r is not None:
-                my_user = '401534863@qq.com'  # 收件人邮箱账号，我这边发送给自己
-                mail(my_user)
+            # r = re.search('550', e)
+            # if r is not None:
+            #     my_user = '401534863@qq.com'  # 收件人邮箱账号，我这边发送给自己
+            #     mail(my_user)
             ret = False
         return ret
 
