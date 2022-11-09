@@ -12,7 +12,7 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
 
     print(x)
     payload = json.dumps({
-        "ywlx": "J",
+        "ywlx": "L",
         "bookDate": "",
         "bookCity": "",
         "sfzjhm": "",
@@ -78,10 +78,10 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
         "hyzmEnty": None
     })
     headers = {
-        'x-tif-did': '462eacb0-4062-df5d-b2a7-6603e7d9e5e8',
+        'x-tif-did': '81e2ece1-9cb5-151b-ba5c-f09055e147d1',
         'x-yss-page': 'hunyin/pages/marriage_step3_booktime/marriage_step3_booktime',
         'x-yss-city-code': '4400',
-        'x-tif-sid': 'dbcf3fbd78fade94bc7b732ce4adbbb9f8',
+        'x-tif-sid': '8e09fba33ecb2e818f99fee95d310cee8f',
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
         'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) '
@@ -89,7 +89,7 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
                       'MiniProgramEnv/Mac',
         'Referer': 'https://servicewechat.com/wx82d43fee89cdc7df/754/page-frame.html',
         'Connection': 'keep-alive',
-        'x-ysshint': '462eacb0-4062-df5d-b2a7-6603e7d9e5e81662810716134',
+        'x-ysshint': '81e2ece1-9cb5-151b-ba5c-f09055e147d11662810716134',
         'dgd-pre-release': '0',
         'Content-Type': 'application/json'
     }
@@ -122,9 +122,9 @@ def run():
     if shijisj >= mubiaosj:
         jishiqi.cancel()
         print('时机已到')
-        data = seckill('2022-09-17', '14:00-14:30', '440304', '深圳市福田区民政局婚姻登记处',
-                       '吴晓彬', '440582199309086397', '15279101998',
-                       '潘莹莹', '440981199610152846', '15279101998',
+        data = seckill('2022-11-04', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
+                       '杜攀', '511321198704064922', '19926598165',
+                       '皮巍巍', '411325198908197876', '15210098415',
                        34)
         # while True:
         #

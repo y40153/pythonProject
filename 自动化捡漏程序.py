@@ -53,8 +53,8 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
             "zynv": "国家机关，党群组织，企事业单位",
             "whcdnan": "博士研究生",
             "whcdnv": "硕士研究生",
-            "fjdnan": "广东省深圳市福田区福田街道办事处",
-            "fjdnv": "广东省深圳市福田区香蜜湖街道办事处",
+            "fjdnan": "隐藏显示",
+            "fjdnv": "隐藏显示",
             "lxdhnan": f"{phone}",
             "lxdhnv": f"{phone2}",
             "yyrq_id": "",
@@ -90,10 +90,10 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
         "hyzmEnty": None
     })
     headers = {
-        'x-tif-did': '462eacb0-4062-df5d-b2a7-6603e7d9e5e8',
+        'x-tif-did': '81e2ece1-9cb5-151b-ba5c-f09055e147d1',
         'x-yss-page': 'hunyin/pages/marriage_step3_booktime/marriage_step3_booktime',
         'x-yss-city-code': '4400',
-        'x-tif-sid': 'dbcf3fbd78fade94bc7b732ce4adbbb9f8',
+        'x-tif-sid': '8e09fba33ecb2e818f99fee95d310cee8f',
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
         'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) '
@@ -101,7 +101,7 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
                       'MiniProgramEnv/Mac',
         'Referer': 'https://servicewechat.com/wx82d43fee89cdc7df/754/page-frame.html',
         'Connection': 'keep-alive',
-        'x-ysshint': 'e6be642f-6d31-8aae-9871-352603d137fe1661747478128',
+        'x-ysshint': '81e2ece1-9cb5-151b-ba5c-f09055e147d11667870503047',
         'dgd-pre-release': '0',
         'Content-Type': 'application/json'
     }

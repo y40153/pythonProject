@@ -48,8 +48,8 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
             "zynv": "国家机关，党群组织，企事业单位",
             "whcdnan": "博士研究生",
             "whcdnv": "硕士研究生",
-            "fjdnan": "广东省深圳市福田区福田街道办事处",
-            "fjdnv": "广东省深圳市福田区香蜜湖街道办事处",
+            "fjdnan": "隐藏显示",
+            "fjdnv": "隐藏显示",
             "lxdhnan": f"{phone}",
             "lxdhnv": f"{phone2}",
             "yyrq_id": "",
@@ -85,10 +85,10 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
         "hyzmEnty": None
     })
     headers = {
-        'x-tif-did': '462eacb0-4062-df5d-b2a7-6603e7d9e5e8',
+        'x-tif-did': '81e2ece1-9cb5-151b-ba5c-f09055e147d1',
         'x-yss-page': 'hunyin/pages/marriage_step3_booktime/marriage_step3_booktime',
         'x-yss-city-code': '4400',
-        'x-tif-sid': 'dbcf3fbd78fade94bc7b732ce4adbbb9f8',
+        'x-tif-sid': '8e09fba33ecb2e818f99fee95d310cee8f',
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
         'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) '
@@ -96,7 +96,7 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
                       'MiniProgramEnv/Mac',
         'Referer': 'https://servicewechat.com/wx82d43fee89cdc7df/754/page-frame.html',
         'Connection': 'keep-alive',
-        'x-ysshint': 'e6be642f-6d31-8aae-9871-352603d137fe1661747478128',
+        'x-ysshint': '81e2ece1-9cb5-151b-ba5c-f09055e147d11667870503047',
         'dgd-pre-release': '0',
         'Content-Type': 'application/json'
     }
@@ -359,13 +359,13 @@ def chaxun():
     print(date)
     zi = 1
     while True:
-        key = query(date, '440304', '福田区')+query(date, '440305', '南山区')
+        key = query(date, '440304', '福田区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308', '盐田区') + query(date,'440307', '龙岗区') key =
         # query(date, '440305', '南山区') + query(date, '440306', '宝安区') +query(date, '440303', '罗湖区')  key = query(
         # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',
         # '罗湖区')+ query(date,'440307', '龙岗区')
         sj = datetime.datetime.now()  # 当前时间
-        print(f'侯佳怡{sj},第{zi}次轮询：有{key}个区有号')
+        print(f'王施芬{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
         if key > 0:
             global name
@@ -380,8 +380,8 @@ def chaxun():
 
 def run(yyrq, shij, bianhao, diz):
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '李灿伟', '441522199408102297', '13926579828',
-            '侯佳怡', '130203199403172422', '13631601721',
+            '李浩田', '360102199411183819', '18070115887',
+            '王施芬', '431123199701192546', '18001210119',
             32)
     return
 
