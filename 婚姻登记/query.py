@@ -53,8 +53,8 @@ def query(shijian, bianhao, dizhi):
             "areatypenv": "",
             "area_provincenan": "440000000000",
             "area_provincenv": "440000000000",
-            "area_citynan": "440600000000",
-            "area_citynv": "440600000000",
+            "area_citynan": "440300000000",
+            "area_citynv": "440300000000",
             "area_countynan": f"{bianhao}000000",
             "area_countynv": f"{bianhao}00000",
             "area_townnan": f"{bianhao}000000",
@@ -103,11 +103,11 @@ def query(shijian, bianhao, dizhi):
 
 
 if __name__ == '__main__':
-    date = '2022-11-18'
+    date = '2022-11-22'
     # query(date, '440304', "深圳市福田区民政局婚姻登记处")
     print('-' * 90)
     # query(date, '440308', '盐田区')
-    query(date, '440606', "深圳市南山区民政局婚姻登记处")
+    query(date, '440305', "深圳市南山区民政局婚姻登记处")
     # print('-' * 90)
     # # query(date, '440306', "深圳市宝安区民政局婚姻登记处")
     # # print('-' * 90)
