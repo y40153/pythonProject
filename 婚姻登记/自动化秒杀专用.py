@@ -81,10 +81,10 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
         "hyzmEnty": None
     })
     headers = {
-        'x-tif-did': '462eacb0-4062-df5d-b2a7-6603e7d9e5e8',
+        'x-tif-did': '81e2ece1-9cb5-151b-ba5c-f09055e147d1',
         'x-yss-page': 'hunyin/pages/marriage_step3_booktime/marriage_step3_booktime',
         'x-yss-city-code': '4400',
-        'x-tif-sid': 'dbcf3fbd78fade94bc7b732ce4adbbb9f8',
+        'x-tif-sid': '8e09fba33ecb2e818f99fee95d310cee8f',
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
         'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) '
@@ -92,7 +92,7 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
                       'MiniProgramEnv/Mac',
         'Referer': 'https://servicewechat.com/wx82d43fee89cdc7df/754/page-frame.html',
         'Connection': 'keep-alive',
-        'x-ysshint': '462eacb0-4062-df5d-b2a7-6603e7d9e5e81662810716134',
+        'x-ysshint': '81e2ece1-9cb5-151b-ba5c-f09055e147d11667870503047',
         'dgd-pre-release': '0',
         'Content-Type': 'application/json'
     }
@@ -183,10 +183,10 @@ def seckill3(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuma
         "hyzmEnty": None
     })
     headers = {
-        'x-tif-did': '462eacb0-4062-df5d-b2a7-6603e7d9e5e8',
+        'x-tif-did': '81e2ece1-9cb5-151b-ba5c-f09055e147d1',
         'x-yss-page': 'hunyin/pages/marriage_step3_booktime/marriage_step3_booktime',
         'x-yss-city-code': '4400',
-        'x-tif-sid': 'dbcf3fbd78fade94bc7b732ce4adbbb9f8',
+        'x-tif-sid': '8e09fba33ecb2e818f99fee95d310cee8f',
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
         'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) '
@@ -194,7 +194,7 @@ def seckill3(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuma
                       'MiniProgramEnv/Mac',
         'Referer': 'https://servicewechat.com/wx82d43fee89cdc7df/754/page-frame.html',
         'Connection': 'keep-alive',
-        'x-ysshint': '462eacb0-4062-df5d-b2a7-6603e7d9e5e81662810716134',
+        'x-ysshint': '81e2ece1-9cb5-151b-ba5c-f09055e147d11667870503047',
         'dgd-pre-release': '0',
         'Content-Type': 'application/json'
     }
@@ -285,10 +285,10 @@ def seckill2(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuma
         "hyzmEnty": None
     })
     headers = {
-        'x-tif-did': '462eacb0-4062-df5d-b2a7-6603e7d9e5e8',
+        'x-tif-did': '81e2ece1-9cb5-151b-ba5c-f09055e147d1',
         'x-yss-page': 'hunyin/pages/marriage_step3_booktime/marriage_step3_booktime',
         'x-yss-city-code': '4400',
-        'x-tif-sid': 'dbcf3fbd78fade94bc7b732ce4adbbb9f8',
+        'x-tif-sid': '8e09fba33ecb2e818f99fee95d310cee8f',
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
         'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) '
@@ -355,8 +355,8 @@ def run():
 
     if shijisj >= yjsj:
         name = '激动时刻马上到来', shijisj, s
-        if not s == 1:
-            sendmail(name)
+        # if not s == 1:
+        #     sendmail(name)
         s = 1
         print(name)
     else:
@@ -366,9 +366,9 @@ def run():
     if shijisj >= mubiaosj:
         jishiqi.cancel()
         print('时机已到')
-        data = seckill('2022-11-22', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
-                       '胡益诚', '330326199301220718', '18617194874',
-                       '杨佳宝', '460103199609110324', '15501790259',
+        data = seckill('2022-11-28', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
+                       '彭爽', '510125199004080014', '13408604022',
+                       '许晓敏', '44050919951228122X', '13631235690',
                        34)
         while True:
 
@@ -377,31 +377,15 @@ def run():
                 break
             else:
                 print('不能秒，重来')
-                data = seckill('2022-11-22', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
-                               '胡益诚', '330326199301220718', '18617194874',
-                               '杨佳宝', '460103199609110324', '15501790259',
+                data = seckill('2022-11-28', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
+                               '彭爽', '510125199004080014', '13408604022',
+                               '许晓敏', '44050919951228122X', '13631235690',
                                34)
-        seckill3('2022-11-22', '13:00-13:30', '440104', '广州市越秀区民政局婚姻登记处',
-                 '林钊', '440202199508200633', '18666614751',
-                 '陈绮彤', '440221199512061620', '13112765262',
-                 34)
-        seckill('2022-11-22', '14:00-14:30', '440304', '深圳市福田区民政局婚姻登记处',
-                '王宜铭', '440304199310183813', '13226662058',
-                '赵恺奕', '440682199502114324', '15692410980',
+        seckill('2022-11-28', '10:00-11:00', '440305', '深圳市南山区民政局婚姻登记处',
+                '陈誉天', '44090219950808049X', '17688487868',
+                '赖婧澜', '440902199510270428', '15918516784',
                 34)
-        seckill('2022-11-22', '14:30-15:30', '440304', '深圳市福田区民政局婚姻登记处',
-                '刘文坤', '411381199604050854', '15981933500',
-                '陈云卿', '411423199708280525', '18838085370',
-                34)
-        seckill('2022-11-22', '14:30-15:30', '440306', '深圳市宝安区民政局婚姻登记处',
-                '严国标', '450722199810085618', '17688554818',
-                '李方霞', '431025199407280024', '18566229424',
-                34)
-        seckill('2022-11-22', '14:00-14:30', '440305', '深圳市福田区民政局婚姻登记处',
-                '王戈安', '445224199510011877', '18819206260',
-                '黄岚', '441622199410185461', '18819218142',
-                34)
-        sendmail(data)
+        # sendmail(data)
 
         input('输入任意字符退出程序')
 
