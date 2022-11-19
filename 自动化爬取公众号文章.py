@@ -254,7 +254,7 @@ def pawx():
         ts = ts.replace(f'{base}', f'{url}')
 
     # 爬取文章logo
-    r = re.search('var cdn_url_1_1 = "(.*)"; // 1:1比例的封面图', content)
+    r = re.search('var msg_cdn_url = "(.*)"; // 首图idx=0时2.35:1', content)
     logo = r.group(1)
 
     r = requests.get(logo)
