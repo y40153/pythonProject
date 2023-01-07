@@ -102,8 +102,8 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
     }
     response = requests.request("POST", url, headers=headers, data=payload)
     global name
-    txt = response.text
-    name = name + x + txt
+    txt = response.text + '\n'
+    name = str(name) + x + txt
     print('\033'f'[0:{colour}m', response.text, '\033[m')  # 31-37
     return
 
