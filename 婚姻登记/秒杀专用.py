@@ -78,10 +78,10 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
         "hyzmEnty": None
     })
     headers = {
-        'x-tif-did': '81e2ece1-9cb5-151b-ba5c-f09055e147d1',
+        'x-tif-did': 'afc8aae4-2005-7d32-81df-b7b044f07147',
         'x-yss-page': 'hunyin/pages/marriage_step3_booktime/marriage_step3_booktime',
         'x-yss-city-code': '4400',
-        'x-tif-sid': '8e09fba33ecb2e818f99fee95d310cee8f',
+        'x-tif-sid': '8efcfe5ae90ca6816767e69d6e8ac0e0ba',
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
         'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) '
@@ -97,11 +97,11 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
     txt = response.text
     # if os.name == 'posix':
     #
-    #     with open('/Users/wang/Desktop/证件信息.txt', mode='a', encoding='utf‐8') as a_file:
+    #     with open('./证件信息.txt', mode='a', encoding='utf‐8') as a_file:
     #         a_file.write(f'\n{datetime.datetime.now()}调用了秒杀{date}的号\n{x}\n{txt}\n')
     #         # 写字
     # else:
-    #     with open(r'C:\Users\Administrator\Desktop\证件信息.txt', mode='a', encoding='utf‐8') as a_file:
+    #     with open(r'./证件信息.txt', mode='a', encoding='utf‐8') as a_file:
     #         a_file.write(f'\n{datetime.datetime.now()}调用了秒杀{date}的号\n{x}\n{txt}\n')
     #         # 写字
     print('\033'f'[0:{colour}m', response.text, '\033[m')  # 31-37
@@ -122,7 +122,7 @@ def run():
     if shijisj >= mubiaosj:
         jishiqi.cancel()
         print('时机已到')
-        data = seckill('2022-11-04', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
+        data = seckill('2023-11-04', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
                        '杜攀', '511321198704064922', '19926598165',
                        '皮巍巍', '411325198908197876', '15210098415',
                        34)
@@ -133,16 +133,16 @@ def run():
         #         break
         #     else:
         #         print('不能秒，重来')
-        #         data = seckill('2022-09-27', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
+        #         data = seckill('2023-09-27', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
         #                        '叶灿明', '441202198201154018', '15820285059',
         #                        '姚凤兰', '431022199007054280', '18818560254',
         #                        34)
-        # seckill('2022-09-27', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
+        # seckill('2023-09-27', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
         #         '董贺楠', '23233019930527461X', '17620311677',
         #         '严冬', '441284199410070047', '13760088888',
         #         32)
         #
-        # seckill('2022-09-27', '14:00-14:30', '440304', '深圳市福田区民政局婚姻登记处',
+        # seckill('2023-09-27', '14:00-14:30', '440304', '深圳市福田区民政局婚姻登记处',
         #         '陈凌锋', '441323199402078519', '15986763618',
         #         '陈婉玲', '44522419951214522X', '18503066997',
         #         34)

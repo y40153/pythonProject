@@ -98,19 +98,12 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
     }
     response = requests.request("POST", url, headers=headers, data=payload)
     txt = response.text
-    # if os.name == 'posix':
-    #
-    #     with open('./证件信息.txt', mode='a', encoding='utf‐8') as a_file:
-    #         a_file.write(f'\n{datetime.datetime.now()}调用了秒杀{date}的号\n{x}\n{txt}\n')
-    #         # 写字
-    # else:
-    #     with open(r'./证件信息.txt', mode='a', encoding='utf‐8') as a_file:
-    #         a_file.write(f'\n{datetime.datetime.now()}调用了秒杀{date}的号\n{x}\n{txt}\n')
-    #         # 写字
+
     print('\033'f'[0:{colour}m', response.text, '\033[m')  # 31-37
     return txt
 
 
+# 广东
 def seckill3(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wumanhao, phone2, colour):
     x = f'男名{manname}，男卡{manhao}，男号{phone}，女名{wumanname}，女卡{wumanhao}，女号{phone2}'
     url = "https://mmykm2.gdbs.gov.cn/ebus/huazi_gdhy/hunyin/api/mobile/marriage/create_reservation?"
@@ -213,6 +206,100 @@ def seckill3(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuma
     return txt
 
 
+# 男老外
+def seckill4(date, time, bianhao, dizhi, manname, manhao, phone, gj, wumanname, wumanhao, phone2, colour):
+    x = f'男名{manname}，男卡{manhao}，男号{phone}，女名{wumanname}，女卡{wumanhao}，女号{phone2}'
+    url = "https://mmykm2.gdbs.gov.cn/ebus/huazi_gdhy/hunyin/api/mobile/marriage/create_reservation?"
+
+    print(x)
+    payload = json.dumps({
+        "ywlx": "J",
+        "bookDate": "",
+        "bookCity": "",
+        "sfzjhm": "",
+        "slhzbh": "",
+        "hydjEnty": {
+            "id": "",
+            "yyywlx": "",
+            "slywlx": "",
+            "sqrlbnan": "外籍华人",
+            "sqrlbnv": "内地居民",
+            "sfzjlbnan": "护照",
+            "sfzjlbnv": "内地居民身份证",
+            "sfzjhmnan": f"{manhao}",
+            "sfzjhmnv": f"{wumanhao}",
+            "jrzjlbnan": "",
+            "jrzjlbnv": "",
+            "xmnan": f"{manname}",
+            "xmnv": f"{wumanname}",
+            "csrqnan": f'1993-01-01',
+            "csrqnv": f'{wumanhao[6:10]}-{wumanhao[10:12]}-{wumanhao[12:14]}',
+            "gjnan": f"{gj}",
+            "gjnv": "中国",
+            "mznan": "",
+            "mznv": "",
+            "zynan": "专业技术人员",
+            "zynv": "国家机关，党群组织，企事业单位",
+            "whcdnan": "博士研究生",
+            "whcdnv": "硕士研究生",
+            "fjdnan": f"{gj}",
+            "fjdnv": "隐藏显示",
+            "lxdhnan": f"{phone}",
+            "lxdhnv": f"{phone2}",
+            "yyrq_id": "",
+            "yyh": "",
+            "yyrq": f"{date}",
+            "yysj": f"{time}",
+            "djjgbm": f"{bianhao}0A1000",
+            "djjgmc": f"{dizhi}",
+            "djjgdz": "深圳市福田区农园路30号香蜜公园西门。进入婚姻登记处需出示行程码、粤康码（绿码）、48小时内核酸检测阴性证明，行程码带星（*）的按照现行规定提供核酸检测阴性证明。",
+            "djjgdh": "0755-82928049",
+            "areacodenan": "",
+            "areacodenv": "",
+            "areatypenan": "",
+            "areatypenv": "",
+            "area_provincenan": "",
+            "area_provincenv": "440000000000",
+            "area_citynan": "",
+            "area_citynv": "440300000000",
+            "area_countynan": "",
+            "area_countynv": f"{bianhao}000000",
+            "area_townnan": "",
+            "area_townnv": f"{bianhao}004000",
+            "area_communitynan": "",
+            "area_communitynv": "",
+            "ydbllx": "01",
+            "jzd_provincenan": "440000000000",
+            "jzd_provincenv": "440000000000",
+            "jzd_citynan": "",
+            "jzd_citynv": "",
+            "jzd_countynan": "",
+            "jzd_countynv": ""
+        },
+        "hyzmEnty": None
+    })
+    headers = {
+        'x-tif-did': 'afc8aae4-2005-7d32-81df-b7b044f07147',
+        'x-yss-page': 'hunyin/pages/marriage_step3_booktime/marriage_step3_booktime',
+        'x-yss-city-code': '4400',
+        'x-tif-sid': '8efcfe5ae90ca6816767e69d6e8ac0e0ba',
+        'Accept-Language': 'zh-cn',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) '
+                      'Mobile/15E217 MicroMessenger/6.8.0(0x16080000) NetType/WIFI Language/en Branch/Br_trunk '
+                      'MiniProgramEnv/Mac',
+        'Referer': 'https://servicewechat.com/wx82d43fee89cdc7df/754/page-frame.html',
+        'Connection': 'keep-alive',
+        'x-ysshint': 'afc8aae4-2005-7d32-81df-b7b044f071471672644536959',
+        'dgd-pre-release': '0',
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
+    print('\033'f'[0:{colour}m', response.text, '\033[m')  # 31-37
+    return
+
+
+# 香港
 def seckill2(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wumanhao, phone2, colour):
     x = f'男名{manname}，男卡{manhao}，男号{phone}，女名{wumanname}，女卡{wumanhao}，女号{phone2}'
     url = "https://mmykm2.gdbs.gov.cn/ebus/huazi_gdhy/hunyin/api/mobile/marriage/create_reservation?"
@@ -301,11 +388,200 @@ def seckill2(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuma
         'Content-Type': 'application/json'
     }
     response = requests.request("POST", url, headers=headers, data=payload)
-    global name
     txt = response.text
-    name = name + x + txt
+
     print('\033'f'[0:{colour}m', response.text, '\033[m')  # 31-37
-    return
+    return txt
+
+
+# 顺德
+def seckill5(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wumanhao, phone2, colour):
+    x = f'男名{manname}，男卡{manhao}，男号{phone}，女名{wumanname}，女卡{wumanhao}，女号{phone2}'
+    url = "https://mmykm2.gdbs.gov.cn/ebus/huazi_gdhy/hunyin/api/mobile/marriage/create_reservation?"
+
+    print(x)
+    payload = json.dumps({
+        "ywlx": "J",
+        "bookDate": "",
+        "bookCity": "",
+        "sfzjhm": "",
+        "slhzbh": "",
+        "hydjEnty": {
+            "id": "",
+            "yyywlx": "",
+            "slywlx": "",
+            "sqrlbnan": "内地居民",
+            "sqrlbnv": "内地居民",
+            "sfzjlbnan": "内地居民身份证",
+            "sfzjlbnv": "内地居民身份证",
+            "sfzjhmnan": f"{manhao}",
+            "sfzjhmnv": f"{wumanhao}",
+            "jrzjlbnan": "",
+            "jrzjlbnv": "",
+            "xmnan": f"{manname}",
+            "xmnv": f"{wumanname}",
+            "csrqnan": f'{manhao[6:10]}-{manhao[10:12]}-{manhao[12:14]}',
+            "csrqnv": f'{wumanhao[6:10]}-{wumanhao[10:12]}-{wumanhao[12:14]}',
+            "gjnan": "中国",
+            "gjnv": "中国",
+            "mznan": "",
+            "mznv": "",
+            "zynan": "专业技术人员",
+            "zynv": "国家机关，党群组织，企事业单位",
+            "whcdnan": "博士研究生",
+            "whcdnv": "硕士研究生",
+            "fjdnan": "隐藏显示",
+            "fjdnv": "隐藏显示",
+            "lxdhnan": f"{phone}",
+            "lxdhnv": f"{phone2}",
+            "yyrq_id": "",
+            "yyh": "",
+            "yyrq": f"{date}",
+            "yysj": f"{time}",
+            "djjgbm": f"{bianhao}0A1000",
+            "djjgmc": f"{dizhi}",
+            "djjgdz": "深圳市福田区农园路30号香蜜公园西门。进入婚姻登记处需出示行程码、粤康码（绿码）、48小时内核酸检测阴性证明，行程码带星（*）的按照现行规定提供核酸检测阴性证明。",
+            "djjgdh": "0755-82928049",
+            "areacodenan": "",
+            "areacodenv": "",
+            "areatypenan": "",
+            "areatypenv": "",
+            "area_provincenan": "440000000000",
+            "area_provincenv": "440000000000",
+            "area_citynan": "440600000000",
+            "area_citynv": "440600000000",
+            "area_countynan": f"{bianhao}000000",
+            "area_countynv": f"{bianhao}000000",
+            "area_townnan": f"{bianhao}001000",
+            "area_townnv": f"{bianhao}004000",
+            "area_communitynan": "",
+            "area_communitynv": "",
+            "ydbllx": "01",
+            "jzd_provincenan": "440000000000",
+            "jzd_provincenv": "440000000000",
+            "jzd_citynan": "",
+            "jzd_citynv": "",
+            "jzd_countynan": "",
+            "jzd_countynv": ""
+        },
+        "hyzmEnty": None
+    })
+    headers = {
+        'x-tif-did': 'afc8aae4-2005-7d32-81df-b7b044f07147',
+        'x-yss-page': 'hunyin/pages/marriage_step3_booktime/marriage_step3_booktime',
+        'x-yss-city-code': '4400',
+        'x-tif-sid': '8efcfe5ae90ca6816767e69d6e8ac0e0ba',
+        'Accept-Language': 'zh-cn',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) '
+                      'Mobile/15E217 MicroMessenger/6.8.0(0x16080000) NetType/WIFI Language/en Branch/Br_trunk '
+                      'MiniProgramEnv/Mac',
+        'Referer': 'https://servicewechat.com/wx82d43fee89cdc7df/754/page-frame.html',
+        'Connection': 'keep-alive',
+        'x-ysshint': 'afc8aae4-2005-7d32-81df-b7b044f071471672644536959',
+        'dgd-pre-release': '0',
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
+    txt = response.text
+
+    print('\033'f'[0:{colour}m', response.text, '\033[m')  # 31-37
+    return txt
+
+
+# 东莞
+def seckill6(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wumanhao, phone2, colour):
+    x = f'男名{manname}，男卡{manhao}，男号{phone}，女名{wumanname}，女卡{wumanhao}，女号{phone2}'
+    url = "https://mmykm2.gdbs.gov.cn/ebus/huazi_gdhy/hunyin/api/mobile/marriage/create_reservation?"
+
+    print(x)
+    payload = json.dumps({
+        "ywlx": "J",
+        "bookDate": "",
+        "bookCity": "",
+        "sfzjhm": "",
+        "slhzbh": "",
+        "hydjEnty": {
+            "id": "",
+            "yyywlx": "",
+            "slywlx": "",
+            "sqrlbnan": "内地居民",
+            "sqrlbnv": "内地居民",
+            "sfzjlbnan": "内地居民身份证",
+            "sfzjlbnv": "内地居民身份证",
+            "sfzjhmnan": f"{manhao}",
+            "sfzjhmnv": f"{wumanhao}",
+            "jrzjlbnan": "",
+            "jrzjlbnv": "",
+            "xmnan": f"{manname}",
+            "xmnv": f"{wumanname}",
+            "csrqnan": f'{manhao[6:10]}-{manhao[10:12]}-{manhao[12:14]}',
+            "csrqnv": f'{wumanhao[6:10]}-{wumanhao[10:12]}-{wumanhao[12:14]}',
+            "gjnan": "中国",
+            "gjnv": "中国",
+            "mznan": "",
+            "mznv": "",
+            "zynan": "专业技术人员",
+            "zynv": "国家机关，党群组织，企事业单位",
+            "whcdnan": "博士研究生",
+            "whcdnv": "硕士研究生",
+            "fjdnan": "隐藏显示",
+            "fjdnv": "隐藏显示",
+            "lxdhnan": f"{phone}",
+            "lxdhnv": f"{phone2}",
+            "yyrq_id": "",
+            "yyh": "",
+            "yyrq": f"{date}",
+            "yysj": f"{time}",
+            "djjgbm": f"{bianhao}000000",
+            "djjgmc": f"{dizhi}",
+            "djjgdz": "",
+            "djjgdh": "",
+            "areacodenan": "",
+            "areacodenv": "",
+            "areatypenan": "",
+            "areatypenv": "",
+            "area_provincenan": "440000000000",
+            "area_provincenv": "440000000000",
+            "area_citynan": "441900000000",
+            "area_citynv": "441900000000",
+            "area_countynan": f"{bianhao}000000",
+            "area_countynv": f"{bianhao}000000",
+            "area_townnan": f"{bianhao}001000",
+            "area_townnv": f"{bianhao}004000",
+            "area_communitynan": "",
+            "area_communitynv": "",
+            "ydbllx": "01",
+            "jzd_provincenan": "440000000000",
+            "jzd_provincenv": "440000000000",
+            "jzd_citynan": "",
+            "jzd_citynv": "",
+            "jzd_countynan": "",
+            "jzd_countynv": ""
+        },
+        "hyzmEnty": None
+    })
+    headers = {
+        'x-tif-did': 'afc8aae4-2005-7d32-81df-b7b044f07147',
+        'x-yss-page': 'hunyin/pages/marriage_step3_booktime/marriage_step3_booktime',
+        'x-yss-city-code': '4400',
+        'x-tif-sid': '8efcfe5ae90ca6816767e69d6e8ac0e0ba',
+        'Accept-Language': 'zh-cn',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) '
+                      'Mobile/15E217 MicroMessenger/6.8.0(0x16080000) NetType/WIFI Language/en Branch/Br_trunk '
+                      'MiniProgramEnv/Mac',
+        'Referer': 'https://servicewechat.com/wx82d43fee89cdc7df/754/page-frame.html',
+        'Connection': 'keep-alive',
+        'x-ysshint': 'afc8aae4-2005-7d32-81df-b7b044f071471672644536959',
+        'dgd-pre-release': '0',
+        'Content-Type': 'application/json'
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
+    txt = response.text
+
+    print('\033'f'[0:{colour}m', response.text, '\033[m')  # 31-37
+    return txt
 
 
 # sj=datetime.datetime.strptime(shijian,'%Y-%m-%d')转时间的写法
@@ -355,8 +631,8 @@ def run():
 
     if shijisj >= yjsj:
         name = '激动时刻马上到来', shijisj, s
-        if not s == 1:
-            sendmail(name)
+        # if not s == 1:
+        #     sendmail(name)
         s = 1
         print(name)
     else:
@@ -366,26 +642,51 @@ def run():
     if shijisj >= mubiaosj:
         jishiqi.cancel()
         print('时机已到')
-        data = seckill('2023-01-20', '14:30-15:30', '440304', '深圳市福田区民政局婚姻登记处',
-                       '姜功赫', '440304199305050717', '13826503505',
-                       '杨羚', '441522199104293362', '18122387826',
+        data = seckill('2023-12-26', '9:00-10:00', '440304', '深圳市福田区民政局婚姻登记处',
+                       '李嘉旼', '410811199711040077', '13530198658',
+                       '郭欣', '440112199709271224', '15975362770',
                        34)
-        while True:
+        # while True:
+        #
+        #     if re.search('剩余号源不够', data) is None:
+        #         print('开始放号啦！加油冲')
+        #         break
+        #     else:
+        #         print('不能秒，重来')
+        #         data = seckill('2023-12-26', '9:00-10:00', '440304', '深圳市福田区民政局婚姻登记处',
+        #                        '李嘉旼', '410811199711040077', '13530198658',
+        #                        '郭欣', '440112199709271224', '15975362770',
+        #                        34)
+        seckill('2023-12-26', '14:30-15:30', '440309', '深圳市龙华区民政局婚姻登记处',
+                '张李栓', '41052219891229475X', '16621090994',
+                '郭凤娟', '430523199002287280', '18825170859',
+                34)
+        seckill6('2023-12-26', '9:00-10:00', '4419A2', '东莞市民政局松山湖婚姻登记处',
+                 '蔡嘉俊', '441900199012154852', '18929182883',
+                 '郑泺媛', '441602199911050228', '13148605076',
+                 34)
+        seckill('2023-12-26', '14:00-14:30', '440306', '深圳市宝安区民政局婚姻登记处',
+                '肖斌', '430682199112133616', '18680675921',
+                '王顺辉', '440229199311063524', '18680675921',
+                34)
+        seckill('2023-12-26', '14:00-14:30', '440304', '深圳市福田区民政局婚姻登记处',
+                '王提', '440307199211203814', '18507489697',
+                '杨梦瑶', '430623199712171245', '15279101998',
+                34)
 
-            if re.search('剩余号源不够', data) is None:
-                print('开始放号啦！加油冲')
-                break
-            else:
-                print('不能秒，重来')
-                data = seckill('2023-01-20', '14:30-15:30', '440304', '深圳市福田区民政局婚姻登记处',
-                               '姜功赫', '440304199305050717', '13826503505',
-                               '杨羚', '441522199104293362', '18122387826',
-                               34)
+        seckill('2023-12-26', '14:30-15:30', '440304', '深圳市福田区民政局婚姻登记处',
+                '陈远杰', '440509199401045611', '18814116039',
+                '黄海洋', '412822199707150821', '13713916430',
+                34)
 
-        sendmail(data)
+        seckill('2023-12-26', '10:00-11:00', '440304', '深圳市福田区民政局婚姻登记处',
+                '孙唯', '440103198811283319', '15889720265',
+                '张瑜', '630104198708130025', '13510341908',
+                34)
+
+        # sendmail(data)
 
         input('输入任意字符退出程序')
-
     return
 
 

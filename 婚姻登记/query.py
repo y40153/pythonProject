@@ -6,7 +6,7 @@ import requests
 def query(shijian, bianhao, dizhi):
     url = "https://mmykm1.gdbs.gov.cn/ebus/huazi_gdhy/hunyin/api/mobile/marriage/list_times?"
     payload = json.dumps({
-        "ywlx": "J",
+        "ywlx": "L",
         "bookDate": f"{shijian}",
         "bookCity": "",
         "sfzjhm": "",
@@ -41,7 +41,7 @@ def query(shijian, bianhao, dizhi):
             "lxdhnv": "",
             "yyrq_id": "",
             "yyh": "",
-            "yyrq": "2022-05-20",
+            "yyrq": "2023-05-20",
             "yysj": "",
             "djjgbm": f"{bianhao}0A1000",
             "djjgmc": f"{dizhi}",
@@ -72,10 +72,10 @@ def query(shijian, bianhao, dizhi):
         "hyzmEnty": None
     })
     headers = {
-        'x-tif-did': '81e2ece1-9cb5-151b-ba5c-f09055e147d1',
+        'x-tif-did': 'afc8aae4-2005-7d32-81df-b7b044f07147',
         'x-yss-page': 'hunyin/pages/marriage_step3_booktime/marriage_step3_booktime',
         'x-yss-city-code': '4400',
-        'x-tif-sid': '8e09fba33ecb2e818f99fee95d310cee8f',
+        'x-tif-sid': '8efcfe5ae90ca6816767e69d6e8ac0e0ba',
         'Accept-Language': 'zh-cn',
         'Accept-Encoding': 'gzip, deflate, br',
         'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) '
@@ -83,7 +83,7 @@ def query(shijian, bianhao, dizhi):
                       'MiniProgramEnv/Mac',
         'Referer': 'https://servicewechat.com/wx82d43fee89cdc7df/754/page-frame.html',
         'Connection': 'keep-alive',
-        'x-ysshint': '81e2ece1-9cb5-151b-ba5c-f09055e147d11667870503047',
+        'x-ysshint': 'afc8aae4-2005-7d32-81df-b7b044f071471672644536959',
         'dgd-pre-release': '0',
         'Content-Type': 'application/json'
     }
@@ -103,11 +103,11 @@ def query(shijian, bianhao, dizhi):
 
 
 if __name__ == '__main__':
-    date = '2022-11-22'
-    # query(date, '440304', "深圳市福田区民政局婚姻登记处")
+    date = '2023-12-09'
+    query(date, '440304', "深圳市福田区民政局婚姻登记处")
     print('-' * 90)
     # query(date, '440308', '盐田区')
-    query(date, '440305', "深圳市南山区民政局婚姻登记处")
+    # query(date, '440305', "深圳市南山区民政局婚姻登记处")
     # print('-' * 90)
     # # query(date, '440306', "深圳市宝安区民政局婚姻登记处")
     # # print('-' * 90)

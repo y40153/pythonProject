@@ -63,13 +63,13 @@ def yzm(cancel):
     elif cancel == 1:
         print('秒杀来验证码')
         if os.name == 'posix':
-            with open('/Users/wang/Desktop/证件信息.txt', 'r', encoding='utf‐8') as a_file:
+            with open('./证件信息.txt', 'r', encoding='utf‐8') as a_file:
                 cookie = a_file.readline().rstrip()
         else:
-            with open(r"C:\Users\Administrator\Desktop\证件信息.txt", 'r', encoding='utf‐8') as a_file:
+            with open(r"./证件信息.txt", 'r', encoding='utf‐8') as a_file:
                 cookie = a_file.readline().rstrip()
         headers = {
-            'Referer': 'https://www.gdhy.gov.cn/yyjh.do?do=preYyxxOper&yyrq=2022-08-30&djjg=4403040A1000&yysj=9:00-10:00&ydbllx=01',
+            'Referer': 'https://www.gdhy.gov.cn/yyjh.do?do=preYyxxOper&yyrq=2023-08-30&djjg=4403040A1000&yysj=9:00-10:00&ydbllx=01',
             'Cookie': f'{cookie}'
         }
         url = f"https://www.gdhy.gov.cn/common.do?do=getCaptchaImg&random={random.random()}"
@@ -78,10 +78,10 @@ def yzm(cancel):
                                     data=payload)
     else:  # 进行取消
         if os.name == 'posix':
-            with open('/Users/wang/Desktop/证件信息.txt', 'r', encoding='utf‐8') as a_file:
+            with open('./证件信息.txt', 'r', encoding='utf‐8') as a_file:
                 cookie = a_file.readline().rstrip()
         else:
-            with open(r"C:\Users\Administrator\Desktop\证件信息.txt", 'r', encoding='utf‐8') as a_file:
+            with open(r"./证件信息.txt", 'r', encoding='utf‐8') as a_file:
                 cookie = a_file.readline().rstrip()
         headers = {
             'Referer': 'https://www.gdhy.gov.cn/wsyy/query/yyQuery.jsp?flag=2',
@@ -112,11 +112,11 @@ def yzm(cancel):
 
         if os.name == 'posix':
 
-            with open('/Users/wang/Desktop/证件信息.txt', mode='w', encoding='utf‐8') as a_file:
+            with open('./证件信息.txt', mode='w', encoding='utf‐8') as a_file:
                 a_file.write(f'JSESSIONID={values};openstack_cookie_insert={values2}')
                 # 写字
         else:
-            with open(r'C:\Users\Administrator\Desktop\证件信息.txt', mode='w', encoding='utf‐8') as a_file:
+            with open(r'./证件信息.txt', mode='w', encoding='utf‐8') as a_file:
                 a_file.write(f'JSESSIONID={values};openstack_cookie_insert={values2}')
             # 写字
     return zhi
@@ -125,10 +125,10 @@ def yzm(cancel):
 def denlu():
     payload = f'captcha={yzm(None)}'
     if os.name == 'posix':
-        with open('/Users/wang/Desktop/证件信息.txt', 'r', encoding='utf‐8') as a_file:
+        with open('./证件信息.txt', 'r', encoding='utf‐8') as a_file:
             cookie = a_file.readline().rstrip()
     else:
-        with open(r"C:\Users\Administrator\Desktop\证件信息.txt", 'r', encoding='utf‐8') as a_file:
+        with open(r"./证件信息.txt", 'r', encoding='utf‐8') as a_file:
             cookie = a_file.readline().rstrip()
     headers = {
         'Referer': 'https://www.gdhy.gov.cn/wsyy/yyjh.jsp',
@@ -156,20 +156,20 @@ def login():
     payload = {}
     try:
         if os.name == 'posix':
-            with open('/Users/wang/Desktop/证件信息.txt', 'r', encoding='utf‐8') as a_file:
+            with open('./证件信息.txt', 'r', encoding='utf‐8') as a_file:
                 cookie = a_file.readline().rstrip()
         else:
-            with open(r"C:\Users\Administrator\Desktop\证件信息.txt", 'r', encoding='utf‐8') as a_file:
+            with open(r"./证件信息.txt", 'r', encoding='utf‐8') as a_file:
                 cookie = a_file.readline().rstrip()
     except:
         print('出错了，没有发现存储器，立马创建。。。')
         if os.name == 'posix':
 
-            with open('/Users/wang/Desktop/证件信息.txt', mode='w', encoding='utf‐8') as a_file:
+            with open('./证件信息.txt', mode='w', encoding='utf‐8') as a_file:
                 a_file.write('')
                 # 写字
         else:
-            with open(r'C:\Users\Administrator\Desktop\证件信息.txt', mode='w', encoding='utf‐8') as a_file:
+            with open(r'./证件信息.txt', mode='w', encoding='utf‐8') as a_file:
                 a_file.write('')
                 # 写字
         cookie = ''
@@ -181,7 +181,7 @@ def login():
     print(headers)
 
     response = requests.request('GET',
-                                "https://www.gdhy.gov.cn/common.do?do=getWdrqxx&yyrq=2022-09-09&blcs=440300000000&ywlx=J",
+                                "https://www.gdhy.gov.cn/common.do?do=getWdrqxx&yyrq=2023-09-09&blcs=440300000000&ywlx=J",
                                 headers=headers, data=payload)
 
     if re.search('会话超时，请重新申请！', response.text) is None:
@@ -195,10 +195,10 @@ def query(shijian, bianhao, weizhi):
     url = "https://www.gdhy.gov.cn/common.do?do=getYysjxx"
 
     if os.name == 'posix':
-        with open('/Users/wang/Desktop/证件信息.txt', 'r', encoding='utf‐8') as a_file:
+        with open('./证件信息.txt', 'r', encoding='utf‐8') as a_file:
             cookie = a_file.readline().rstrip()
     else:
-        with open(r"C:\Users\Administrator\Desktop\证件信息.txt", 'r', encoding='utf‐8') as a_file:
+        with open(r"./证件信息.txt", 'r', encoding='utf‐8') as a_file:
             cookie = a_file.readline().rstrip()
     payload = f'djjgbm={bianhao}0A1000&ywlx=J&rqDate={shijian}&ydbllx=01'
     headers = {
@@ -207,7 +207,7 @@ def query(shijian, bianhao, weizhi):
         'Accept': 'application/json, text/javascript, */*; q=0.01',
         'Sec-Fetch-Site': 'same-origin',
         'Sec-Fetch-Mode': 'navigate',
-        'Referer': 'https://www.gdhy.gov.cn/common.do?do=getWdrqxx&yyrq=2022-08-30&blcs=4403040A1000&ywlx=J',
+        'Referer': 'https://www.gdhy.gov.cn/common.do?do=getWdrqxx&yyrq=2023-08-30&blcs=4403040A1000&ywlx=J',
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'zh-CN,zh;q=0.9',
         'Content-Length': '54',
@@ -254,7 +254,7 @@ def chaxun():
     panduan = False
     # name = ''
     dater = input("请输入预约日期如09-01:\n")
-    date = f'2022-{dater}'
+    date = f'2023-{dater}'
     print(date)
     dz = input('请输入预约区域如4:')
     while True:
@@ -272,10 +272,10 @@ def chaxun():
 
 def quxiao(nan, nv, yyrq):
     if os.name == 'posix':
-        with open('/Users/wang/Desktop/证件信息.txt', 'r', encoding='utf‐8') as a_file:
+        with open('./证件信息.txt', 'r', encoding='utf‐8') as a_file:
             cookie = a_file.readline().rstrip()
     else:
-        with open(r"C:\Users\Administrator\Desktop\证件信息.txt", 'r', encoding='utf‐8') as a_file:
+        with open(r"./证件信息.txt", 'r', encoding='utf‐8') as a_file:
             cookie = a_file.readline().rstrip()
     url = "https://www.gdhy.gov.cn/common.do?do=getYyInfos"
 
@@ -315,10 +315,10 @@ def quxiao(nan, nv, yyrq):
 def miaosha():
     url1 = "https://www.gdhy.gov.cn/yyjh.do?do=hjFormValidate&vatow=04"
     if os.name == 'posix':
-        with open('/Users/wang/Desktop/证件信息.txt', 'r', encoding='utf‐8') as a_file:
+        with open('./证件信息.txt', 'r', encoding='utf‐8') as a_file:
             cookie = a_file.readline().rstrip()
     else:
-        with open(r"C:\Users\Administrator\Desktop\证件信息.txt", 'r', encoding='utf‐8') as a_file:
+        with open(r"./证件信息.txt", 'r', encoding='utf‐8') as a_file:
             cookie = a_file.readline().rstrip()
     payload = 'creator_id=%20&creator_name=%20&creator_orgid=%20&create_time=%20&slywlx=%20&id=%20&oper=%20&jszjhmnan=%20&jszjhmnv=%20&djnlnan=%20&djnlnv=%20&blzt=%20&blsj=%20&hidcitynan=%20&hidcitynv=%20&yyywlx=1&sqrlbnan=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0%91&sqrlbnv=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0%91&gjnan=%E4%B8%AD%E5%9B%BD&gjnv=%E4%B8%AD%E5%9B%BD&area_provincenan=440000000000&area_provincenv=440000000000&area_citynan=440300000000&area_citynv=440300000000&area_countynan=440304000000&area_countynv=440304000000&area_townnan=440304002000&area_townnv=440304006000&fjdnan=%E9%87%91%E9%B8%A1&fjdnv=%E6%B7%B1%E5%9C%B3%E5%B8%82&jzd_provincenan=440000000000&jzd_provincenv=440000000000&jzd_citynan=%20&jzd_citynv=%20&jzd_countynan=%20&jzd_countynv=%20&jzd_townnan=%20&jzd_townnv='
     headers = {
@@ -330,7 +330,7 @@ def miaosha():
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         # 'Host': 'www.gdhy.gov.cn',
         # 'Origin': 'https://www.gdhy.gov.cn',
-        'Referer': 'https://www.gdhy.gov.cn/yyjh.do?do=preYyxxOper&yyrq=2022-09-17&djjg=4403040A1000&yysj=9:00-10:00&ydbllx=01',
+        'Referer': 'https://www.gdhy.gov.cn/yyjh.do?do=preYyxxOper&yyrq=2023-09-17&djjg=4403040A1000&yysj=9:00-10:00&ydbllx=01',
         # 'Sec-Fetch-Mode': 'cors',
         # 'Sec-Fetch-Site': 'same-origin',
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
@@ -358,7 +358,7 @@ def miaosha():
         # global headers
         payload = f'creator_id=%20&creator_name=%20&creator_orgid=%20&create_time=%20&slywlx=%2001&id=%20&oper=%20' \
                   f'&jszjhmnan=%20&jszjhmnv=%20&djnlnan=%20&djnlnv=%20&blzt=%20&blsj=%20&hidcitynan=%20&hidcitynv=%20' \
-                  f'&yyrq=2022-09-17&yysj=9%3A00-10%3A00&djjg=4403040A1000&sqrlbnan=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0' \
+                  f'&yyrq=2023-09-17&yysj=9%3A00-10%3A00&djjg=4403040A1000&sqrlbnan=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0' \
                   f'%91&sqrlbnv=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0%91&xmnan=%E5%90%B4%E6%99%93%E5%BD%AC&xmnv=%E6%BD%98' \
                   f'%E8%8E%B9%E8%8E%B9&sfzjlbnan=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0%91%E8%BA%AB%E4%BB%BD%E8%AF%81' \
                   f'&sfzjlbnv=%E5%86%85%E5%9C%B0%E5%B1%85%E6%B0%91%E8%BA%AB%E4%BB%BD%E8%AF%81&sfzjhmnan' \
@@ -369,7 +369,7 @@ def miaosha():
                   f'%E5%85%B3%E4%BA%BA%E5%91%98&lxdhnan=15279101998&lxdhnv=15279101998&captcha={yzm(1)}'
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'Referer': 'https://www.gdhy.gov.cn/yyjh.do?do=preYyxxOper&yyrq=2022-09-17&djjg=4403040A1000&yysj=9:00-10'
+            'Referer': 'https://www.gdhy.gov.cn/yyjh.do?do=preYyxxOper&yyrq=2023-09-17&djjg=4403040A1000&yysj=9:00-10'
                        ':00&ydbllx=01',
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) '
                           'Chrome/78.0.3904.108 Safari/537.36',
@@ -386,11 +386,11 @@ def miaosha():
         payload = 'flag=J&sfzjhmnan=440582199309086397&sfzjhmnv=440981199610152846'
         response = requests.request("POST", url6, headers=headers, data=payload)
         print(response.text, 'checkSfzjhmInYyhmd')
-        payload = 'sfzjhmnan=440582199309086397&sfzjhmnv=440981199610152846&yyrq=2022-09-17'
+        payload = 'sfzjhmnan=440582199309086397&sfzjhmnv=440981199610152846&yyrq=2023-09-17'
         response = requests.request("POST", url5, headers=headers, data=payload)
         print(response.text, 'checkSfzjh')
 
-        payload = f'rq=2022-09-17&sj=9:00-10:00'
+        payload = f'rq=2023-09-17&sj=9:00-10:00'
         response = requests.request("POST", url4, headers=headers, data=payload)
         print(response.text, 'completeOper')
         if response.text == 'captchaCodeError':
@@ -407,4 +407,4 @@ if __name__ == '__main__':
     # miaosha()
     # chaxun()
 
-    quxiao('360602199003022511', '430223199710251821', '2022-11-22')  # 取消
+    quxiao('432802196201182994', '445201198810120064', '2023-01-11')  # 取消
