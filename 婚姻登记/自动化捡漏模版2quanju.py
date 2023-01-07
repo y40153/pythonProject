@@ -355,7 +355,7 @@ def query(shijian, bianhao, weizhi):
 
 def chaxun():
     # name = ''
-    dater = input("请输入预约日期如09-01:\n")
+    dater = ''
     date = f'2023-{dater}'
     print(date)
     zi = 1

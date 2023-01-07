@@ -354,18 +354,18 @@ def query(shijian, bianhao, weizhi):
 
 def chaxun():
     # name = ''
-    dater = input("请输入预约日期如09-01:\n")
+    dater = '01-09'
     date = f'2023-{dater}'
     print(date)
     zi = 1
     while True:
-        key = query('2023-11-28', '440309', '龙华区')+query('2023-11-29', '440309', '龙华区')+query('2023-11-30', '440309', '龙华区')+query('2023-12-01', '440309', '龙华区')+query('2023-12-02', '440309', '龙华区')
+        key = query(date,'440307', '龙岗区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308', '盐田区') + query(date,'440307', '龙岗区') key =
         # query(date, '440305', '南山区') + query(date, '440306', '宝安区') +query(date, '440303', '罗湖区')  key = query(
         # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',
         # '罗湖区')+ query(date,'440307', '龙岗区')
         sj = datetime.datetime.now()  # 当前时间
-        print(f'祁珊珊{sj},第{zi}次轮询：有{key}个区有号')
+        print(f'吴志刚{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
         if key > 0:
             global name
@@ -374,14 +374,14 @@ def chaxun():
             mins = 300
         else:
             print('没有号，发不了')
-            mins = 1
+            mins = 3
         time.sleep(mins)
 
 
 def run(yyrq, shij, bianhao, diz):
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '周迪', '430726198511220055', '18676673352',
-            '祁珊珊', '220282198704162343', '13538088354',
+            '邱碧潇', '44030119920903382X', '15013416523',
+            '吴志刚', '431025199007200013', '15019489196',
             32)
     return
 
