@@ -425,7 +425,7 @@ def query(shijian, bianhao, weizhi):
         print('正常跳转查询成功')
         try:
             data = response.json()  # 解读出接口返回的数据
-            global panduan
+            global panduan,name
             panduan = False
             for d in data:
                 print(d)  # 打印出想要的数据

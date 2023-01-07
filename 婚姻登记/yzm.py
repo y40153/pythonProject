@@ -228,7 +228,7 @@ def query(shijian, bianhao, weizhi):
     if re.search('会话超时，请重新申请！', response.text) == None:
         print('正常跳转查询成功')
         data = response.json()  # 解读出接口返回的数据
-        global panduan
+        global panduan,name
         panduan = False
         for d in data:
 
@@ -249,7 +249,7 @@ def query(shijian, bianhao, weizhi):
 
 
 def chaxun():
-    global panduan
+    global panduan,name
     panduan = False
     # name = ''
     global name
