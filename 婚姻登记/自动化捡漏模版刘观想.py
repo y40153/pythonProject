@@ -103,7 +103,7 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
     response = requests.request("POST", url, headers=headers, data=payload)
     global name
     txt = response.text + '\n'
-    name = str(name) + x + txt
+    name = name + x + txt
     print('\033'f'[0:{colour}m', response.text, '\033[m')  # 31-37
     return
 
@@ -331,7 +331,7 @@ def query(shijian, bianhao, weizhi):
         print('正常跳转查询成功')
         try:
             data = response.json()  # 解读出接口返回的数据
-            global panduan, name
+            global panduan
             panduan = False
             for d in data:
 
@@ -340,7 +340,7 @@ def query(shijian, bianhao, weizhi):
                 if d['syl'] > 0:  # 秒杀准备，有号判断
                     print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
                     panduan = True
-                    name = str(name) + f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦\n'
+                    name = name + f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦\n'
                     run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
                 else:
                     print('获取值为空', data)
@@ -355,6 +355,8 @@ def query(shijian, bianhao, weizhi):
 
 
 def chaxun():
+    global name
+    name=''
     dater = ''
     date = f'2023-{dater}'
     print(date)
@@ -370,7 +372,6 @@ def chaxun():
         print(f'刘观想{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
         if key > 0:
-            global name
             print('发邮件哦', name)
             sendmail(name)
             mins = 300

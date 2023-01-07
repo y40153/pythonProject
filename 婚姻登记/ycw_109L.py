@@ -103,7 +103,7 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
     response = requests.request("POST", url, headers=headers, data=payload)
     global name
     txt = response.text + '\n'
-    name = str(name) + x + txt
+    name = name + x + txt
     print('\033'f'[0:{colour}m', response.text, '\033[m')  # 31-37
     return
 
@@ -163,10 +163,10 @@ def yzm(cancel):
     elif cancel == 1:
         print('秒杀来验证码')
         if os.name == 'posix':
-            with open('./证件信息.txt', 'r', encoding='utf‐8') as a_file:
+            with open('./证件信息4.txt', 'r', encoding='utf‐8') as a_file:
                 cookie = a_file.readline().rstrip()
         else:
-            with open(r"./证件信息.txt", 'r', encoding='utf‐8') as a_file:
+            with open(r"./证件信息4.txt", 'r', encoding='utf‐8') as a_file:
                 cookie = a_file.readline().rstrip()
         headers = {
             'Referer': 'https://www.gdhy.gov.cn/yyjh.do?do=preYyxxOper&yyrq=2023-08-30&djjg=4403040A1000&yysj=9:00-10:00&ydbllx=01',
@@ -178,10 +178,10 @@ def yzm(cancel):
                                     data=payload)
     else:  # 进行取消
         if os.name == 'posix':
-            with open('./证件信息.txt', 'r', encoding='utf‐8') as a_file:
+            with open('./证件信息4.txt', 'r', encoding='utf‐8') as a_file:
                 cookie = a_file.readline().rstrip()
         else:
-            with open(r"./证件信息.txt", 'r', encoding='utf‐8') as a_file:
+            with open(r"./证件信息4.txt", 'r', encoding='utf‐8') as a_file:
                 cookie = a_file.readline().rstrip()
         headers = {
             'Referer': 'https://www.gdhy.gov.cn/wsyy/query/yyQuery.jsp?flag=2',
@@ -211,11 +211,11 @@ def yzm(cancel):
 
         if os.name == 'posix':
 
-            with open('./证件信息.txt', mode='w', encoding='utf‐8') as a_file:
+            with open('./证件信息4.txt', mode='w', encoding='utf‐8') as a_file:
                 a_file.write(f'JSESSIONID={values};openstack_cookie_insert={values2}')
                 # 写字
         else:
-            with open(r'./证件信息.txt', mode='w', encoding='utf‐8') as a_file:
+            with open(r'./证件信息4.txt', mode='w', encoding='utf‐8') as a_file:
                 a_file.write(f'JSESSIONID={values};openstack_cookie_insert={values2}')
             # 写字
     return zhi
@@ -224,10 +224,10 @@ def yzm(cancel):
 def denlu():
     payload = f'captcha={yzm(None)}'
     if os.name == 'posix':
-        with open('./证件信息.txt', 'r', encoding='utf‐8') as a_file:
+        with open('./证件信息4.txt', 'r', encoding='utf‐8') as a_file:
             cookie = a_file.readline().rstrip()
     else:
-        with open(r"./证件信息.txt", 'r', encoding='utf‐8') as a_file:
+        with open(r"./证件信息4.txt", 'r', encoding='utf‐8') as a_file:
             cookie = a_file.readline().rstrip()
     headers = {
         'Referer': 'https://www.gdhy.gov.cn/wsyy/yyjh.jsp',
@@ -255,20 +255,20 @@ def login():
     payload = {}
     try:
         if os.name == 'posix':
-            with open('./证件信息.txt', 'r', encoding='utf‐8') as a_file:
+            with open('./证件信息4.txt', 'r', encoding='utf‐8') as a_file:
                 cookie = a_file.readline().rstrip()
         else:
-            with open(r"./证件信息.txt", 'r', encoding='utf‐8') as a_file:
+            with open(r"./证件信息4.txt", 'r', encoding='utf‐8') as a_file:
                 cookie = a_file.readline().rstrip()
     except:
         print('出错了，没有发现存储器，立马创建。。。')
         if os.name == 'posix':
 
-            with open('./证件信息.txt', mode='w', encoding='utf‐8') as a_file:
+            with open('./证件信息4.txt', mode='w', encoding='utf‐8') as a_file:
                 a_file.write('')
                 # 写字
         else:
-            with open(r'./证件信息.txt', mode='w', encoding='utf‐8') as a_file:
+            with open(r'./证件信息4.txt', mode='w', encoding='utf‐8') as a_file:
                 a_file.write('')
                 # 写字
         cookie = ''
@@ -293,10 +293,10 @@ def login():
 def query(shijian, bianhao, weizhi):
     url = "https://www.gdhy.gov.cn/common.do?do=getYysjxx"
     if os.name == 'posix':
-        with open('./证件信息.txt', 'r', encoding='utf‐8') as a_file:
+        with open('./证件信息4.txt', 'r', encoding='utf‐8') as a_file:
             cookie = a_file.readline().rstrip()
     else:
-        with open(r"./证件信息.txt", 'r', encoding='utf‐8') as a_file:
+        with open(r"./证件信息4.txt", 'r', encoding='utf‐8') as a_file:
             cookie = a_file.readline().rstrip()
     payload = f'djjgbm={bianhao}0A1000&ywlx=LS&rqDate={shijian}&ydbllx=01'
     print(f"正在查询{weizhi}的号：{payload}")
@@ -328,7 +328,7 @@ def query(shijian, bianhao, weizhi):
         print('正常跳转查询成功')
         try:
             data = response.json()  # 解读出接口返回的数据
-            global panduan, name
+            global panduan
             panduan = False
             for d in data:
 
@@ -337,7 +337,7 @@ def query(shijian, bianhao, weizhi):
                 if d['syl'] > 0:  # 秒杀准备，有号判断
                     print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
                     panduan = True
-                    name = str(name) + f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦\n'
+                    name = name + f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦\n'
                     run(d["yyrq"], d["yysj"], f'{bianhao}', weizhi)
                 else:
                     print('获取值为空', data)
@@ -353,6 +353,8 @@ def query(shijian, bianhao, weizhi):
 
 def chaxun():
     # name = ''
+    global name
+    name=''
     dater = '01-09'
     date = f'2023-{dater}'
     print(date)
@@ -367,7 +369,6 @@ def chaxun():
         print(f'吴志刚{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
         if key > 0:
-            global name
             print('发邮件哦', name)
             sendmail(name)
             mins = 300

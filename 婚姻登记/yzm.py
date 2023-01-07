@@ -228,7 +228,7 @@ def query(shijian, bianhao, weizhi):
     if re.search('会话超时，请重新申请！', response.text) == None:
         print('正常跳转查询成功')
         data = response.json()  # 解读出接口返回的数据
-        global panduan, name
+        global panduan
         panduan = False
         for d in data:
 
@@ -252,6 +252,8 @@ def chaxun():
     global panduan
     panduan = False
     # name = ''
+    global name
+    name=''
     dater = ''
     date = f'2023-{dater}'
     print(date)

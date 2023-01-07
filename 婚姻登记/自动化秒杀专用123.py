@@ -303,7 +303,7 @@ def seckill2(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuma
     response = requests.request("POST", url, headers=headers, data=payload)
     global name
     txt = response.text + '\n'
-    name = str(name) + x + txt
+    name = name + x + txt
     print('\033'f'[0:{colour}m', response.text, '\033[m')  # 31-37
     return
 
