@@ -417,9 +417,8 @@ def query(shijian, bianhao, weizhi):
     try:
         response = requests.request("POST", url, headers=headers, data=payload)
     except requests.exceptions.RequestException:
-        sendmail('请求超时哦')
         print('-' * 20, '【出错了】', '-' * 20)
-        time.sleep(60)
+        time.sleep(10)
         response = requests.request("POST", url, headers=headers, data=payload)
 
     if re.search('会话超时，请重新申请！', response.text) is None:
@@ -433,7 +432,7 @@ def query(shijian, bianhao, weizhi):
                 if d['syl'] > 0:  # 秒杀准备，有号判断
                     print('\033''[0:35m'  f'快看啊{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦:[{weizhi}]'  '\033[m')
                     panduan = True
-                    name = f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦'
+                    name = str(name) + f'[{weizhi}]{d["yyrq"]}，{d["yysj"]}这里有 {d["syl"]} 个号啦\n'
                     payloadq = f'ids=21f4aa0d92ec40ba8dea28cb6b8964cc:1:d35ef9398e75462da7287ba8b0e92631'
                     response = requests.request("POST", 'https://www.gdhy.gov.cn/common.do?do=revokeYyInfos',
                                                 headers=headers, data=payloadq)
