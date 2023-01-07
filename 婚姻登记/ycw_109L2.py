@@ -19,7 +19,7 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
 
     print(x)
     payload = json.dumps({
-        "ywlx": "J",
+        "ywlx": "LS",
         "bookDate": "",
         "bookCity": "",
         "sfzjhm": "",
@@ -65,15 +65,15 @@ def seckill(date, time, bianhao, dizhi, manname, manhao, phone, wumanname, wuman
             "areatypenan": "",
             "areatypenv": "",
             "area_provincenan": "440000000000",
-            "area_provincenv": "440000000000",
-            "area_citynan": "440300000000",
-            "area_citynv": "440300000000",
+            "area_provincenv": "510000000000",
+            "area_citynan": "440500000000",
+            "area_citynv": "511100000000",
             "area_countynan": f"{bianhao}000000",
-            "area_countynv": f"{bianhao}000000",
+            "area_countynv": f"",
             "area_townnan": f"{bianhao}001000",
-            "area_townnv": f"{bianhao}004000",
-            "area_communitynan": "",
-            "area_communitynv": "",
+            "area_townnv": f"",
+            "area_communitynan": "浩溪和惠路段70号2房",
+            "area_communitynv": "乐至县帅乡大道670号22栋1单元3楼1号",
             "ydbllx": "01",
             "jzd_provincenan": "440000000000",
             "jzd_provincenv": "440000000000",
@@ -191,20 +191,18 @@ def yzm(cancel):
                                     data=payload)
 
     # text = response.content.decode('utf-8','ignore')#解决乱码
-    open("./aa.gif", 'wb').write(response.content)  # 下载gif图片
-    im = Image.open("./aa.gif")
-    im.save(str(0) + '.png')  # 将png图片保存
-
+    open("./0.gif", 'wb').write(response.content)  # 下载gif图片
+    im = Image.open("./0.gif")
+    im.save(str(4) + '.png')  # 将png图片保存
     im.seek(2)
-    im.save(str(2) + '.png')  # 将png图片保存
+    im.save(str(6) + '.png')  # 将png图片保存
     im.seek(3)
-    im.save(str(3) + '.png')  # 将png图片保存
+    im.save(str(7) + '.png')  # 将png图片保存
     try:
-        zhi = f"{recognize('3.png')[0]}{recognize('2.png')[1:2]}{recognize('3.png')[1:2]}{recognize('0.png')[-1]}"
+        zhi = f"{recognize('7.png')[0]}{recognize('6.png')[1:2]}{recognize('7.png')[1:2]}{recognize('4.png')[-1]}"
     except Exception as e:
         zhi = 2341
         print(e)
-        
         sendmail(f'验证码获取错误{e}')
         print('-' * 20, '【出错了】', '-' * 20)
         time.sleep(60)
@@ -300,7 +298,7 @@ def query(shijian, bianhao, weizhi):
     else:
         with open(r"./证件信息.txt", 'r', encoding='utf‐8') as a_file:
             cookie = a_file.readline().rstrip()
-    payload = f'djjgbm={bianhao}0A1000&ywlx=J&rqDate={shijian}&ydbllx=01'
+    payload = f'djjgbm={bianhao}0A1000&ywlx=LS&rqDate={shijian}&ydbllx=01'
     print(f"正在查询{weizhi}的号：{payload}")
     headers = {
         'Host': 'www.gdhy.gov.cn',
@@ -322,7 +320,6 @@ def query(shijian, bianhao, weizhi):
     try:
         response = requests.request("POST", url, headers=headers, data=payload)
     except requests.exceptions.RequestException:
-        
         print('-' * 20, '【出错了】', '-' * 20)
         time.sleep(10)
         response = requests.request("POST", url, headers=headers, data=payload)
@@ -345,8 +342,8 @@ def query(shijian, bianhao, weizhi):
                 else:
                     print('获取值为空', data)
         except:
-            sendmail(f'{response.text}')
-            time.sleep(60)
+            # sendmail(f'{response.text}')
+            time.sleep(10)
             pass
     else:
         print('登录过期')
@@ -355,18 +352,19 @@ def query(shijian, bianhao, weizhi):
 
 
 def chaxun():
-    dater = ''
+    # name = ''
+    dater = '01-09'
     date = f'2023-{dater}'
     print(date)
     zi = 1
     while True:
-        key = query(date, '440305', '南山区')+ query(date, '440304', '福田区')
+        key = query('2023-01-09','440514', '汕头市潮南区民政局婚姻登记处')+query('2023-01-10','440514', '汕头市潮南区民政局婚姻登记处')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308', '盐田区') + query(date,'440307', '龙岗区') key =
-        # query(date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440303', '罗湖区') key = query(
+        # query(date, '440305', '南山区') + query(date, '440306', '宝安区') +query(date, '440303', '罗湖区')  key = query(
         # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',
-        # '罗湖区')+ query(date,'440307', '龙岗区')+ query(date,'440311', '光明区')
+        # '罗湖区')+ query(date,'440307', '龙岗区')
         sj = datetime.datetime.now()  # 当前时间
-        print(f'杨茜{sj},第{zi}次轮询：有{key}个区有号')
+        print(f'江妮{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
         if key > 0:
             global name
@@ -375,29 +373,16 @@ def chaxun():
             mins = 300
         else:
             print('没有号，发不了')
-            mins = 1
+            mins = 3
         time.sleep(mins)
 
 
 def run(yyrq, shij, bianhao, diz):
-    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-    #         '夏正', '421126199501101758', '13691777188',
-    #         '李琳', '532128199610130346', '15764233924',
-    #         32)
-    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-    #         '潘卓钒', '441802199804110919', '15279101998',
-    #         '黎静婷', '445381199803206021', '13168661477',
-    #         32)
-    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-    #         '黄凯', '441523199507176036', '15014049639',
-    #         '马丽纯', '440582199501135849', '13202297256',
-    #         32)
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-            '孙鸿鉴', '210403199408193311', '13544088728',
-            '杨茜', '440304199401126726', '18926491283',
+            '郑吉伟', '440582199009062078', '13060901397',
+            '江妮', '513922198608020023', '13926250907',
             32)
     return
-
 
 if __name__ == '__main__':
     login()

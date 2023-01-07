@@ -355,7 +355,7 @@ def query(shijian, bianhao, weizhi):
 
 
 def chaxun():
-    dater = ''
+    dater = '01-11'
     date = f'2023-{dater}'
     print(date)
     zi = 1
@@ -375,7 +375,7 @@ def chaxun():
             mins = 300
         else:
             print('没有号，发不了')
-            mins = 5
+            mins = 2
         time.sleep(mins)
 
 
