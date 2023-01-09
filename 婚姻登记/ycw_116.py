@@ -362,13 +362,13 @@ def chaxun():
     print(date)
     zi = 1
     while True:
-        key = query(date, '440305', '南山区')+ query(date, '440304', '福田区')
+        key = query(date, '440306', '宝安区')+ query(date, '440304', '福田区')
         # key = query(date, '440396', '大鹏新区') + query(date, '440308', '盐田区') + query(date,'440307', '龙岗区') key =
         # query(date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440303', '罗湖区') key = query(
         # date, '440305', '南山区') + query(date, '440306', '宝安区') + query(date, '440304', '福田区')+ query(date, '440303',
         # '罗湖区')+ query(date,'440307', '龙岗区')+ query(date,'440311', '光明区')
         sj = datetime.datetime.now()  # 当前时间
-        print(f'杨茜{sj},第{zi}次轮询：有{key}个区有号')
+        print(f'胥风玲{sj},第{zi}次轮询：有{key}个区有号')
         zi += 1
         if key > 0:
             print('发邮件哦', name)
@@ -381,18 +381,7 @@ def chaxun():
 
 
 def run(yyrq, shij, bianhao, diz):
-    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-    #         '夏正', '421126199501101758', '13691777188',
-    #         '李琳', '532128199610130346', '15764233924',
-    #         32)
-    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-    #         '潘卓钒', '441802199804110919', '15279101998',
-    #         '黎静婷', '445381199803206021', '13168661477',
-    #         32)
-    # seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
-    #         '黄凯', '441523199507176036', '15014049639',
-    #         '马丽纯', '440582199501135849', '13202297256',
-    #         32)
+    
     seckill(f'{yyrq}', f'{shij}', f'{bianhao}', f'{diz}',
             '赵鼎甲', '430304199105150279', '18682490515',
             '胥风玲', '610321199410122741', '13640849946',
