@@ -357,7 +357,7 @@ def query(shijian, bianhao, weizhi):
 def chaxun():
     global name
     name=''
-    dater = '01-12'
+    dater = '01-16'
     date = f'2023-{dater}'
     print(date)
     zi = 1
