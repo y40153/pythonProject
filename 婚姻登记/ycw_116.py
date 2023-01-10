@@ -151,44 +151,48 @@ def recognize(name):
 
 def yzm(cancel):
     payload = {}
-    if cancel == None:  # 进行登录验证码破解
-        headers = {
-            'Referer': 'https://www.gdhy.gov.cn/wsyy/index.jsp'
-        }
-        response = requests.request("GET", "http://www.gdhy.gov.cn/common.do?do=getCaptchaImg", headers=headers,
-                                    data=payload)
-        aa = requests.utils.dict_from_cookiejar(response.cookies)  # 获取该请求的cookie
-        values = aa['JSESSIONID']
-        values2 = aa['openstack_cookie_insert']
-    elif cancel == 1:
-        print('秒杀来验证码')
-        if os.name == 'posix':
-            with open('./证件信息2.txt', 'r', encoding='utf‐8') as a_file:
-                cookie = a_file.readline().rstrip()
-        else:
-            with open(r"./证件信息2.txt", 'r', encoding='utf‐8') as a_file:
-                cookie = a_file.readline().rstrip()
-        headers = {
-            'Referer': 'https://www.gdhy.gov.cn/yyjh.do?do=preYyxxOper&yyrq=2023-08-30&djjg=4403040A1000&yysj=9:00-10:00&ydbllx=01',
-            'Cookie': f'{cookie}'
-        }
-        url = f"https://www.gdhy.gov.cn/common.do?do=getCaptchaImg&random={random.random()}"
-        print(url)
-        response = requests.request("GET", url, headers=headers,
-                                    data=payload)
-    else:  # 进行取消
-        if os.name == 'posix':
-            with open('./证件信息2.txt', 'r', encoding='utf‐8') as a_file:
-                cookie = a_file.readline().rstrip()
-        else:
-            with open(r"./证件信息2.txt", 'r', encoding='utf‐8') as a_file:
-                cookie = a_file.readline().rstrip()
-        headers = {
-            'Referer': 'https://www.gdhy.gov.cn/wsyy/query/yyQuery.jsp?flag=2',
-            'Cookie': f'{cookie}'
-        }
-        response = requests.request("GET", "https://www.gdhy.gov.cn/common.do?do=getCaptchaImg", headers=headers,
-                                    data=payload)
+    try:
+        if cancel == None:  # 进行登录验证码破解
+            headers = {
+                'Referer': 'https://www.gdhy.gov.cn/wsyy/index.jsp'
+            }
+            response = requests.request("GET", "http://www.gdhy.gov.cn/common.do?do=getCaptchaImg", headers=headers,
+                                        data=payload)
+            aa = requests.utils.dict_from_cookiejar(response.cookies)  # 获取该请求的cookie
+            values = aa['JSESSIONID']
+            values2 = aa['openstack_cookie_insert']
+        elif cancel == 1:
+            print('秒杀来验证码')
+            if os.name == 'posix':
+                with open('./证件信息2.txt', 'r', encoding='utf‐8') as a_file:
+                    cookie = a_file.readline().rstrip()
+            else:
+                with open(r"./证件信息2.txt", 'r', encoding='utf‐8') as a_file:
+                    cookie = a_file.readline().rstrip()
+            headers = {
+                'Referer': 'https://www.gdhy.gov.cn/yyjh.do?do=preYyxxOper&yyrq=2023-08-30&djjg=4403040A1000&yysj=9:00-10:00&ydbllx=01',
+                'Cookie': f'{cookie}'
+            }
+            url = f"https://www.gdhy.gov.cn/common.do?do=getCaptchaImg&random={random.random()}"
+            print(url)
+            response = requests.request("GET", url, headers=headers,
+                                        data=payload)
+        else:  # 进行取消
+            if os.name == 'posix':
+                with open('./证件信息2.txt', 'r', encoding='utf‐8') as a_file:
+                    cookie = a_file.readline().rstrip()
+            else:
+                with open(r"./证件信息2.txt", 'r', encoding='utf‐8') as a_file:
+                    cookie = a_file.readline().rstrip()
+            headers = {
+                'Referer': 'https://www.gdhy.gov.cn/wsyy/query/yyQuery.jsp?flag=2',
+                'Cookie': f'{cookie}'
+            }
+            response = requests.request("GET", "https://www.gdhy.gov.cn/common.do?do=getCaptchaImg", headers=headers,
+                                        data=payload)
+    except:
+        time.sleep(10)
+        chaxun()
 
     # text = response.content.decode('utf-8','ignore')#解决乱码
     open("./aa.gif", 'wb').write(response.content)  # 下载gif图片
